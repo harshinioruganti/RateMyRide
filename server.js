@@ -99,18 +99,44 @@ app.post('/api/register', async (req, res, next) =>
 
 app.post('/api/addRide', async (req, res, next) =>
 {
-  // incoming: rideName
+  // incoming: rideName, description, themeParkId
   // outgoing: error
 	
-  const { rideName } = req.body;
+  const { userId, rideName, description } = req.body;
 
-  const newRide = {Ride:rideName, RideID:"1"};
+  const newRide = {Ride:rideName,Description:description,ThemeParkID:themeParkId,RideID:"1"};
   var error = '';
 
   try
   {
     const db = client.db('COP4331Cards');
     const result = db.collection('Rides').insertOne(newRide);
+  }
+  catch(e)
+  {
+    error = e.toString();
+  }
+
+  //cardList.push( rideName ); delete i think
+
+  var ret = { error: error };
+  res.status(200).json(ret);
+});
+
+app.post('/api/addReview', async (req, res, next) =>
+{
+  // incoming: rideID, userID, rating, review
+  // outgoing: error
+	
+  const { userId, rideName } = req.body;
+
+  const newReview = {RideID:rideId,UserId:userId,Rating:rating,Review:review};
+  var error = '';
+
+  try
+  {
+    const db = client.db('COP4331Cards');
+    const result = db.collection('Reviews').insertOne(newReview);
   }
   catch(e)
   {
