@@ -102,7 +102,7 @@ app.post('/api/addRide', async (req, res, next) =>
   // incoming: rideName, description, themeParkId
   // outgoing: error
 	
-  const { userId, rideName, description } = req.body;
+  const { rideName, description, themeParkId } = req.body;
 
   const newRide = {Ride:rideName,Description:description,ThemeParkID:themeParkId,RideID:"1"};
   var error = '';
