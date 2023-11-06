@@ -97,4 +97,19 @@ app.post('/api/register', async (req, res, next) =>
   var ret = { log: "Acount created" };
   res.status(200).json(ret);
 });
+app.post('/api/delete', async (req, res, next) => 
+{
+  const { reviewId } = req.body; // Assuming you send the review ID in the request body
+
+  const db = client.db('COP4331');
+
+  // Find the review by its ID and delete it
+  const deleteResult = await db.collection('Reviews').deleteOne({ _id: ObjectId(reviewId) });
+
+  // Review was successfully deleted
+  var ret = { log: "Review deleted" };
+  res.status(200).json(ret);
+
+});
+
 })();
