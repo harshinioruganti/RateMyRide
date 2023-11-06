@@ -94,7 +94,7 @@ app.post('/api/register', async (req, res, next) =>
   var newAccount = { FirstName:firstName, LastName:lastName, Login:login, Password:password, UserId:"4" };
   db.collection('Users').insertOne(newAccount);
 
-  var ret = { log: "Acount created" };
+  var ret = { log: "Account created" };
   res.status(200).json(ret);
 });
 })();
