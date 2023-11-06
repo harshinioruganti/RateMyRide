@@ -99,12 +99,12 @@ app.post('/api/register', async (req, res, next) =>
 
 app.post('/api/addRide', async (req, res, next) =>
 {
-  // incoming: rideName, 
+  // incoming: rideName
   // outgoing: error
 	
-  const { userId, rideName } = req.body;
+  const { rideName } = req.body;
 
-  const newRide = {Ride:rideName,UserId:userId};
+  const newRide = {Ride:rideName, RideID:"1"};
   var error = '';
 
   try
