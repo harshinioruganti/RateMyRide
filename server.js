@@ -97,6 +97,7 @@ app.post('/api/register', async (req, res, next) =>
   var ret = { log: "Acount created" };
   res.status(200).json(ret);
 });
+
 app.post('/api/delete', async (req, res, next) => 
 {
   const { reviewId } = req.body; // Assuming you send the review ID in the request body
