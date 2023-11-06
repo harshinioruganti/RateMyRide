@@ -49,8 +49,6 @@ if (process.env.NODE_ENV === 'production')
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
   });
 }
-
-
 	
 app.post('/api/login', async (req, res, next) => 
 {
@@ -96,6 +94,32 @@ app.post('/api/register', async (req, res, next) =>
   db.collection('Users').insertOne(newAccount);
 
   var ret = { log: "Acount created" };
+  res.status(200).json(ret);
+});
+
+app.post('/api/addRide', async (req, res, next) =>
+{
+  // incoming: rideName, 
+  // outgoing: error
+	
+  const { userId, rideName } = req.body;
+
+  const newRide = {Ride:rideName,UserId:userId};
+  var error = '';
+
+  try
+  {
+    const db = client.db('COP4331Cards');
+    const result = db.collection('Rides').insertOne(newRide);
+  }
+  catch(e)
+  {
+    error = e.toString();
+  }
+
+  //cardList.push( rideName ); delete i think
+
+  var ret = { error: error };
   res.status(200).json(ret);
 });
 
