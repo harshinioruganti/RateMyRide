@@ -104,6 +104,8 @@ app.post('/api/addRide', async (req, res, next) =>
 	
   const { rideName, description, themeParkId } = req.body;
 
+  // Need auto increment Ride ID here
+	
   const newRide = {Ride:rideName,Description:description,ThemeParkID:themeParkId,RideID:"1"};
   var error = '';
 
@@ -117,19 +119,19 @@ app.post('/api/addRide', async (req, res, next) =>
     error = e.toString();
   }
 
-  //cardList.push( rideName ); delete i think
-
   var ret = { error: error };
   res.status(200).json(ret);
 });
 
 app.post('/api/addReview', async (req, res, next) =>
 {
-  // incoming: rideID, userID, rating, review
+  // incoming: rideId, userId, rating, review
   // outgoing: error
 	
-  const { userId, rideName } = req.body;
+  const { rideId, userId, rating, review } = req.body;
 
+  // Need auto increment review ID here
+	
   const newReview = {RideID:rideId,UserId:userId,Rating:rating,Review:review};
   var error = '';
 
