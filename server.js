@@ -145,20 +145,21 @@ app.post('/api/addReview', async (req, res, next) =>
     error = e.toString();
   }
 
-  //cardList.push( rideName ); delete i think
-
   var ret = { error: error };
   res.status(200).json(ret);
 });
 
 app.post('/api/deleteReview', async (req, res, next) => 
 {
+  // incoming: reviewId
+  // outgoing: error
+	
   const { reviewId } = req.body; // Assuming you send the review ID in the request body
 
   const db = client.db('COP4331Cards');
 
   // Find the review by its ID and delete it
-  const deleteResult = await db.collection('Reviews').deleteOne({ _id: ObjectId(reviewId) });
+  const deleteResult = await db.collection('Reviews').deleteOne({ReviewID:reviewId});
 
   // Review was successfully deleted
   var ret = { log: "Review deleted" };
