@@ -90,7 +90,7 @@ app.post('/api/register', async (req, res, next) =>
 
   // Set up auto increment user ID here
 
-  var newAccount = { FirstName:firstName, LastName:lastName, Login:login, Password:password, UserId:"4" };
+  var newAccount = {UserId:"4",FirstName:firstName, LastName:lastName, Login:login, Password:password};
   db.collection('Users').insertOne(newAccount);
 
   var ret = { log: "Acount created" };
@@ -106,7 +106,7 @@ app.post('/api/addRide', async (req, res, next) =>
 
   // Need auto increment Ride ID here
 	
-  const newRide = {Ride:rideName,Description:description,ThemeParkID:themeParkId,RideID:"1"};
+  const newRide = {RideID:"1",Ride:rideName,Description:description,ThemeParkID:themeParkId};
   var error = '';
 
   try
@@ -132,7 +132,7 @@ app.post('/api/addReview', async (req, res, next) =>
 
   // Need auto increment review ID here
 	
-  const newReview = {RideID:rideId,UserId:userId,Rating:rating,Review:review};
+  const newReview = {ReviewID:"6",RideID:rideId,UserId:userId,Rating:rating,Review:review};
   var error = '';
 
   try
