@@ -1,102 +1,97 @@
 import React, { useState } from "react";
-import { View, ImageBackground, Text } from "react-native";
 import Axios from 'axios';
 
 // Components
 import ReusableAuthForm from '../../Components/Form/ReusableAuthForm';
 
-const URL = 'http://localhost:5000/api/register'
+const URL = 'https://ratemyride-3b8d03447308.herokuapp.com/'
 
 export default RegisterScreen = ({ navigation }) => {
-    // Define Empty States 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
-
-    // Update the states
-    const updateFirstName = (text) => setFirstName(text);
-    const updateLastName = (text) => setLastName(text);
-    const updateEmail = (text) => setEmail(text);
-    const updateLogin = (text) => setLogin(text);
-    const updatePassword = (text) => setPassword(text);
-
+    // init state
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        login: '',
+        password: '',
+    })
     // Input Fields
     const inputFields = [
         {
             placeholder: 'First Name',
-            value: firstName,
-            onChangeText: updateFirstName,
+            value: formData.firstName,
             inputType: 'text',
+            name: 'firstName',
         },
         {
             placeholder: 'Last Name',
-            value: lastName,
-            onChangeText: updateLastName,
+            value: formData.lastName,
             inputType: 'text',
+            name: 'lastName',
         },
         {
             placeholder: 'Email ID',
-            value: email,
-            onChangeText: updateEmail,
+            value: formData.email,
             inputType: 'email-address',
+            name: 'email',
         },
         {
             placeholder: 'Username',
-            value: login,
-            onChangeText: updateLogin,
+            value: formData.login,
             inputType: 'text',
+            name: 'login',
         },
         {
             placeholder: 'Password',
-            value: password,
-            onChangeText: updatePassword,
+            value: formData.password,
             inputType: 'password',
+            name: 'password',
         },
-    ]
-
+    ];
     const mainForm = {
         onPress: handleSignUp,
         title: 'Sign Up',
     }
-
     const altForm = {
         onPress: () => navigation.navigate('LOGIN'),
         title: 'Login',
         text: "Already have an account?"
     }
 
+    const handleUpdateFormData = (fieldName, value) => setFormData({...formData, [fieldName]: value,}); 
+
     // Async function
     const handleSignUp = async () => {
-        
+        const data = {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            login: formData.login,
+            password: formData.password,
+        }
         try {
-            const userData = {
-                firstName,
-                lastName,
-                login,
-                password,
-                email,
-            };
-            console.log(URL)
-            console.log("before await")
-            const response = await Axios.post(URL, userData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            // At some point you need to implement an email verification.
+            const response = await Axios.post(URL + 'api/register', data, {
+                Headers: { 'Content-type': 'application/json' }
             });
-            console.log("after await")
-            if (response.status === 200) {
+
+            if (response.data.error) {
+                console.log("API ERROR");
+            }
+            else {
                 console.log("Success");
-                // You can perform additional actions on success, such as navigating to another screen.
-            } else {
-                console.log("Error");
-                // Handle errors here
+                // Reset form values
+                setFormData({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    login: '',
+                    password: '',
+                });
             }
         }
-        catch(error)
-        {
-            console.error('An error occurred:', error);
+        catch(err) {
+            alert(err.toString());
+            return;
         }
     };
 
@@ -105,6 +100,8 @@ export default RegisterScreen = ({ navigation }) => {
             inputFields={ inputFields }
             mainForm={ mainForm }
             altForm={ altForm }
+            updateFormData={ handleUpdateFormData }
+            onFormSubmit={ handleSignUp }
         />
     )
 }

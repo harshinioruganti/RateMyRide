@@ -11,8 +11,8 @@ import TouchableTextButton from "../Button/TouchableTextButton";
 import Card from "../Cards/Card";
 import NavigationButton from '../Button/NavigationButton';
 
-const ReusableAuthForm = ({ inputFields, mainForm, altForm }) => {
-
+const ReusableAuthForm = ({ inputFields, mainForm, altForm, updateFormData, onFormSubmit }) => {
+    
     return (
         <ImageBackground
             source={ require('../../assets/Img/RegisterLoginBackground.jpg') }
@@ -26,7 +26,7 @@ const ReusableAuthForm = ({ inputFields, mainForm, altForm }) => {
                             key={ index }
                             placeHolder={ field.placeholder }
                             value={ field.value }
-                            onChangeText={ field.onChangeText }
+                            onChangeText={ (text) => updateFormData(field.name, text) }
                             inputType={ field.inputType }
                             viewStyle={ AuthStyling.inputContainer }
                             inputStyle={ AuthStyling.input }
@@ -34,7 +34,7 @@ const ReusableAuthForm = ({ inputFields, mainForm, altForm }) => {
                     ))} 
                     <TouchableTextButton 
                         touchableOpacStyle={ AuthStyling.signUpBtn }
-                        onPress={ mainForm.onPress }
+                        onPress={ onFormSubmit }
                         title={ mainForm.title }
                         titleStyle={ AuthStyling.titleStyle }
                     />

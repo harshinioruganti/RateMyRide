@@ -15,31 +15,32 @@ export default LoginScreen = ({ navigation }) =>
     const updatePassword = (text) => setPassword(text);
 
     const handleLogin = async () => {
-        const user = {
-            username: loginName,
-            password: loginPassword,
-        };
-        const js = JSON.stringify(user);
-        // URL = 'https://cop4331-ratemyride-fd93630d9ccb.herokuapp.com/'
-        try {
-            const response = await fetch(URL + 'api/register', {
-                method: 'POST',
-                body: js,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
 
-            const res = JSON.parse(await response.text());
+        // const user = {
+        //     username: loginName,
+        //     password: loginPassword,
+        // };
+        // const js = JSON.stringify(user);
+        // // URL = 'https://cop4331-ratemyride-fd93630d9ccb.herokuapp.com/'
+        // try {
+        //     const response = await fetch(URL + 'api/register', {
+        //         method: 'POST',
+        //         body: js,
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //     });
 
-            if (res.error) {
-                console.log("SHUCKS")
-            } else {
-                console.log("Success")
-            }
-        } catch (error) {
-            console.log("Error: " + error)
-        }
+        //     const res = JSON.parse(await response.text());
+
+        //     if (res.error) {
+        //         console.log("SHUCKS")
+        //     } else {
+        //         console.log("Success")
+        //     }
+        // } catch (error) {
+        //     console.log("Error: " + error)
+        // }
     };
 
     const inputFields = [
@@ -67,7 +68,6 @@ export default LoginScreen = ({ navigation }) =>
             title: 'Sign Up',
             text: "Don't Have an account?"
         }
-
 
     return (
         <ReusableAuthForm 
