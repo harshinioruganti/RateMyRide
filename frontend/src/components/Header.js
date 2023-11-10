@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 import './Header.css';
 
 const Header = () => {
   
   var _ud = localStorage.getItem('user_data');
   var ud = JSON.parse(_ud);
-  var userId = ud.id;
+  // var userId = ud.id;
   var firstName = ud.firstName;
   var lastName = ud.lastName;
   const initials = (firstName && lastName) ? `${firstName.charAt(0)}${lastName.charAt(0)}` : '';
@@ -26,9 +26,9 @@ const Header = () => {
         <div class="user-icon">
             <div class="initials">{initials}</div>
             <div class="dropdown">
-                <button class="dropdown-item">Go to Profile</button>
-                <button class="dropdown-item" onClick={doLogout}>Logout</button>
-                <button class="dropdown-item">About Page</button>
+                <button class="dropdown-item">My Profile</button><br/>
+                <button class="dropdown-item">About Page</button><br/>
+                <button class="dropdown-item" onClick={doLogout}>Logout</button><br/>
             </div>
         </div>
     </div>

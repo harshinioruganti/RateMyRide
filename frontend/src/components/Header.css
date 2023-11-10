@@ -48,7 +48,7 @@
     top: 50px;
     right: 10px;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 2px solid #445988;
     border-radius: 5px;
     padding: 5px;
   }
@@ -56,6 +56,13 @@
   .dropdown-item {
     padding: 5px;
     cursor: pointer;
+    background-color: transparent;
+    font-size: 10pt;
+    border: none;
+  }
+
+  .dropdown-item:hover {
+    background-color: gray;
   }
   
   /* Show Dropdown on Hover */
