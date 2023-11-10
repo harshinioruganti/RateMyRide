@@ -1,0 +1,22 @@
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -5px; /* vertical positioning */
+  }
+  
+  .button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background: lightcyan;
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    transition: background 0.3s;
+    color: #171E2E;
+    margin: 0 10px; /* horizontal spacing */
+  }
+  
+  .button:hover {
+    background: #445988;
+    color: white;
+  }
