@@ -1,15 +1,10 @@
 import React from 'react';
-import './PageTitle.css';
-import logo from '../logo.png';
 
 function PageTitle()
 {
-  return(
-    <div className='title-container'>
-        <img src={logo} alt="Logo" className='logo' />
-        <h1 id="title" className="title">Welcome to RateMyRide!</h1>
-    </div>
-  );
+   return(
+     <h1 id="title">Rate My Ride</h1>
+   );
 };
 
 export default PageTitle;

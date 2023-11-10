@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './Login.css';
 
 function Login()
 {
@@ -57,19 +56,24 @@ function Login()
         }    
     };
 
-    return (
-        <div className="formBox">
-        <form id="login" className="input-group">
-            <span id="inner-title">Login</span><br />
-            <input type="text" id="loginUsername" placeholder="Username"
-                required ref={(c) => loginName = c}/><br />
-            <input type="password" id="loginPassword" placeholder="Password" required
-                ref={(c) => loginPassword = c}/><br />
-            <button type="button" id="loginButton" className="buttons" value = "Login"
-                onClick={doLogin}>Login</button>
+
+
+
+
+
+    return(
+      <div id="loginDiv">
+        <form onSubmit={doLogin}>
+        <span id="inner-title">PLEASE LOG IN</span><br />
+        <input type="text" id="loginName" placeholder="Username" 
+        ref={(c) => loginName = c} />
+        <input type="password" id="loginPassword" placeholder="Password" 
+        ref={(c) => loginPassword = c} />
+        <input type="submit" id="loginButton" class="buttons" value = "Do It"
+          onClick={doLogin} />
         </form>
         <span id="loginResult">{message}</span>
-        </div>
+     </div>
     );
 };
 

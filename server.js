@@ -49,7 +49,8 @@ if (process.env.NODE_ENV === 'production')
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
   });
 }
-	
+
+
 app.post('/api/login', async (req, res, next) => 
 {
   // incoming: login, password
@@ -90,76 +91,22 @@ app.post('/api/register', async (req, res, next) =>
 
   // Set up auto increment user ID here
 
-  var newAccount = {UserId:"4",FirstName:firstName, LastName:lastName, Login:login, Password:password};
+  var newAccount = { FirstName:firstName, LastName:lastName, Login:login, Password:password, UserId:"4" };
   db.collection('Users').insertOne(newAccount);
 
   var ret = { log: "Acount created" };
   res.status(200).json(ret);
 });
 
-app.post('/api/addRide', async (req, res, next) =>
+
+app.post('/api/delete', async (req, res, next) => 
 {
-  // incoming: rideName, description, themeParkId
-  // outgoing: error
-	
-  const { rideName, description, themeParkId } = req.body;
-
-  // Need auto increment Ride ID here
-	
-  const newRide = {RideID:"1",Ride:rideName,Description:description,ThemeParkID:themeParkId};
-  var error = '';
-
-  try
-  {
-    const db = client.db('COP4331Cards');
-    const result = db.collection('Rides').insertOne(newRide);
-  }
-  catch(e)
-  {
-    error = e.toString();
-  }
-
-  var ret = { error: error };
-  res.status(200).json(ret);
-});
-
-app.post('/api/addReview', async (req, res, next) =>
-{
-  // incoming: rideId, userId, rating, review
-  // outgoing: error
-	
-  const { rideId, userId, rating, review } = req.body;
-
-  // Need auto increment review ID here
-	
-  const newReview = {ReviewID:"6",RideID:rideId,UserId:userId,Rating:rating,Review:review};
-  var error = '';
-
-  try
-  {
-    const db = client.db('COP4331Cards');
-    const result = db.collection('Reviews').insertOne(newReview);
-  }
-  catch(e)
-  {
-    error = e.toString();
-  }
-
-  var ret = { error: error };
-  res.status(200).json(ret);
-});
-
-app.post('/api/deleteReview', async (req, res, next) => 
-{
-  // incoming: reviewId
-  // outgoing: error
-	
   const { reviewId } = req.body; // Assuming you send the review ID in the request body
 
-  const db = client.db('COP4331Cards');
+  const db = client.db('COP4331');
 
   // Find the review by its ID and delete it
-  const deleteResult = await db.collection('Reviews').deleteOne({ReviewID:reviewId});
+  const deleteResult = await db.collection('Reviews').deleteOne({ _id: ObjectId(reviewId) });
 
   // Review was successfully deleted
   var ret = { log: "Review deleted" };
