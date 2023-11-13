@@ -20,13 +20,13 @@ export default RegisterScreen = ({ navigation }) => {
         {
             placeholder: 'First Name',
             value: formData.firstName,
-            inputType: 'text',
+            inputType: 'default',
             name: 'firstName',
         },
         {
             placeholder: 'Last Name',
             value: formData.lastName,
-            inputType: 'text',
+            inputType: 'default',
             name: 'lastName',
         },
         {
@@ -38,7 +38,7 @@ export default RegisterScreen = ({ navigation }) => {
         {
             placeholder: 'Username',
             value: formData.login,
-            inputType: 'text',
+            inputType: 'default',
             name: 'login',
         },
         {

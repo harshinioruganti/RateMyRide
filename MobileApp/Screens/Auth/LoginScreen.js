@@ -48,7 +48,7 @@ export default LoginScreen = ({ navigation }) =>
             placeholder: 'Username',
             value: login,
             onChangeText: updateLogin,
-            inputType: 'text',
+            inputType: 'default',
         },
         {
             placeholder: 'Password',

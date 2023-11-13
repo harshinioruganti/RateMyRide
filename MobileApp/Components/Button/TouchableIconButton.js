@@ -11,7 +11,7 @@ export default TouchableIconButton = ({
     }) => {
     return (
         <View style={ viewStyle }>
-            <TouchableOpacity style={ touchableOpacStyle } onPress={ onPress }>
+            <TouchableOpacity style={ touchableOpacStyle } onPress={ onPress } activeOpacity={ 0.7 }>
                 <Ionicons name={ icon } size={ iconSize } />
             </TouchableOpacity>
         </View>
