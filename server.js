@@ -105,8 +105,8 @@ app.post('/api/register', async (req, res, next) =>
   res.status(200).json(ret);
 });
 
-app.post('/api/search', async (req, res, next) => {
-  
+app.post('/api/searchRide', async (req, res, next) => {
+
   // incoming: rideName
   // outgoing: rides, error
 
