@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectId;
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
 const client = new MongoClient(url);
@@ -62,13 +63,13 @@ app.post('/api/login', async (req, res, next) =>
   const db = client.db('COP4331Cards');
   const results = await db.collection('Users').find({Email:email,Password:password}).toArray();
 
-  var id = -1;
+  var id = -1;// Will display -1 as id if invalid login
   var fn = '';
   var ln = '';
 
   if( results.length > 0 )
   {
-    id = results[0]._id:ObjectId().toString();
+    id = results[0]._id;
     fn = results[0].FirstName;
     ln = results[0].LastName;
   }
@@ -80,20 +81,27 @@ app.post('/api/login', async (req, res, next) =>
 app.post('/api/register', async (req, res, next) => 
 {
   // incoming: firstName, lastName, email, password
-  // outgoing: log
+  // outgoing: error
 
-  var error = '';
+  var error = "";
 
   const { firstName, lastName, email, password } = req.body;
 
   const db = client.db('COP4331Cards');
 
-  // Set up auto increment user ID here
+  // Check for existing user
+  const results = await db.collection('Users').find({Email:email}).toArray();
+  if(results.length > 0)
+  {
+    error = "Account with this email already exists."
+  }
+  else{
+    var newAccount = {FirstName:firstName, LastName:lastName, Email:email, Password:password};
+    db.collection('Users').insertOne(newAccount);
+    error = "Account created."
+  }
 
-  var newAccount = {UserId:"4",FirstName:firstName, LastName:lastName, Email:email, Password:password};
-  db.collection('Users').insertOne(newAccount);
-
-  var ret = { log: "Account created" };
+  var ret = { error:error };
   res.status(200).json(ret);
 });
 
@@ -103,10 +111,8 @@ app.post('/api/addRide', async (req, res, next) =>
   // outgoing: error
 	
   const { rideName, description, themeParkId } = req.body;
-
-  // Need auto increment Ride ID here
 	
-  const newRide = {RideID:"1",Ride:rideName,Description:description,ThemeParkID:themeParkId};
+  const newRide = {Ride:rideName,Description:description,ThemeParkID:themeParkId};
   var error = '';
 
   try
@@ -129,20 +135,18 @@ app.post('/api/addReview', async (req, res, next) =>
   // outgoing: error
 	
   const { rideId, userId, thrill, theme, length, overall, review } = req.body;
+	var error = '';
 
-  // Need auto increment review ID here
-	
-  const newReview = {ReviewID:"6",RideID:rideId,UserId:userId,Thrill:thrill,Theme:theme,Length:length,Overall:overall,Review:review};
-  var error = '';
-
-  try
+  const db = client.db('COP4331Cards');
+  const results = await db.collection('Reviews').find({RideID:rideId,UserID:userId}).toArray();
+  if(results.length > 0)
   {
-    const db = client.db('COP4331Cards');
-    const result = db.collection('Reviews').insertOne(newReview);
+    error = "You have already reveiwed this ride! Either edit existing review or delete it before creating a new one."
   }
-  catch(e)
-  {
-    error = e.toString();
+  else{
+    const newReview = {RideID:rideId,UserID:userId,Thrill:thrill,Theme:theme,Length:length,Overall:overall,Review:review};
+    const result = db.collection('Reviews').insertOne(newReview);
+    error = "Rewiew added. Thank you!"
   }
 
   var ret = { error: error };
@@ -152,19 +156,68 @@ app.post('/api/addReview', async (req, res, next) =>
 app.post('/api/deleteReview', async (req, res, next) => 
 {
   // incoming: reviewId
-  // outgoing: error
+  // outgoing: log
 	
+  var log = "";
   const { reviewId } = req.body; // Assuming you send the review ID in the request body
 
   const db = client.db('COP4331Cards');
 
   // Find the review by its ID and delete it
-  const deleteResult = await db.collection('Reviews').deleteOne({ReviewID:reviewId});
+  const deleteResult = await db.collection('Reviews').deleteOne({_id:new ObjectId(reviewId)});
 
+  if(deleteResult.deletedCount > 0)
+  {
+    log = "Review deleted.";
+  }
+  else{
+    log = "Review doesn't exist."
+  }
   // Review was successfully deleted
-  var ret = { log: "Review deleted" };
+  var ret = { log:log };
   res.status(200).json(ret);
 
+});
+
+app.post('/api/avgScores', async (req, res, next) =>
+{
+  // incoming: rideId
+  // outgoing: thrillAvg, themeAvg, lengthAvg, overallAvg, error
+	
+  const { rideId } = req.body;
+	
+  var error = "";
+
+  const db = client.db('COP4331Cards');
+  const results = await db.collection('Reviews').find({RideID:rideId}).toArray();
+
+  // Initialize vars to 0
+  var thr=0;var the=0;var len=0; var ovr = 0;
+
+  var n = results.length;
+  if( n > 0 )
+  {
+    // Add totals
+    for(let i = 0; i < n; i++)
+    {
+      thr += parseInt(results[i].Thrill);
+      the += parseInt(results[i].Theme);
+      len += parseInt(results[i].Length);
+      ovr += parseInt(results[i].Overall);
+    }
+    // Average scores
+    thr /= n; the /= n; len /= n; ovr /= n;
+  }
+  else
+  {
+    error = "No reviews yet."
+  }
+
+  // Convert back to strings always rounded to 1 decimal place
+  thr = thr.toFixed(1); the = the.toFixed(1); len = len.toFixed(1); ovr = ovr.toFixed(1);
+
+  var ret = { thrillAvg:thr, themeAvg:the, lengthAvg:len, overallAvg:ovr, error:error};
+  res.status(200).json(ret);
 });
 
 })();
