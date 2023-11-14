@@ -89,8 +89,14 @@ app.post('/api/register', async (req, res, next) =>
   const db = client.db('COP4331Cards');
 
   // Set up auto increment user ID here
+  // Fetch the current maximum UserId
+  const maxUserIdResult = await db.collection('Users').find({}, { sort: { UserId: -1 }, limit: 1 }).toArray();
+  const currentMaxUserId = maxUserIdResult.length > 0 ? parseInt(maxUserIdResult[0].UserId) || 0 : 0;
 
-  var newAccount = {UserId:"4",FirstName:firstName, LastName:lastName, Email:email, Password:password};
+  // Calculate the next UserId
+  const newUserId = (parseInt(currentMaxUserId) + 1).toString();
+
+  var newAccount = {UserId:newUserId,FirstName:firstName, LastName:lastName, Email:email, Password:password};
   db.collection('Users').insertOne(newAccount);
 
   var ret = { log: "Account created" };
