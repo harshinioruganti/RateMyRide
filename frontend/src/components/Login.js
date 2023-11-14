@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+aiimport React, { useState } from 'react';
 import './Login.css';
 
 function Login()
 {
-    var loginEmail;
+    var loginName;
     var loginPassword;
 
     const [message,setMessage] = useState('');
