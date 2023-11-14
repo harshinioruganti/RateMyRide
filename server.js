@@ -80,8 +80,8 @@ app.post('/api/login', async (req, res, next) =>
 app.post('/api/register', async (req, res, next) => 
 {
   // incoming: firstName, lastName, email, password
-  // outgoing: error
-	
+  // outgoing: log
+
   var error = '';
 
   const { firstName, lastName, email, password } = req.body;
@@ -125,14 +125,14 @@ app.post('/api/addRide', async (req, res, next) =>
 
 app.post('/api/addReview', async (req, res, next) =>
 {
-  // incoming: rideId, userId, rating, review
+  // incoming: rideId, userId, thrill, theme, length, overall, review
   // outgoing: error
 	
-  const { rideId, userId, rating, review } = req.body;
+  const { rideId, userId, thrill, theme, length, overall, review } = req.body;
 
   // Need auto increment review ID here
 	
-  const newReview = {ReviewID:"6",RideID:rideId,UserId:userId,Rating:rating,Review:review};
+  const newReview = {ReviewID:"6",RideID:rideId,UserId:userId,Thrill:thrill,Theme:theme,Length:length,Overall:overall,Review:review};
   var error = '';
 
   try
