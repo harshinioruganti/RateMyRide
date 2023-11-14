@@ -49,12 +49,12 @@ if (process.env.NODE_ENV === 'production')
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
   });
 }
-	
+
 app.post('/api/login', async (req, res, next) => 
 {
   // incoming: email, password
   // outgoing: id, firstName, lastName, error
-	
+
  var error = '';
 
   const { email, password } = req.body;
@@ -68,7 +68,7 @@ app.post('/api/login', async (req, res, next) =>
 
   if( results.length > 0 )
   {
-    id = results[0]._id.toString();
+    id = results[0].ObjectId.toString()
     fn = results[0].FirstName;
     ln = results[0].LastName;
   }
