@@ -1,7 +1,7 @@
 .toggle-container {
     display: flex;
     justify-content: center;
-    margin-top: -5px; /* vertical positioning */
+    margin-top: 5px; /* vertical positioning */
   }
   
   .button {

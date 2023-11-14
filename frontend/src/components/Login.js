@@ -1,9 +1,9 @@
-aiimport React, { useState } from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 
 function Login()
 {
-    var loginName;
+    var loginEmail;
     var loginPassword;
 
     const [message,setMessage] = useState('');
@@ -20,8 +20,6 @@ function Login()
             return 'http://localhost:5055/' + route;
         }
     }
-
-
 
     const doLogin = async event => 
     {

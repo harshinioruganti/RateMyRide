@@ -1,6 +1,7 @@
 /* Header Styles */
 .header {
-  background-color: #3498db;
+  display: flex;
+  background-color: #fff;
   color: #fff;
   padding: 10px;
   display: flex;
