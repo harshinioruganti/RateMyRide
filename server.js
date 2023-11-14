@@ -68,7 +68,7 @@ app.post('/api/login', async (req, res, next) =>
 
   if( results.length > 0 )
   {
-    id = results[0].UserID;
+    id = results[0]._id;
     fn = results[0].FirstName;
     ln = results[0].LastName;
   }
