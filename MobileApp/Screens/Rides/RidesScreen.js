@@ -7,6 +7,7 @@ import Accordion from '../../Components/Accordion/Accordion';
 
 // Styles for Card
 import { CardStyle } from '../../Components/Cards/CardStyles';
+import SearchBarStyle from '../../Components/SearchBar/SearchBarStyle';
 
 export default RidesScreen = ({ navigation }) =>
 {
@@ -16,7 +17,9 @@ export default RidesScreen = ({ navigation }) =>
                 <Header />
                 {/* SearchBar  */}
                     <SearchBar 
-                        style={ CardStyle.searchBar }
+                        containerStyle={ SearchBarStyle.searchBar }
+                        leftSideContainerStyle={ SearchBarStyle.leftSideContainer }
+                        placeholder={ 'SEARCH THEMEPARK '}
                         onSearch={ () => console.log("Search btn clicked")}
                     />
                 {/* Accordion holding parks and rides*/}

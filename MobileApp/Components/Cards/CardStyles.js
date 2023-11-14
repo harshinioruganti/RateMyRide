@@ -7,15 +7,6 @@ export const CardStyle = StyleSheet.create({
         width: '100%',
         backgroundColor: '#171e2e',
     },
-    searchBar: {
-        display: 'flex',
-        flexDirection: 'row',
-        backgroundColor: '#fff',
-        width: 350,
-        height: 50,
-        margin: 30,
-        borderRadius: 15,
-    },
     themePark: {
         display: 'flex',
         flexDirection: 'row',
@@ -25,7 +16,10 @@ export const CardStyle = StyleSheet.create({
         width: 375,
         height: 100,
         borderRadius: 15,
-        margin: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 10,
+        marginBottom: 0,
     },
 })
 
