@@ -49,12 +49,12 @@ if (process.env.NODE_ENV === 'production')
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
   });
 }
-
+	
 app.post('/api/login', async (req, res, next) => 
 {
   // incoming: email, password
   // outgoing: id, firstName, lastName, error
-
+	
  var error = '';
 
   const { email, password } = req.body;
@@ -68,12 +68,12 @@ app.post('/api/login', async (req, res, next) =>
 
   if( results.length > 0 )
   {
-    id = results[0].ObjectId.toString()
+    id = results[0].UserId;
     fn = results[0].FirstName;
     ln = results[0].LastName;
   }
 
-  var ret = { userId:id, firstName:fn, lastName:ln, error:''};
+  var ret = { id:id, firstName:fn, lastName:ln, error:''};
   res.status(200).json(ret);
 });
 
@@ -90,10 +90,10 @@ app.post('/api/register', async (req, res, next) =>
 
   // Set up auto increment user ID here
 
-  var newAccount = {UserID:"4",FirstName:firstName, LastName:lastName, Email:email, Password:password};
+  var newAccount = {UserId:"4",FirstName:firstName, LastName:lastName, Email:email, Password:password};
   db.collection('Users').insertOne(newAccount);
 
-  var ret = { log: "Acount created" };
+  var ret = { log: "Account created" };
   res.status(200).json(ret);
 });
 
@@ -125,14 +125,14 @@ app.post('/api/addRide', async (req, res, next) =>
 
 app.post('/api/addReview', async (req, res, next) =>
 {
-  // incoming: rideId, userId, thrill, theme, length, overall, review
+  // incoming: rideId, userId, rating, review
   // outgoing: error
 	
-  const { rideId, userId, thrill, theme, length, overall, review } = req.body;
+  const { rideId, userId, rating, review } = req.body;
 
   // Need auto increment review ID here
 	
-  const newReview = {ReviewID:"6",RideID:rideId,UserID:userId,Thrill:thrill,Theme:theme,Length:length,Overall:overall,Review:review};
+  const newReview = {ReviewID:"6",RideID:rideId,UserId:userId,Rating:rating,Review:review};
   var error = '';
 
   try

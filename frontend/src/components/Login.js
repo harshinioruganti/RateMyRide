@@ -1,9 +1,9 @@
-aiimport React, { useState } from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 
 function Login()
 {
-    var loginName;
+    var loginEmail;
     var loginPassword;
 
     const [message,setMessage] = useState('');
@@ -37,13 +37,13 @@ function Login()
 
             var res = JSON.parse(await response.text());
 
-            if( res.userId == -1 )
+            if( res.id <= 0 )
             {
                 setMessage('Email/Password combination incorrect');
             }
             else
             {
-                var user = {FirstName:res.firstName,LastName:res.lastName,UserID:res.userId}
+                var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
                 localStorage.setItem('user_data', JSON.stringify(user));
 
                 setMessage('');
