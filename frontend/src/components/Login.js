@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+aiimport React, { useState } from 'react';
 import './Login.css';
 
 function Login()
@@ -27,7 +27,7 @@ function Login()
     {
         event.preventDefault();
 
-        var obj = {login:loginName.value,password:loginPassword.value};
+        var obj = {email:loginEmail.value,password:loginPassword.value};
         var js = JSON.stringify(obj);
 
         try
@@ -61,8 +61,8 @@ function Login()
         <div className="formBox">
         <form id="login" className="input-group">
             <span id="inner-title">Login</span><br />
-            <input type="text" id="loginUsername" placeholder="Email"
-                required ref={(c) => loginName = c}/><br />
+            <input type="text" id="loginEmail" placeholder="Email"
+                required ref={(c) => loginEmail = c}/><br />
             <input type="password" id="loginPassword" placeholder="Password" required
                 ref={(c) => loginPassword = c}/><br />
             <button type="button" id="loginButton" className="buttons" value = "Login"
