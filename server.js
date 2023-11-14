@@ -264,7 +264,7 @@ app.post('/api/avgScores', async (req, res, next) =>
   res.status(200).json(ret);
 });
 
-app.get('/api/getAllThemeParks', async (req, res, next) => {
+app.post('/api/getAllThemeParks', async (req, res, next) => {
   const db = client.db('COP4331Cards');
   const themeParks = await db.collection('ThemeParks').find({}).toArray();
 
@@ -282,6 +282,7 @@ app.get('/api/getAllThemeParks', async (req, res, next) => {
     res.status(404).json({ themeParks: [], error: 'No theme parks found.' });
   }
 });
+
 
 
 })();
