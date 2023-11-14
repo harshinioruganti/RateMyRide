@@ -264,4 +264,24 @@ app.post('/api/avgScores', async (req, res, next) =>
   res.status(200).json(ret);
 });
 
+app.get('/api/getAllThemeParks', async (req, res, next) => {
+  const db = client.db('COP4331Cards');
+  const themeParks = await db.collection('ThemeParks').find({}).toArray();
+
+  if (themeParks.length > 0) {
+    const mappedThemeParks = themeParks.map(themePark => ({
+      themeParkId: themePark._id,
+      themePark: themePark.ThemePark,
+      city: themePark.City,
+      state: themePark.State,
+      // Add other fields as needed
+    }));
+
+    res.status(200).json(mappedThemeParks);
+  } else {
+    res.status(404).json({ themeParks: [], error: 'No theme parks found.' });
+  }
+});
+
+
 })();
