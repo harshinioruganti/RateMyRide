@@ -3,7 +3,7 @@ import './Login.css';
 
 function Login()
 {
-    var loginName;
+    var loginEmail;
     var loginPassword;
 
     const [message,setMessage] = useState('');
