@@ -73,7 +73,7 @@ app.post('/api/login', async (req, res, next) =>
     ln = results[0].LastName;
   }
 
-  var ret = { userId:_id, firstName:fn, lastName:ln, error:''};
+  var ret = { userId:id, firstName:fn, lastName:ln, error:''};
   res.status(200).json(ret);
 });
 
@@ -89,12 +89,11 @@ app.post('/api/register', async (req, res, next) =>
   const db = client.db('COP4331Cards');
 
   // Set up auto increment user ID here
-  const userId = new ObjectId();
 
-  var newAccount = {_id:userId,FirstName:firstName, LastName:lastName, Email:email, Password:password};
+  var newAccount = {UserID:"4",FirstName:firstName, LastName:lastName, Email:email, Password:password};
   db.collection('Users').insertOne(newAccount);
 
-  var ret = { log: "Account created" };
+  var ret = { log: "Acount created" };
   res.status(200).json(ret);
 });
 
