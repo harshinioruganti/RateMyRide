@@ -126,8 +126,8 @@ app.post('/api/searchRide', async (req, res, next) => {
   const { rideName } = req.body;
   const db = client.db('COP4331Cards');
 
-  let rides = [];
-  let error = '';
+  var rides = [];
+  var error = '';
 
   const results = await db.collection('Rides').find({ Ride: rideName }).toArray();
 
@@ -136,14 +136,15 @@ app.post('/api/searchRide', async (req, res, next) => {
       rideName: ride.Ride,
       description: ride.Description,
       themeParkId: ride.ThemeParkID,
-      rideId: ride._id // Optionally include the ride ID in the response
+      rideId: ride._id, // Optionally include the ride ID in the response
+      error: error
     }));
   } 
   else {
     error = 'No rides found with the specified name.';
   }
 
-  res.status(200).json({ rides, error });
+  res.status(200).json({ rides });
 });
 
 
@@ -265,22 +266,30 @@ app.post('/api/avgScores', async (req, res, next) =>
 });
 
 app.post('/api/getAllThemeParks', async (req, res, next) => {
+  var error = "";
+
   const db = client.db('COP4331Cards');
   const themeParks = await db.collection('ThemeParks').find({}).toArray();
 
-  if (themeParks.length > 0) {
+  if (themeParks.length > 0) 
+  {
     const mappedThemeParks = themeParks.map(themePark => ({
       themeParkId: themePark._id,
       themePark: themePark.ThemePark,
       city: themePark.City,
       state: themePark.State,
+      error: error
       // Add other fields as needed
     }));
 
-    res.status(200).json(mappedThemeParks);
-  } else {
-    res.status(404).json({ themeParks: [], error: 'No theme parks found.' });
+    
+  } 
+  else
+  {
+    error = "No theme parks found."
   }
+
+  res.status(200).json(mappedThemeParks);
 });
 
 
