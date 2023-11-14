@@ -125,14 +125,13 @@ app.post('/api/searchRide', async (req, res, next) => {
       themeParkId: ride.ThemeParkID,
       rideId: ride._id // Optionally include the ride ID in the response
     }));
-  } else {
+  } 
+  else {
     error = 'No rides found with the specified name.';
   }
 
   res.status(200).json({ rides, error });
 });
-
-
 
 
 app.post('/api/addRide', async (req, res, next) =>
@@ -174,7 +173,8 @@ app.post('/api/addReview', async (req, res, next) =>
   {
     error = "You have already reveiwed this ride! Either edit existing review or delete it before creating a new one."
   }
-  else{
+  else
+  {
     const newReview = {RideID:rideId,UserID:userId,Thrill:thrill,Theme:theme,Length:length,Overall:overall,Review:review};
     const result = db.collection('Reviews').insertOne(newReview);
     error = "Rewiew added. Thank you!"
