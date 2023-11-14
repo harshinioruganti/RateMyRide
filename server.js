@@ -105,6 +105,36 @@ app.post('/api/register', async (req, res, next) =>
   res.status(200).json(ret);
 });
 
+app.post('/api/search', async (req, res, next) => {
+  
+  // incoming: rideName
+  // outgoing: rides, error
+
+  const { rideName } = req.body;
+  const db = client.db('COP4331Cards');
+
+  let rides = [];
+  let error = '';
+
+  const results = await db.collection('Rides').find({ Ride: rideName }).toArray();
+
+  if (results.length > 0) {
+    rides = results.map(ride => ({
+      rideName: ride.Ride,
+      description: ride.Description,
+      themeParkId: ride.ThemeParkID,
+      rideId: ride._id // Optionally include the ride ID in the response
+    }));
+  } else {
+    error = 'No rides found with the specified name.';
+  }
+
+  res.status(200).json({ rides, error });
+});
+
+
+
+
 app.post('/api/addRide', async (req, res, next) =>
 {
   // incoming: rideName, description, themeParkId
@@ -128,6 +158,7 @@ app.post('/api/addRide', async (req, res, next) =>
   var ret = { error: error };
   res.status(200).json(ret);
 });
+
 
 app.post('/api/addReview', async (req, res, next) =>
 {
