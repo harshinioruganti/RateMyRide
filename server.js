@@ -52,15 +52,15 @@ if (process.env.NODE_ENV === 'production')
 	
 app.post('/api/login', async (req, res, next) => 
 {
-  // incoming: login, password
+  // incoming: email, password
   // outgoing: id, firstName, lastName, error
 	
  var error = '';
 
-  const { login, password } = req.body;
+  const { email, password } = req.body;
 
   const db = client.db('COP4331Cards');
-  const results = await db.collection('Users').find({Login:login,Password:password}).toArray();
+  const results = await db.collection('Users').find({Email:email,Password:password}).toArray();
 
   var id = -1;
   var fn = '';
@@ -68,29 +68,29 @@ app.post('/api/login', async (req, res, next) =>
 
   if( results.length > 0 )
   {
-    id = results[0].UserId;
+    id = results[0].UserID;
     fn = results[0].FirstName;
     ln = results[0].LastName;
   }
 
-  var ret = { id:id, firstName:fn, lastName:ln, error:''};
+  var ret = { userId:id, firstName:fn, lastName:ln, error:''};
   res.status(200).json(ret);
 });
 
 app.post('/api/register', async (req, res, next) => 
 {
-  // incoming: firstName, lastName, login, password
+  // incoming: firstName, lastName, email, password
   // outgoing: error
 	
   var error = '';
 
-  const { firstName, lastName, login, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
 
   const db = client.db('COP4331Cards');
 
   // Set up auto increment user ID here
 
-  var newAccount = {UserId:"4",FirstName:firstName, LastName:lastName, Login:login, Password:password};
+  var newAccount = {UserID:"4",FirstName:firstName, LastName:lastName, Email:email, Password:password};
   db.collection('Users').insertOne(newAccount);
 
   var ret = { log: "Acount created" };
@@ -125,14 +125,14 @@ app.post('/api/addRide', async (req, res, next) =>
 
 app.post('/api/addReview', async (req, res, next) =>
 {
-  // incoming: rideId, userId, rating, review
+  // incoming: rideId, userId, thrill, theme, length, overall, review
   // outgoing: error
 	
-  const { rideId, userId, rating, review } = req.body;
+  const { rideId, userId, thrill, theme, length, overall, review } = req.body;
 
   // Need auto increment review ID here
 	
-  const newReview = {ReviewID:"6",RideID:rideId,UserId:userId,Rating:rating,Review:review};
+  const newReview = {ReviewID:"6",RideID:rideId,UserID:userId,Thrill:thrill,Theme:theme,Length:length,Overall:overall,Review:review};
   var error = '';
 
   try
