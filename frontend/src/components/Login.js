@@ -37,7 +37,7 @@ function Login()
 
             var res = JSON.parse(await response.text());
 
-            if( res.id <= 0 )
+            if( res.userId == -1 )
             {
                 setMessage('Email/Password combination incorrect');
             }
