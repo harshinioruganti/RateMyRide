@@ -1,9 +1,9 @@
-aiimport React, { useState } from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 
 function Login()
 {
-    var loginName;
+    var loginEmail;
     var loginPassword;
 
     const [message,setMessage] = useState('');
@@ -63,8 +63,8 @@ function Login()
             <span id="inner-title">Login</span><br />
             <input type="text" id="loginEmail" placeholder="Email"
                 required ref={(c) => loginEmail = c}/><br />
-            <input type="password" id="loginPassword" placeholder="Password" required
-                ref={(c) => loginPassword = c}/><br />
+            <input type="password" id="loginPassword" placeholder="Password"
+                required ref={(c) => loginPassword = c}/><br />
             <button type="button" id="loginButton" className="buttons" value = "Login"
                 onClick={doLogin}>Login</button>
         </form>
