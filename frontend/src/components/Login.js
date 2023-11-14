@@ -39,7 +39,7 @@ function Login()
 
             if( res.id <= 0 )
             {
-                setMessage('User/Password combination incorrect');
+                setMessage('Email/Password combination incorrect');
             }
             else
             {
@@ -47,7 +47,7 @@ function Login()
                 localStorage.setItem('user_data', JSON.stringify(user));
 
                 setMessage('');
-                window.location.href = '/cards';
+                window.location.href = '/home';
             }
         }
         catch(e)
@@ -61,7 +61,7 @@ function Login()
         <div className="formBox">
         <form id="login" className="input-group">
             <span id="inner-title">Login</span><br />
-            <input type="text" id="loginUsername" placeholder="Username"
+            <input type="text" id="loginUsername" placeholder="Email"
                 required ref={(c) => loginName = c}/><br />
             <input type="password" id="loginPassword" placeholder="Password" required
                 ref={(c) => loginPassword = c}/><br />
