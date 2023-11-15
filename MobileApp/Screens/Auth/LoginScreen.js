@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // Components
-import ReusableAuthForm from "../../Components/Form/ReusableAuthForm";
+import ReusableAuthForm from "./Components/ReusableAuthForm";
 
 const URL = 'https://cop4331-ratemyride-fd93630d9ccb.herokuapp.com/'
 

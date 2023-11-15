@@ -3,14 +3,13 @@ import React from 'react';
 import Card from '../../Components/Cards/Card';
 import Header from '../../Components/Header/Header';
 import SearchBar from '../../Components/SearchBar/SearchBar';
-import Accordion from '../../Components/Accordion/Accordion';
+import Accordion from './Components/Accordion/Accordion';
 
 // Styles for Card
 import { CardStyle } from '../../Components/Cards/CardStyles';
 import SearchBarStyle from '../../Components/SearchBar/SearchBarStyle';
 
-export default RidesScreen = ({ navigation }) =>
-{
+export default RidesScreen = ({ navigation }) => {
     return (        
             <Card styles={ CardStyle.background }>
                 {/* Header  */}
@@ -22,7 +21,7 @@ export default RidesScreen = ({ navigation }) =>
                         placeholder={ 'SEARCH THEMEPARK '}
                         onSearch={ () => console.log("Search btn clicked")}
                     />
-                {/* Accordion holding parks and rides*/}
+                {/* Holds main code for the apps functionality*/}
                 <Accordion />
             </Card>
     )

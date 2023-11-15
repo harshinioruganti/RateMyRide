@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { rides } from "../../../tests";
+import { rides } from "../../../../../tests";
 // Components
 import RidesList from '../Rides/RideList';
-import SearchBar from '../../SearchBar/SearchBar';
+import SearchBar from '../../../../../Components/SearchBar/SearchBar';
 // Style
-import SearchBarStyle from "../../SearchBar/SearchBarStyle";
+import SearchBarStyle from "../../../../../Components/SearchBar/SearchBarStyle";
 
 const ThemeParkItem = ({ item, index }) => {
     // Handle park click (reveals the rides)
@@ -16,7 +16,6 @@ const ThemeParkItem = ({ item, index }) => {
 
     const handleThemeParkPress = () => {
         setActivePark(!activePark);
-
     }
 
     return (

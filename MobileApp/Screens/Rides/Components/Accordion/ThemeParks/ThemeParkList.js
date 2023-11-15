@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList } from "react-native";
 import ThemeParkItem from "./ThemeParkItem";
-import { themeParks } from "../../../tests";
+import { themeParks } from "../../../../../tests";
 
 const ThemeParkList = () => {
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Axios from 'axios';
 
 // Components
-import ReusableAuthForm from '../../Components/Form/ReusableAuthForm';
+import ReusableAuthForm from "./Components/ReusableAuthForm";
 
 const URL = 'https://ratemyride-3b8d03447308.herokuapp.com/'
 
