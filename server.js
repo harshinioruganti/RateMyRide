@@ -89,7 +89,7 @@ app.post('/api/register', async (req, res, next) =>
 
   const db = client.db('COP4331Cards');
 
-  /* // Set up auto increment user ID here
+  /*
   // Fetch the current maximum UserId
   const maxUserIdResult = await db.collection('Users').find({}, { sort: { UserId: -1 }, limit: 1 }).toArray();
   const currentMaxUserId = maxUserIdResult.length > 0 ? parseInt(maxUserIdResult[0].UserId) || 0 : 0;
@@ -178,19 +178,19 @@ app.post('/api/addReview', async (req, res, next) =>
   // outgoing: error
 	
   const { rideId, userId, thrill, theme, length, overall, review } = req.body;
-	var error = '';
+  var error = '';
 
   const db = client.db('COP4331Cards');
   const results = await db.collection('Reviews').find({RideID:rideId,UserID:userId}).toArray();
   if(results.length > 0)
   {
-    error = "You have already reveiwed this ride! Either edit existing review or delete it before creating a new one."
+    error = "You have already reveiwed this ride! Either edit existing review or delete it before creating a new one.";
   }
   else
   {
     const newReview = {RideID:rideId,UserID:userId,Thrill:thrill,Theme:theme,Length:length,Overall:overall,Review:review};
     const result = db.collection('Reviews').insertOne(newReview);
-    error = "Rewiew added. Thank you!"
+    error = "Rewiew added. Thank you!";
   }
 
   var ret = { error: error };
@@ -215,7 +215,7 @@ app.post('/api/deleteReview', async (req, res, next) =>
     log = "Review deleted.";
   }
   else{
-    log = "Review doesn't exist."
+    log = "Review doesn't exist.";
   }
   // Review was successfully deleted
   var ret = { log:log };
@@ -265,6 +265,8 @@ app.post('/api/avgScores', async (req, res, next) =>
 });
 
 app.get('/api/getAllThemeParks', async (req, res, next) => {
+  // incoming: 
+  // outgoing: allThemeParks, log
   const db = client.db('COP4331Cards');
   const themeParks = await db.collection('ThemeParks').find({}).toArray();
 
@@ -277,9 +279,12 @@ app.get('/api/getAllThemeParks', async (req, res, next) => {
       // Add other fields as needed
     }));
 
-    res.status(200).json(mappedThemeParks);
-  } else {
-    res.status(404).json({ themeParks: [], error: 'No theme parks found.' });
+    var ret = { allThemeParks:mappedThemeParks, log:log};
+    res.status(200).json(ret);
+  } 
+  else{
+    var ret = { log:log };
+    res.status(200).json(ret);
   }
 });
 
