@@ -6,9 +6,8 @@ function Register()
 
   var registerFirstName;
   var registerLastName;
-  var registerLogin;
-  var registerPassword;
   var registerEmail;
+  var registerPassword;
 
   const [message,setMessage] = useState('');
 
@@ -29,7 +28,7 @@ function Register()
   {
       event.preventDefault();
 
-      var obj = {firstName:registerFirstName.value,lastName:registerLastName.value,login:registerLogin.value,password:registerPassword.value};
+      var obj = {firstName:registerFirstName.value,lastName:registerLastName.value,email:registerEmail.value,password:registerPassword.value};
       var js = JSON.stringify(obj);
 
       try
@@ -67,12 +66,10 @@ function Register()
           ref={(c) => registerFirstName = c}/>
         <input name="lastName" type="text" placeholder="Last Name"
           ref={(c) => registerLastName = c}/>
-        <input name="username" type="text" placeholder="Username"
-          ref={(c) => registerLogin = c}/>
-        <input name="password" type="password" placeholder="Password"
-          ref={(c) => registerPassword = c}/>
         <input name="email" type="email" placeholder="Email"
           ref={(c) => registerEmail = c}/>
+        <input name="password" type="password" placeholder="Password"
+          ref={(c) => registerPassword = c}/>
         <button name="registerButton" type="button" className="buttons" value="Register"
           onClick={doRegister}>Register</button>
       </form>

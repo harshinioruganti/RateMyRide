@@ -3,7 +3,7 @@ import './Login.css';
 
 function Login()
 {
-    var loginName;
+    var loginEmail;
     var loginPassword;
 
     const [message,setMessage] = useState('');
@@ -21,13 +21,11 @@ function Login()
         }
     }
 
-
-
     const doLogin = async event => 
     {
         event.preventDefault();
 
-        var obj = {login:loginName.value,password:loginPassword.value};
+        var obj = {email:loginEmail.value,password:loginPassword.value};
         var js = JSON.stringify(obj);
 
         try
@@ -39,7 +37,7 @@ function Login()
 
             if( res.id <= 0 )
             {
-                setMessage('User/Password combination incorrect');
+                setMessage('Email/Password combination incorrect');
             }
             else
             {
@@ -47,7 +45,7 @@ function Login()
                 localStorage.setItem('user_data', JSON.stringify(user));
 
                 setMessage('');
-                window.location.href = '/cards';
+                window.location.href = '/theme-parks';
             }
         }
         catch(e)
@@ -61,8 +59,8 @@ function Login()
         <div className="formBox">
         <form id="login" className="input-group">
             <span id="inner-title">Login</span><br />
-            <input type="text" id="loginUsername" placeholder="Username"
-                required ref={(c) => loginName = c}/><br />
+            <input type="text" id="loginEmail" placeholder="Email"
+                required ref={(c) => loginEmail = c}/><br />
             <input type="password" id="loginPassword" placeholder="Password" required
                 ref={(c) => loginPassword = c}/><br />
             <button type="button" id="loginButton" className="buttons" value = "Login"
