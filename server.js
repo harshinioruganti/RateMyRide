@@ -267,6 +267,7 @@ app.post('/api/avgScores', async (req, res, next) =>
 app.get('/api/getAllThemeParks', async (req, res, next) => {
   // incoming: 
   // outgoing: allThemeParks, log
+  var log = "";
   const db = client.db('COP4331Cards');
   const themeParks = await db.collection('ThemeParks').find({}).toArray();
 
@@ -278,11 +279,12 @@ app.get('/api/getAllThemeParks', async (req, res, next) => {
       state: themePark.State,
       // Add other fields as needed
     }));
-
+    log = "Success.";
     var ret = { allThemeParks:mappedThemeParks, log:log};
     res.status(200).json(ret);
   } 
   else{
+    log = "No theme parks found.";
     var ret = { log:log };
     res.status(200).json(ret);
   }
