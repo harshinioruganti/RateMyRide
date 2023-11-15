@@ -89,7 +89,6 @@ app.post('/api/register', async (req, res, next) =>
 
   const db = client.db('COP4331Cards');
 
-  /* // Set up auto increment user ID here
   // Fetch the current maximum UserId
   const maxUserIdResult = await db.collection('Users').find({}, { sort: { UserId: -1 }, limit: 1 }).toArray();
   const currentMaxUserId = maxUserIdResult.length > 0 ? parseInt(maxUserIdResult[0].UserId) || 0 : 0;
@@ -118,6 +117,35 @@ app.post('/api/register', async (req, res, next) =>
   res.status(200).json(ret);
 });
 
+app.post('/api/searchRide', async (req, res, next) => {
+
+  // incoming: rideName
+  // outgoing: rides, error
+
+  const { rideName } = req.body;
+  const db = client.db('COP4331Cards');
+
+  let rides = [];
+  let error = '';
+
+  const results = await db.collection('Rides').find({ Ride: rideName }).toArray();
+
+  if (results.length > 0) {
+    rides = results.map(ride => ({
+      rideName: ride.Ride,
+      description: ride.Description,
+      themeParkId: ride.ThemeParkID,
+      rideId: ride._id // Optionally include the ride ID in the response
+    }));
+  } 
+  else {
+    error = 'No rides found with the specified name.';
+  }
+
+  res.status(200).json({ rides, error });
+});
+
+
 app.post('/api/addRide', async (req, res, next) =>
 {
   // incoming: rideName, description, themeParkId
@@ -142,24 +170,26 @@ app.post('/api/addRide', async (req, res, next) =>
   res.status(200).json(ret);
 });
 
+
 app.post('/api/addReview', async (req, res, next) =>
 {
   // incoming: rideId, userId, thrill, theme, length, overall, review
   // outgoing: error
 	
   const { rideId, userId, thrill, theme, length, overall, review } = req.body;
-	var error = '';
+  var error = '';
 
   const db = client.db('COP4331Cards');
   const results = await db.collection('Reviews').find({RideID:rideId,UserID:userId}).toArray();
   if(results.length > 0)
   {
-    error = "You have already reveiwed this ride! Either edit existing review or delete it before creating a new one."
+    error = "You have already reveiwed this ride! Either edit existing review or delete it before creating a new one.";
   }
-  else{
+  else
+  {
     const newReview = {RideID:rideId,UserID:userId,Thrill:thrill,Theme:theme,Length:length,Overall:overall,Review:review};
     const result = db.collection('Reviews').insertOne(newReview);
-    error = "Rewiew added. Thank you!"
+    error = "Rewiew added. Thank you!";
   }
 
   var ret = { error: error };
@@ -184,7 +214,7 @@ app.post('/api/deleteReview', async (req, res, next) =>
     log = "Review deleted.";
   }
   else{
-    log = "Review doesn't exist."
+    log = "Review doesn't exist.";
   }
   // Review was successfully deleted
   var ret = { log:log };
@@ -234,6 +264,9 @@ app.post('/api/avgScores', async (req, res, next) =>
 });
 
 app.get('/api/getAllThemeParks', async (req, res, next) => {
+  // incoming: 
+  // outgoing: allThemeParks, log
+  var log = "";
   const db = client.db('COP4331Cards');
   const themeParks = await db.collection('ThemeParks').find({}).toArray();
 
@@ -245,26 +278,16 @@ app.get('/api/getAllThemeParks', async (req, res, next) => {
       state: themePark.State,
       // Add other fields as needed
     }));
-
-    res.status(200).json(mappedThemeParks);
-  } else {
-    res.status(404).json({ themeParks: [], error: 'No theme parks found.' });
+    log = "Success.";
+    var ret = { allThemeParks:mappedThemeParks, log:log};
+    res.status(200).json(ret);
+  } 
+  else{
+    log = "No theme parks found.";
+    var ret = { log:log };
+    res.status(200).json(ret);
   }
 });
 
-app.get('/api/rides/:themeParkId', async (req, res) => {
-  try {
-    const { themeParkId } = req.params;
-    const rides = await db.collection('Rides').find({ themeParkId }).toArray(); // Fetch rides with the given themeParkId
-
-    if (rides.length > 0) {
-      res.status(200).json(rides);
-    } else {
-      res.status(404).json({ rides: [], error: 'No rides found for this theme park.' });
-    }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 })();
