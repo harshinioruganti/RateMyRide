@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './LoginPage.css';
+import './css/LoginPage.css';
 
 import PageTitle from '../components/PageTitle';
-import Login from '../components/Login';
-import Register from '../components/Register';
+import Login from '../components/Login/Login';
+import Register from '../components/Register/Register';
 
 const LoginPage = () =>
 {

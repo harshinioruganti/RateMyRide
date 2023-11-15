@@ -21,8 +21,6 @@ function Login()
         }
     }
 
-
-
     const doLogin = async event => 
     {
         event.preventDefault();
@@ -47,7 +45,7 @@ function Login()
                 localStorage.setItem('user_data', JSON.stringify(user));
 
                 setMessage('');
-                window.location.href = '/home';
+                window.location.href = '/theme-parks';
             }
         }
         catch(e)
