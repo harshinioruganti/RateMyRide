@@ -276,7 +276,7 @@ app.get('/api/getAllThemeParks', async (req, res, next) => {
       themeParkId: themePark._id,
       themePark: themePark.ThemePark,
       city: themePark.City,
-      state: themePark.State,
+      state: themePark.State
       // Add other fields as needed
     }));
     log = "Success.";
