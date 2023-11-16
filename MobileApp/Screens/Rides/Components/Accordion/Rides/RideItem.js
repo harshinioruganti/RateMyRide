@@ -17,6 +17,7 @@ const RenderRide = ({ item, backgroundColor }) => {
                 toggleModal={ setModal }
                 isVisible={ modal }
                 rideInfo={ item }
+                backgroundColor={ backgroundColor }
             />
             {/* LIST OF RIDES FOR THE PARK */}
             <TouchableOpacity style={{ flex: 1 }} activeOpacity={ 0.7 } onPress={ handleModal }>

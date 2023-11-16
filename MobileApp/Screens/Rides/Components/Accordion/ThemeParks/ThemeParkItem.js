@@ -12,7 +12,9 @@ const ThemeParkItem = ({ item, index }) => {
     // Handle park click (reveals the rides)
     const [activePark, setActivePark] = useState(false);
 
-    const backgroundColor = index % 3 === 0 ? '#fc7324' : index % 3 === 1 ? '#58ad93' : '#2fb4c2';
+    // const backgroundColor = index % 3 === 0 ? '#fc7324' : index % 3 === 1 ? '#58ad93' : '#2fb4c2';
+    const backgroundColor = index % 3 === 0 ? '#78c2e2' : index % 3 === 1 ? '#6eb476' : '#faefc2';
+
 
     const handleThemeParkPress = () => {
         setActivePark(!activePark);
@@ -64,7 +66,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#fff',
         width: 375,
         height: 100,
         borderRadius: 15,

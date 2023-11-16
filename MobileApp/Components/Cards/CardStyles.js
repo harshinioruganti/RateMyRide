@@ -5,7 +5,7 @@ export const CardStyle = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         width: '100%',
-        backgroundColor: '#171e2e',
+        backgroundColor: '#141c22',
     },
     themePark: {
         display: 'flex',

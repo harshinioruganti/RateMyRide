@@ -7,7 +7,7 @@ import CustomTextInput from '../Input/CustomTextInput';
 import TouchableIconButton from "../Button/TouchableIconButton";
 import { View } from "react-native";
 
-export default SearchBar = ({ containerStyle, leftSideContainerStyle, onSearch, placeholder }) => {
+const SearchBar = ({ containerStyle, leftSideContainerStyle, onSearch, placeholder }) => {
     const [search, setSearch] = useState('');
 
     // update state
@@ -33,3 +33,5 @@ export default SearchBar = ({ containerStyle, leftSideContainerStyle, onSearch, 
             </View>
     )
 }
+
+export default SearchBar;
