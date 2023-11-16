@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import '../App.css';
 import './Register.css';
 
 function Register()
 {
+
+  let bp = require('./Path.js');
 
   var registerFirstName;
   var registerLastName;
@@ -10,19 +13,6 @@ function Register()
   var registerPassword;
 
   const [message,setMessage] = useState('');
-
-  const app_name = 'ratemyride-3b8d03447308'
-  function buildPath(route)
-  {
-    if (process.env.NODE_ENV === 'production') 
-    {
-        return 'https://' + app_name +  '.herokuapp.com/' + route;
-    }
-    else
-    {        
-        return 'http://localhost:5055/' + route;
-    }
-  }
 
   const doRegister = async event => 
   {
@@ -33,28 +23,26 @@ function Register()
 
       try
       {    
-          const response = await fetch(buildPath('api/register'),
+          const response = await fetch(bp.buildPath('api/register'),
               {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
           var res = JSON.parse(await response.text());
 
-          if( res.id <= 0 )
+          if( res.error.length > 0 )
           {
-              setMessage('Account not created');
+              setMessage('Account not created:' + res.error);
           }
           else
           {
               /*var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
-              localStorage.setItem('user_data', JSON.stringify(user));
+              localStorage.setItem('user_data', JSON.stringify(user));*/
 
-              setMessage('');
-              window.location.href = '/cards';*/
+              setMessage('User has been added, Please check your email to verify your account');
           }
       }
       catch(e)
       {
-          alert(e.toString());
-          return;
+          setMessage(e.toString())
       }    
   };
 

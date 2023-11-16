@@ -4,7 +4,6 @@ import './App.css';
 
 import LoginPage from './pages/LoginPage';
 import ThemeParkPage from './pages/ThemeParkPage';
-import RideListPage from './pages/RideListPage';
 import RideDetailsPage from './pages/RideDetailsPage';
 
 function App() {
@@ -13,7 +12,6 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/theme-parks" element={<ThemeParkPage />} />
-        <Route path="/rides/:themeParkId" element={<RideListPage />} />
         <Route path="/rides/:themeParkId/description/:rideId" element={<RideDetailsPage />} />
       </Routes>
     </BrowserRouter>

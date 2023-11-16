@@ -7,25 +7,11 @@ const RideDetailsPage = ({ match }) => {
 
   const rideId = match.params.rideId; // Assuming the rideId is obtained from the route params
 
-  useEffect(() => {
-    // Fetch ride details from backend API using rideId
-    fetch(`/api/rides/${rideId}/details`)
-      .then(response => response.json())
-      .then(data => setRideDetails(data))
-      .catch(error => console.error('Error fetching ride details:', error));
+  // Fetch ride details from backend API using rideId
 
-    // Fetch reviews for the ride from backend API
-    fetch(`/api/reviews/${rideId}`)
-      .then(response => response.json())
-      .then(data => setReviews(data))
-      .catch(error => console.error('Error fetching reviews:', error));
+  // Fetch reviews for the ride from backend API
 
-    // Fetch average rating for the ride from backend API
-    fetch(`/api/rides/${rideId}/avgRating`)
-      .then(response => response.json())
-      .then(data => setAvgRating(data.avgRating))
-      .catch(error => console.error('Error fetching average rating:', error));
-  }, [rideId]);
+  // Fetch average rating for the ride from backend API
 
   return (
     <div>
@@ -51,6 +37,6 @@ const RideDetailsPage = ({ match }) => {
       <p>Average Rating: {avgRating}</p>
     </div>
   );
-};
+}
 
 export default RideDetailsPage;
