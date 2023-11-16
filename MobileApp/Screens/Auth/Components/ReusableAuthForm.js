@@ -2,20 +2,20 @@ import React from "react";
 import { ImageBackground } from 'react-native';
 
 // Styling
-import AuthStyling from "../../Screens/Auth/AuthStyling";
-import KeyBoardAvoidWrapper from "../Keyboard/KeyBoardAvoiderWrapper";
+import AuthStyling from "../AuthStyling";
+import KeyBoardAvoidWrapper from "../../../Components/Keyboard/KeyBoardAvoiderWrapper";
 
 // Components
-import CustomTextInput from "../Input/CustomTextInput";
-import TouchableTextButton from "../Button/TouchableTextButton";
-import Card from "../Cards/Card";
-import NavigationButton from '../Button/NavigationButton';
+import CustomTextInput from "../../../Components/Input/CustomTextInput";
+import TouchableTextButton from "../../../Components/Button/TouchableTextButton";
+import Card from "../../../Components/Cards/Card";
+import NavigationButton from '../../../Components/Button/NavigationButton';
 
 const ReusableAuthForm = ({ inputFields, mainForm, altForm, updateFormData, onFormSubmit }) => {
     
     return (
         <ImageBackground
-            source={ require('../../assets/Img/RegisterLoginBackground.jpg') }
+            source={ require('../../../assets/Img/RegisterLoginBackground.jpg') }
             style={ AuthStyling.background }
         >
             <KeyBoardAvoidWrapper>

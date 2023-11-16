@@ -3,12 +3,11 @@ import React, { useState } from "react";
 // Style imports
 import SearchBarStyle from "./SearchBarStyle";
 
-// Components
-import Card from "../Cards/Card";
 import CustomTextInput from '../Input/CustomTextInput';
 import TouchableIconButton from "../Button/TouchableIconButton";
+import { View } from "react-native";
 
-export default SearchBar = ({ onSearch, style }) => {
+const SearchBar = ({ containerStyle, leftSideContainerStyle, onSearch, placeholder }) => {
     const [search, setSearch] = useState('');
 
     // update state
@@ -16,15 +15,12 @@ export default SearchBar = ({ onSearch, style }) => {
 
     return (
             // Styles for Card is CardStyle.searchBar
-            <Card styles={ style }>
-                {/* Style for textInput view container is SearchBar.leftSideContainer  */}
-                {/* Style for textInput is SearchBarStyle.input  */}
-                {/* Style for icon is SearchBarStyle.icon  */}
+            <View style={ containerStyle }>
                 <CustomTextInput 
-                    viewStyle={ SearchBarStyle.leftSideContainer }
+                    viewStyle={ leftSideContainerStyle }
                     inputStyle={ SearchBarStyle.input }
-                    inputType={ 'text' }
-                    placeHolder={ 'SEARCH' }
+                    inputType={ 'default' }
+                    placeHolder={ placeholder }
                     onChangeText={ onChangeSearch }
                     value={ search }
                 />
@@ -34,6 +30,8 @@ export default SearchBar = ({ onSearch, style }) => {
                     icon={ 'search' }
                     iconSize={ 45 }
                 />
-            </Card>
+            </View>
     )
 }
+
+export default SearchBar;

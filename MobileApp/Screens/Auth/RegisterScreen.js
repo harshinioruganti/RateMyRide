@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Axios from 'axios';
 
 // Components
-import ReusableAuthForm from '../../Components/Form/ReusableAuthForm';
+import ReusableAuthForm from "./Components/ReusableAuthForm";
 
 const URL = 'https://ratemyride-3b8d03447308.herokuapp.com/'
 
@@ -20,13 +20,13 @@ export default RegisterScreen = ({ navigation }) => {
         {
             placeholder: 'First Name',
             value: formData.firstName,
-            inputType: 'text',
+            inputType: 'default',
             name: 'firstName',
         },
         {
             placeholder: 'Last Name',
             value: formData.lastName,
-            inputType: 'text',
+            inputType: 'default',
             name: 'lastName',
         },
         {
@@ -38,7 +38,7 @@ export default RegisterScreen = ({ navigation }) => {
         {
             placeholder: 'Username',
             value: formData.login,
-            inputType: 'text',
+            inputType: 'default',
             name: 'login',
         },
         {
