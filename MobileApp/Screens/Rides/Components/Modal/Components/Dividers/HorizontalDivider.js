@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-const HorizontalDivider = ({ color, height }) => {
+const HorizontalDivider = ({ height }) => {
     return (
-        <View style={[styles.divider, { borderBottomColor: color || '#EAEAEA', borderBottomWidth: height || 1 }]} />
+        <View style={[styles.divider, { borderBottomColor: 'black', borderBottomWidth: height || 1 }]} />
     );
 };
 

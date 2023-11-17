@@ -2,6 +2,7 @@ import React, { useState} from "react"
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RidesModal from "../../Modal/RidesModal";
+import AverageRating from "../../Modal/Components/Ratings/AverageRating";
 
 const RenderRide = ({ item, backgroundColor }) => {
     const [modal, setModal] = useState(false);
@@ -25,7 +26,10 @@ const RenderRide = ({ item, backgroundColor }) => {
                     <View style={ styles.leftSide }>
                         <Text style={ styles.rideName}>{ item.name }</Text>
                         {/* TURN RATING INTO COMPONENT */}
-                        <Text style={ styles.rating }>Rating</Text>
+                        <AverageRating 
+                            tintColor={ backgroundColor }
+                            startingVal={ 2.5 }
+                        />
                     </View>
                     <Ionicons name='chevron-forward-outline' size={ 50 } />
                 </View>
