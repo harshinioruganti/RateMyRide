@@ -134,7 +134,7 @@ app.post('/api/searchRide', async (req, res, next) => {
   let rides = [];
   let log = '';
 
-  const results = await db.collection('Rides').find({ Ride: rideName }).toArray();
+  const results = await db.collection('Rides').find({ Ride: { $regex: rideName, $options: 'i' } } ).toArray();
 
   if (results.length > 0) {
     rides = results.map(ride => ({
