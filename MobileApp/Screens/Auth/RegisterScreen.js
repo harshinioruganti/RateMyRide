@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Axios from 'axios';
 
 // Components
-import ReusableAuthForm from '../../Components/Form/ReusableAuthForm';
+import ReusableAuthForm from "./Components/ReusableAuthForm";
+import { Alert } from "react-native";
 
 const URL = 'https://ratemyride-3b8d03447308.herokuapp.com/'
 
@@ -12,21 +13,24 @@ export default RegisterScreen = ({ navigation }) => {
         firstName: '',
         lastName: '',
         email: '',
-        login: '',
         password: '',
     })
+    
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+
     // Input Fields
     const inputFields = [
         {
             placeholder: 'First Name',
             value: formData.firstName,
-            inputType: 'text',
+            inputType: 'default',
             name: 'firstName',
         },
         {
             placeholder: 'Last Name',
             value: formData.lastName,
-            inputType: 'text',
+            inputType: 'default',
             name: 'lastName',
         },
         {
@@ -34,12 +38,6 @@ export default RegisterScreen = ({ navigation }) => {
             value: formData.email,
             inputType: 'email-address',
             name: 'email',
-        },
-        {
-            placeholder: 'Username',
-            value: formData.login,
-            inputType: 'text',
-            name: 'login',
         },
         {
             placeholder: 'Password',
@@ -58,24 +56,25 @@ export default RegisterScreen = ({ navigation }) => {
         text: "Already have an account?"
     }
 
-    const handleUpdateFormData = (fieldName, value) => setFormData({...formData, [fieldName]: value,}); 
+    const handleUpdateFormData = (fieldName, value) => setFormData({ ...formData, [fieldName]: value }); 
 
-    // Async function
     const handleSignUp = async () => {
         const data = {
             firstName: formData.firstName,
             lastName: formData.lastName,
-            login: formData.login,
+            email: formData.email,
             password: formData.password,
         }
         try {
-            // At some point you need to implement an email verification.
             const response = await Axios.post(URL + 'api/register', data, {
-                Headers: { 'Content-type': 'application/json' }
+                headers: { 'Content-type': 'application/json' }
             });
 
-            if (response.data.error) {
-                console.log("API ERROR");
+            if (response.status !== 200) {
+                console.log(response.data.error);
+                setErrorMessage(response.data.error);
+                setSuccessMessage('');
+                Alert.alert('Error: ', response.data.error);
             }
             else {
                 console.log("Success");
@@ -84,14 +83,17 @@ export default RegisterScreen = ({ navigation }) => {
                     firstName: '',
                     lastName: '',
                     email: '',
-                    login: '',
                     password: '',
                 });
+                // Set message to true that will display a message on 
+                // the form page
+                Alert.alert('Success', 'Account created successfully.');
             }
         }
         catch(err) {
-            alert(err.toString());
-            return;
+            setErrorMessage(err.toString());
+            setSuccessMessage('');
+            Alert.alert('Error', err.toString());
         }
     };
 

@@ -1,28 +1,27 @@
 import React from 'react';
-import {TouchableWithoutFeedback, Keyboard } from 'react-native';
-
 // Components
 import Card from '../../Components/Cards/Card';
 import Header from '../../Components/Header/Header';
 import SearchBar from '../../Components/SearchBar/SearchBar';
-
+import Accordion from './Components/Accordion/Accordion';
 // Styles for Card
 import { CardStyle } from '../../Components/Cards/CardStyles';
+import SearchBarStyle from '../../Components/SearchBar/SearchBarStyle';
 
-export default RidesScreen = ({ navigation }) =>
-{
-    return (
-        <TouchableWithoutFeedback onPress={ Keyboard.dismiss } accessible={ false } >
+export default RidesScreen = ({ navigation }) => {
+    return (        
             <Card styles={ CardStyle.background }>
                 {/* Header  */}
                 <Header />
                 {/* SearchBar  */}
                 <SearchBar 
-                    style={ CardStyle.searchBar }
+                    containerStyle={ SearchBarStyle.searchBar }
+                    leftSideContainerStyle={ SearchBarStyle.leftSideContainer }
+                    placeholder={ 'SEARCH THEMEPARK '}
                     onSearch={ () => console.log("Search btn clicked")}
                 />
-                {/* Rides  */}
+                {/* Holds main code for the apps functionality*/}
+                <Accordion />
             </Card>
-        </TouchableWithoutFeedback>
     )
 }

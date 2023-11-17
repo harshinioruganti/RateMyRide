@@ -2,17 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const authSlice = createSlice({
     name: 'authReducer',
-    initialState: { loggedIn: false, name: '' },
+    initialState: { loggedIn: false, firstName: '' },
     reducers: {
         login(state, action) {
-            const name = action.payload;
+            const firstName = action.payload;
             state.loggedIn = true;
-            state.name = name;
+            state.firstName = firstName;
+            console.log(state.firstName);
+            console.log(state.loggedIn);
             console.log('logged in')
         },
         logout(state, action) {
             state.loggedIn = false;
-            state.name = '';
+            state.firstName = '';
             console.log('logged out')
         }
     }

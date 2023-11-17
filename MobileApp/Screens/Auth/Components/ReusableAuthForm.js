@@ -1,21 +1,21 @@
 import React from "react";
 import { ImageBackground } from 'react-native';
-
+import { useSelector } from 'react-redux';
 // Styling
-import AuthStyling from "../../Screens/Auth/AuthStyling";
-import KeyBoardAvoidWrapper from "../Keyboard/KeyBoardAvoiderWrapper";
+import AuthStyling from "../AuthStyling";
+import KeyBoardAvoidWrapper from "../../../Components/Keyboard/KeyBoardAvoiderWrapper";
 
 // Components
-import CustomTextInput from "../Input/CustomTextInput";
-import TouchableTextButton from "../Button/TouchableTextButton";
-import Card from "../Cards/Card";
-import NavigationButton from '../Button/NavigationButton';
+import CustomTextInput from "../../../Components/Input/CustomTextInput";
+import TouchableTextButton from "../../../Components/Button/TouchableTextButton";
+import Card from "../../../Components/Cards/Card";
+import NavigationButton from '../../../Components/Button/NavigationButton';
 
 const ReusableAuthForm = ({ inputFields, mainForm, altForm, updateFormData, onFormSubmit }) => {
-    
+    const isLoggedIn = useSelector(state => state.auth.loggedIn);
     return (
         <ImageBackground
-            source={ require('../../assets/Img/RegisterLoginBackground.jpg') }
+            source={ require('../../../assets/Img/RegisterLoginBackground.jpg') }
             style={ AuthStyling.background }
         >
             <KeyBoardAvoidWrapper>
@@ -30,13 +30,15 @@ const ReusableAuthForm = ({ inputFields, mainForm, altForm, updateFormData, onFo
                             inputType={ field.inputType }
                             viewStyle={ AuthStyling.inputContainer }
                             inputStyle={ AuthStyling.input }
+                            require
                         />
-                    ))} 
+                    ))}
                     <TouchableTextButton 
                         touchableOpacStyle={ AuthStyling.signUpBtn }
                         onPress={ onFormSubmit }
                         title={ mainForm.title }
                         titleStyle={ AuthStyling.titleStyle }
+                        disable={ isLoggedIn }
                     />
                     <NavigationButton
                         cardStyle={ AuthStyling.altAuthContainer }

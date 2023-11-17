@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image } from 'react-native';
-// Components
-import Header from '../../Components/Header/Header';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../Store/AuthSlice.js';
 // Styles
 import HomeScreenStyle from './HomeScreenStyle';
 import TouchableTextBtn from '../../Components/Button/TouchableTextButton.js';
@@ -10,11 +10,14 @@ import logo from '../../assets/Img/logo.png'
 
 export default HomeScreen = ({ navigation }) =>
 {
-    const [loggedIn, setLoggedIn] = useState(false);
-    
+
+    const isLoggedIn = useSelector(state => state.auth.loggedIn);
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+        dispatch(logout()); // Dispatch the logout action only when the button is pressed
+    };
     return (
         <View style={ HomeScreenStyle.container}>
-            { loggedIn && <Header /> }
             <Image source={ logo } resizeMode="contain" />
 
             {/* TITLE  */}
@@ -25,29 +28,30 @@ export default HomeScreen = ({ navigation }) =>
             </View>
 
             <View style={ HomeScreenStyle.btnContainer }>
+                {/* Only render if the user is not logged in  */}
                 <View style={ HomeScreenStyle.loginRegisterContainer}>
-                    {/* LOGIN BTN  */}
-                    <TouchableTextBtn
+            
+                    { !isLoggedIn && <TouchableTextBtn
                         viewStyle={ HomeScreenStyle.loginRegisterBtnContainer }
                         touchableOpacStyle={ HomeScreenStyle.loginRegisterBtn }
                         onPress={ () => navigation.navigate('LOGIN')}
                         title={ 'LOGIN' }
-                    />
-                    {/* REGISTER BTN  */}
-                    <TouchableTextBtn
+                    /> }
+                    { !isLoggedIn && <TouchableTextBtn
                         viewStyle={ HomeScreenStyle}
                         touchableOpacStyle={ HomeScreenStyle.loginRegisterBtn }
                         onPress={ () => navigation.navigate('REGISTER')}
                         title={ 'REGISTER' }
-                    />
-                </View>
-                {/* GUEST BTN  */}
-                <TouchableTextBtn 
-                    viewStyle={ HomeScreenStyle.guestBtnContainer }
-                    touchableOpacStyle={ HomeScreenStyle.guestBtn }
-                    onPress={ () => '' }
-                    title={ 'Continue As Guest!' }
-                />
+                    /> }
+                
+                    {/* Logout BTN, only shows when logged in */}
+                    { isLoggedIn && <TouchableTextBtn 
+                        viewStyle={ HomeScreenStyle.guestBtnContainer }
+                        touchableOpacStyle={ HomeScreenStyle.logoutBtn }
+                        onPress={ handleLogout }
+                        title={ 'Logout' }
+                    /> }
+                </View> 
             </View>
         </View>
     )

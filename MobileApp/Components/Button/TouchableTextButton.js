@@ -11,7 +11,7 @@ export default TouchableTextBtn = ({
     }) => {
     return (
         <View style={ viewStyle }>
-            <TouchableOpacity style={ touchableOpacStyle } onPress={ onPress }>
+            <TouchableOpacity style={ touchableOpacStyle } onPress={ onPress } activeOpacity={ 0.7 }>
                 <Text style={ titleStyle }>{ title }</Text>
             </TouchableOpacity>
         </View>
