@@ -13,7 +13,7 @@ const ThemeParkItem = ({ item, index }) => {
     const [activePark, setActivePark] = useState(false);
 
     // const backgroundColor = index % 3 === 0 ? '#fc7324' : index % 3 === 1 ? '#58ad93' : '#2fb4c2';
-    const backgroundColor = index % 3 === 0 ? '#78c2e2' : index % 3 === 1 ? '#6eb476' : '#faefc2';
+    const backgroundColor = index % 3 === 0 ? '#78c2e2' : index % 3 === 1 ? '#6eb476' : '#aed9e0';
 
 
     const handleThemeParkPress = () => {

@@ -3,7 +3,7 @@ import { Modal, StyleSheet, View } from 'react-native';
 
 import RidesModalHeader from "./Content/ModalHeader";
 import HorizontalDivider from "./Components/Dividers/HorizontalDivider";
-import RatingAndDescription from "./Content/DescriptionAndRating";
+import RatingAndDescription from "./Content/RatingAndDescription";
 
 const RidesModal = ({toggleModal, isVisible, rideInfo, backgroundColor}) => {
 
@@ -16,7 +16,7 @@ const RidesModal = ({toggleModal, isVisible, rideInfo, backgroundColor}) => {
                     {/* HEADER  */}
                     <RidesModalHeader onPress={ handleCloseModal } rideName={ rideInfo.name } themeParkName={ rideInfo.name }/>
                     {/* Simple Line Divider (Used throughtout this component)  */}
-                    <HorizontalDivider color={ 'black' } />
+                    <HorizontalDivider />
                     {/* BODY  */}
                     <RatingAndDescription />
                     {/* REVIEWS  */}
