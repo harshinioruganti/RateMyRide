@@ -5,8 +5,6 @@ import 'react-router-dom';
 
 function Login()
 {
-    let bp = require('./Path.js');
-
     var loginEmail;
     var loginPassword;
 
@@ -15,6 +13,8 @@ function Login()
     const doLogin = async event => 
     {
         event.preventDefault();
+
+        let bp = require('./Path.js');
 
         var obj = {email:loginEmail.value,password:loginPassword.value};
         var js = JSON.stringify(obj);
