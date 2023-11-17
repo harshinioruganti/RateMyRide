@@ -1,6 +1,6 @@
 var express = require('express');
 require('mongodb');
-const sgMail = require('@sendgrid/mail');
+c
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 var ObjectId = require('mongodb').ObjectId;
 const crypto = require('crypto');
@@ -138,7 +138,7 @@ exports.setApp = function (app, client) {
             ret = { emailToken: newAccount.emailToken, error: error };
           }
           catch (e) {
-            error = e.toString();
+            error = e.toString(); 
             ret = { error: error };
           }
 
@@ -292,31 +292,52 @@ exports.setApp = function (app, client) {
 
     // +++++++++++++++++++++++++++++ Ride APIs +++++++++++++++++++++++++++++
     app.post('/api/searchRide', async (req, res, next) => {
+      
+      // incoming: rideName
+      // outgoing: rides, log
 
-    // incoming: rideName
-    // outgoing: rides, error
+      var token = require('./createJWT.js');
+      const { rideName, jwtToken } = req.body;
 
-    const { rideName } = req.body;
-    const db = client.db('COP4331Cards');
+      try {
+        if (token.isExpired(jwtToken)) {
+          var r = { error: 'The JWT is no longer valid', jwtToken: '' };
+          res.status(200).json(r);
+          return;
+        }
+      }
+      catch (e) {
+        console.log(e.message);
+      }
+    
+      let rides = [];
+      let log = '';
 
-    let rides = [];
-    let error = '';
-
-    const results = await db.collection('Rides').find({ Ride: rideName }).toArray();
-
-    if (results.length > 0) {
+      const db = client.db('COP4331Cards');
+      const results = await db.collection('Rides').find({ Ride: { $regex: rideName, $options: 'i' } } ).toArray();
+    
+      if (results.length > 0) {
         rides = results.map(ride => ({
-        rideName: ride.Ride,
-        description: ride.Description,
-        themeParkId: ride.ThemeParkID,
-        rideId: ride._id // Optionally include the ride ID in the response
+          rideName: ride.Ride,
+          description: ride.Description,
+          themeParkId: ride.ThemeParkID,
+          rideId: ride._id // Optionally include the ride ID in the response
         }));
-    } 
-    else {
-        error = 'No rides found with the specified name.';
-    }
+        log = "Rides found."
+      } 
+      else {
+        log = "No rides found with the specified name.";
+      }
 
-    res.status(200).json({ rides, error });
+      var refreshedToken = null;
+      try {
+        refreshedToken = token.refresh(jwtToken);
+      }
+      catch (e) {
+        console.log(e.message);
+      }
+      
+      res.status(200).json({ rides, log });
     });
 
 
@@ -324,8 +345,21 @@ exports.setApp = function (app, client) {
     {
     // incoming: rideName, description, themeParkId
     // outgoing: error
+
+      var token = require('./createJWT.js');
+      const { rideName,  description, themeParkId, jwtToken } = req.body;
+
+      try {
+        if (token.isExpired(jwtToken)) {
+          var r = { error: 'The JWT is no longer valid', jwtToken: '' };
+          res.status(200).json(r);
+          return;
+        }
+      }
+      catch (e) {
+        console.log(e.message);
+      }
         
-    const { rideName, description, themeParkId } = req.body;
         
     const newRide = {Ride:rideName,Description:description,ThemeParkID:themeParkId};
     var error = '';
@@ -340,6 +374,14 @@ exports.setApp = function (app, client) {
         error = e.toString();
     }
 
+    var refreshedToken = null;
+    try {
+      refreshedToken = token.refresh(jwtToken);
+    }
+    catch (e) {
+      console.log(e.message);
+    }
+
     var ret = { error: error };
     res.status(200).json(ret);
     });
@@ -350,8 +392,21 @@ exports.setApp = function (app, client) {
     {
     // incoming: rideId, userId, thrill, theme, length, overall, review
     // outgoing: error
-        
-    const { rideId, userId, thrill, theme, length, overall, review } = req.body;
+
+    var token = require('./createJWT.js');
+    const { rideId, userId, thrill, theme, length, overall, review, jwtToken } = req.body;
+
+    try {
+      if (token.isExpired(jwtToken)) {
+        var r = { error: 'The JWT is no longer valid', jwtToken: '' };
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch (e) {
+      console.log(e.message);
+    }
+
     var error = '';
 
     const db = client.db('COP4331Cards');
@@ -367,6 +422,15 @@ exports.setApp = function (app, client) {
         error = "Rewiew added. Thank you!";
     }
 
+    var refreshedToken = null;
+    try {
+      refreshedToken = token.refresh(jwtToken);
+    }
+
+    catch (e) {
+      console.log(e.message);
+    }
+
     var ret = { error: error };
     res.status(200).json(ret);
     });
@@ -375,10 +439,22 @@ exports.setApp = function (app, client) {
     {
     // incoming: reviewId
     // outgoing: log
-        
-    var log = "";
-    const { reviewId } = req.body; // Assuming you send the review ID in the request body
+    
+    var token = require('./createJWT.js');
+    const { reviewId, jwtToken } = req.body; // Assuming you send the review ID in the request body
 
+    try {
+      if (token.isExpired(jwtToken)) {
+        var r = { error: 'The JWT is no longer valid', jwtToken: '' };
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch (e) {
+      console.log(e.message);
+    }
+
+    var log = "";
     const db = client.db('COP4331Cards');
 
     // Find the review by its ID and delete it
@@ -391,6 +467,16 @@ exports.setApp = function (app, client) {
     else{
         log = "Review doesn't exist.";
     }
+
+    var refreshedToken = null;
+    try {
+      refreshedToken = token.refresh(jwtToken);
+    }
+
+    catch (e) {
+      console.log(e.message);
+    }
+
     // Review was successfully deleted
     var ret = { log:log };
     res.status(200).json(ret);
@@ -402,7 +488,19 @@ exports.setApp = function (app, client) {
     // incoming: rideId
     // outgoing: thrillAvg, themeAvg, lengthAvg, overallAvg, error
         
-    const { rideId } = req.body;
+    var token = require('./createJWT.js');
+    const { rideId, jwtToken } = req.body;
+
+    try {
+      if (token.isExpired(jwtToken)) {
+        var r = { error: 'The JWT is no longer valid', jwtToken: '' };
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch (e) {
+      console.log(e.message);
+    }
         
     var error = "";
 
@@ -433,6 +531,15 @@ exports.setApp = function (app, client) {
 
     // Convert back to strings always rounded to 1 decimal place
     thr = thr.toFixed(1); the = the.toFixed(1); len = len.toFixed(1); ovr = ovr.toFixed(1);
+
+    var refreshedToken = null;
+    try {
+      refreshedToken = token.refresh(jwtToken);
+    }
+
+    catch (e) {
+      console.log(e.message);
+    }
 
     var ret = { thrillAvg:thr, themeAvg:the, lengthAvg:len, overallAvg:ovr, error:error};
     res.status(200).json(ret);
