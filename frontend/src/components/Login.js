@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import '../App.css';
 import './Login.css';
+import 'react-router-dom';
 
 function Login()
 {
@@ -8,39 +10,30 @@ function Login()
 
     const [message,setMessage] = useState('');
 
-    const app_name = 'ratemyride-3b8d03447308'
-    function buildPath(route)
-    {
-        if (process.env.NODE_ENV === 'production')
-        {
-            return 'https://' + app_name + '.herokuapp.com/' + route;
-        }
-        else
-        {
-            return 'http://localhost:5055/' + route;
-        }
-    }
-
     const doLogin = async event => 
     {
         event.preventDefault();
 
+        let bp = require('./Path.js');
+
         var obj = {email:loginEmail.value,password:loginPassword.value};
         var js = JSON.stringify(obj);
 
+        var storage = require('../tokenStorage.js');
+
         try
         {      
-            const response = await fetch(buildPath('api/login'),
+            const response = await fetch(bp.buildPath('api/login'),
                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-
             var res = JSON.parse(await response.text());
 
-            if( res.id <= 0 )
+            if( res.error )
             {
-                setMessage('Email/Password combination incorrect');
+                setMessage(res.error);
             }
             else
             {
+                storage.storeToken(res);
                 var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
                 localStorage.setItem('user_data', JSON.stringify(user));
 
@@ -57,7 +50,7 @@ function Login()
 
     return (
         <div className="formBox">
-        <form id="login" className="input-group">
+        <form id="login" className="input-group" onSubmit={doLogin}>
             <span id="inner-title">Login</span><br />
             <input type="text" id="loginEmail" placeholder="Email"
                 required ref={(c) => loginEmail = c}/><br />
