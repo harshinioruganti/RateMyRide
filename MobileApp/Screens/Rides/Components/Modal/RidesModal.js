@@ -14,11 +14,16 @@ const RidesModal = ({toggleModal, isVisible, rideInfo, backgroundColor}) => {
             <View style={ styles.modalContainer }>
                 <View style={{ ...styles.modalWrapper, backgroundColor }}>
                     {/* HEADER  */}
-                    <RidesModalHeader onPress={ handleCloseModal } rideName={ rideInfo.name } themeParkName={ rideInfo.name }/>
+                    <RidesModalHeader 
+                        onPress={ handleCloseModal } 
+                        rideName={ rideInfo.rideName }
+                    />
                     {/* Simple Line Divider (Used throughtout this component)  */}
                     <HorizontalDivider />
                     {/* BODY  */}
-                    <RatingAndDescription />
+                    <RatingAndDescription 
+                        rideDescription={ rideInfo.description }
+                    />
                     {/* REVIEWS  */}
                 </View>
             </View>

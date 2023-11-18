@@ -1,12 +1,12 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, Modal } from 'react-native';
 
-const AddRatingModal = () => {
+const AddRatingModal = ({ isVisible }) => {
 
     return (
-        <TouchableOpacity>
-            
-        </TouchableOpacity>
+        <Modal visible={ isVisible }>
+            <Text>Inside the Add New Rating Modal</Text>
+        </Modal>
     )
 }
 

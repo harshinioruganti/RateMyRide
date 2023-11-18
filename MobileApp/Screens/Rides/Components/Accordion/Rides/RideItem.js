@@ -10,7 +10,7 @@ const RenderRide = ({ item, backgroundColor }) => {
     const handleModal = () => {
         setModal(!modal);
     }
-
+    
     return (
         <>
             {/* RIDES MODAL, use can view info about a specific ride and choose to leave a review  */}
@@ -24,7 +24,7 @@ const RenderRide = ({ item, backgroundColor }) => {
             <TouchableOpacity style={{ flex: 1 }} activeOpacity={ 0.7 } onPress={ handleModal }>
                 <View style={{ ...styles.ridesContainer, backgroundColor }}>
                     <View style={ styles.leftSide }>
-                        <Text style={ styles.rideName}>{ item.name }</Text>
+                        <Text style={ styles.rideName}>{ item.rideName }</Text>
                         {/* TURN RATING INTO COMPONENT */}
                         <AverageRating 
                             tintColor={ backgroundColor }
@@ -37,6 +37,7 @@ const RenderRide = ({ item, backgroundColor }) => {
         </>
     )
 }
+
 
 export default RenderRide;
 
