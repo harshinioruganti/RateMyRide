@@ -137,7 +137,8 @@ function ThemeParkList() {
     const toggleAccordion = (parkId) => {
         setActivePark(activePark === parkId ? null : parkId)
     };
-  
+    
+    // RETURN WITH HARDCODED ARRAYS
     return (
         <div className="theme-park-list">
             {themeParks.map((park) => (
