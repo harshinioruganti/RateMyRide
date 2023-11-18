@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
-import './Login.css';
+import './EmailVerif.css';
 import 'react-router-dom';
 import { Link } from 'react-router-dom';
 

@@ -456,7 +456,18 @@ app.post('/api/getRideInfo', async (req, res, next) =>
 	
  var log = '';
 
-  const { rideId } = req.body;
+  const { rideId, jwtToken } = req.body;
+
+  try {
+    if (token.isExpired(jwtToken)) {
+      var r = { error: 'The JWT is no longer valid', jwtToken: '' };
+      res.status(200).json(r);
+      return;
+    }
+  }
+  catch (e) {
+    console.log(e.message);
+  }
 
   const db = client.db('COP4331Cards');
   const results = await db.collection('Rides').find({_id:new ObjectId(rideId)}).toArray();
