@@ -4,7 +4,7 @@ import './App.css';
 
 import LoginPage from './pages/LoginPage';
 import ThemeParkPage from './pages/ThemeParkPage';
-import RideDetailsPage from './pages/RideDetailsPage';
+import RideInfoPage from './pages/RideInfoPage';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/theme-parks" element={<ThemeParkPage />} />
-        <Route path="/rides/:themeParkId/description/:rideId" element={<RideDetailsPage />} />
+        <Route path="/rideInfo/:rideId" element={<RideInfoPage />} />
       </Routes>
     </BrowserRouter>
   );

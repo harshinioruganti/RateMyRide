@@ -297,9 +297,9 @@ exports.setApp = function (app, client) {
       // outgoing: rides, log
 
       var token = require('./createJWT.js');
-      const { rideName, jwtToken } = req.body;
+      const { rideName } = req.body;
 
-      try {
+      /* try {
         if (token.isExpired(jwtToken)) {
           var r = { error: 'The JWT is no longer valid', jwtToken: '' };
           res.status(200).json(r);
@@ -308,7 +308,7 @@ exports.setApp = function (app, client) {
       }
       catch (e) {
         console.log(e.message);
-      }
+      } */
     
       let rides = [];
       let log = '';
@@ -340,6 +340,65 @@ exports.setApp = function (app, client) {
       res.status(200).json({ rides, log });
     });
 
+  app.post('/api/getRides', async (req, res, next) => 
+  {
+  // incoming: themeParkId
+  // outgoing: rideList, log
+	
+  const { themeParkId } = req.body;
+
+  const db = client.db('COP4331Cards');
+  const results = await db.collection('Rides').find({ThemeParkID:themeParkId}).toArray();
+
+  let rides = [];
+  let log = '';
+
+  if( results.length > 0 )
+  {
+    rides = results.map(ride => ({
+      rideName: ride.Ride,
+      description: ride.Description,
+      themeParkId: ride.ThemeParkID,
+      rideId: ride._id
+    }));
+    log = "Rides found."
+  }
+  else {
+    log = "No rides found at that theme park.";
+  }
+
+  var ret = { rideList:rides, log:log};
+  res.status(200).json(ret);
+});
+
+app.post('/api/getRideInfo', async (req, res, next) => 
+{
+  // incoming: rideId
+  // outgoing: rideName, description, themeParkId, log
+	
+ var log = '';
+
+  const { rideId } = req.body;
+
+  const db = client.db('COP4331Cards');
+  const results = await db.collection('Rides').find({_id:new ObjectId(rideId)}).toArray();
+
+  if( results.length > 0 )
+  {
+    rideName = results[0].Ride;
+    description = results[0].Description;
+    themeParkId = results[0].ThemeParkID;
+    log = "Success."
+  }
+  else{
+    log = "Ride doesn't exist."
+  }
+
+
+  var ret = { rideName:rideName, description:description, themeParkId:themeParkId, log:log};
+  res.status(200).json(ret);
+});
+
 
     app.post('/api/addRide', async (req, res, next) =>
     {
@@ -347,9 +406,9 @@ exports.setApp = function (app, client) {
     // outgoing: error
 
       var token = require('./createJWT.js');
-      const { rideName,  description, themeParkId, jwtToken } = req.body;
+      const { rideName,  description, themeParkId } = req.body;
 
-      try {
+      /* try {
         if (token.isExpired(jwtToken)) {
           var r = { error: 'The JWT is no longer valid', jwtToken: '' };
           res.status(200).json(r);
@@ -358,7 +417,7 @@ exports.setApp = function (app, client) {
       }
       catch (e) {
         console.log(e.message);
-      }
+      } */
         
         
     const newRide = {Ride:rideName,Description:description,ThemeParkID:themeParkId};
@@ -388,15 +447,46 @@ exports.setApp = function (app, client) {
 
 
     //++++++++++++++++++++++++++++++++ Review APIs ++++++++++++++++++++++++++++++++++++++++
+    app.post('/api/getReviews', async (req, res, next) => {
+
+      // incoming: rideId
+      // outgoing: reviewList, log
+    
+      const { rideId } = req.body;
+      const db = client.db('COP4331Cards');
+    
+      let reviewList = [];
+      let log = '';
+    
+      const results = await db.collection('Reviews').find({ RideID:rideId }).toArray();
+    
+      if (results.length > 0) {
+        reviewList = results.map(review => ({
+          thrill: review.Thrill,
+          theme: review.Theme,
+          length: review.Length,
+          overall: review.Overall,
+          review: review.Review,
+          userId: review.UserID
+        }));
+        log = "Reviews found."
+      } 
+      else {
+        log = "No reviews yet.";
+      }
+    
+      res.status(200).json({ reviewList, log });
+    });
+    
     app.post('/api/addReview', async (req, res, next) =>
     {
     // incoming: rideId, userId, thrill, theme, length, overall, review
     // outgoing: error
 
     var token = require('./createJWT.js');
-    const { rideId, userId, thrill, theme, length, overall, review, jwtToken } = req.body;
+    const { rideId, userId, thrill, theme, length, overall, review } = req.body;
 
-    try {
+    /* try {
       if (token.isExpired(jwtToken)) {
         var r = { error: 'The JWT is no longer valid', jwtToken: '' };
         res.status(200).json(r);
@@ -405,7 +495,7 @@ exports.setApp = function (app, client) {
     }
     catch (e) {
       console.log(e.message);
-    }
+    } */
 
     var error = '';
 
@@ -441,9 +531,9 @@ exports.setApp = function (app, client) {
     // outgoing: log
     
     var token = require('./createJWT.js');
-    const { reviewId, jwtToken } = req.body; // Assuming you send the review ID in the request body
+    const { reviewId } = req.body; // Assuming you send the review ID in the request body
 
-    try {
+    /* try {
       if (token.isExpired(jwtToken)) {
         var r = { error: 'The JWT is no longer valid', jwtToken: '' };
         res.status(200).json(r);
@@ -452,7 +542,7 @@ exports.setApp = function (app, client) {
     }
     catch (e) {
       console.log(e.message);
-    }
+    } */
 
     var log = "";
     const db = client.db('COP4331Cards');
@@ -483,15 +573,55 @@ exports.setApp = function (app, client) {
 
     });
 
+    // ++++++++++++++++++++++++++++++ Rating APIs ++++++++++++++++++++++++++++++++++++++++++
+    app.post('/api/getRideRating', async (req, res, next) =>
+    {
+      // incoming: rideId
+      // outgoing: overallAvg, log
+	
+      const { rideId } = req.body;
+	
+      var log = "";
+
+      const db = client.db('COP4331Cards');
+      const results = await db.collection('Reviews').find({RideID:rideId}).toArray();
+
+      // Initialize vars to 0
+      var ovr = 0;
+
+      var n = results.length;
+      if( n > 0 )
+      {
+        // Add totals
+        for(let i = 0; i < n; i++)
+        {
+          ovr += parseInt(results[i].Overall);
+        }
+        // Average scores
+        ovr /= n;
+        log = "Success."
+      }
+      else
+      {
+        log = "No reviews yet."
+      }
+
+      // Convert back to strings always rounded to 1 decimal place
+      ovr = ovr.toFixed(1);
+
+      var ret = { overallAvg:ovr, log:log};
+      res.status(200).json(ret);
+    });
+
     app.post('/api/avgScores', async (req, res, next) =>
     {
     // incoming: rideId
     // outgoing: thrillAvg, themeAvg, lengthAvg, overallAvg, error
         
     var token = require('./createJWT.js');
-    const { rideId, jwtToken } = req.body;
+    const { rideId } = req.body;
 
-    try {
+    /* try {
       if (token.isExpired(jwtToken)) {
         var r = { error: 'The JWT is no longer valid', jwtToken: '' };
         res.status(200).json(r);
@@ -500,7 +630,7 @@ exports.setApp = function (app, client) {
     }
     catch (e) {
       console.log(e.message);
-    }
+    } */
         
     var error = "";
 

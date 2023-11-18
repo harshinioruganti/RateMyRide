@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const crypto = require('crypto');
 
 exports.createToken = function ( fn, ln, id )
 {
@@ -11,7 +12,7 @@ _createToken = function ( fn, ln, id )
     {
       const expiration = new Date();
       const user = {id:id,firstName:fn,lastName:ln};
-      secret = process.env.ACCESS_TOKEN_SECRET
+      secret = crypto.randomBytes(64).toString('hex');
       const accessToken =  jwt.sign( user, secret);
       // In order to expire with a value other than the default, use the 
        // following
