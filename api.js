@@ -8,6 +8,84 @@ const { ppid } = require('process');
 var router = express.Router();
 
 exports.setApp = function (app, client) {
+    //+++++++++++++++++++++++ MOBILE APIS +++++++++++++++++++++++++++++
+    app.post('/api/mobile/login', async (req, res, next) => 
+    {
+      // incoming: email, password
+      // outgoing: userID, firstName, lastName, log
+      
+      var log = '';
+
+      const { email, password } = req.body;
+
+      const db = client.db('COP4331Cards');
+      const results = await db.collection('Users').find({Email:email,Password:password}).toArray();
+
+      var id = -1;// Will display -1 as id if invalid login
+      var fn = '';
+      var ln = '';
+
+      if( results.length > 0 )
+      {
+        id = results[0]._id;
+        fn = results[0].FirstName;
+        ln = results[0].LastName;
+        log = "Success."
+      }
+      else{
+        log = "Account doesn't exist."
+      }
+
+
+      var ret = { userID:id, firstName:fn, lastName:ln, log:log};
+      res.status(200).json(ret);
+  });
+
+  app.post('/api/mobile/register', async (req, res, next) => 
+    {
+        // incoming: firstName, lastName, email, password
+        // outgoing: error
+
+        const { firstName, lastName, email, password } = req.body;
+
+        /* // Fetch the current maximum UserId
+        const maxUserIdResult = await db.collection('Users').find({}, { sort: { UserId: -1 }, limit: 1 }).toArray();
+        const currentMaxUserId = maxUserIdResult.length > 0 ? parseInt(maxUserIdResult[0].UserId) || 0 : 0;
+
+        // Calculate the next UserId
+        const newUserId = (parseInt(currentMaxUserId) + 1).toString(); */
+
+        const newAccount = {
+            FirstName:firstName,
+            LastName:lastName,
+            Email:email,
+            Password:password
+        };
+
+        let error = '';
+        var ret;
+        const db = client.db('COP4331Cards');
+        try {
+            // Check for existing user
+            const user = await db.collection('Users').findOne({Email:email});
+            {
+                if(user)
+                {
+                    error = "Account with this email already exists.";
+                    error = { error: error };
+                    return res.status(200).json(error);
+                }
+            }
+            const result = db.collection('Users').insertOne(newAccount);
+            ret = "New Account Created";
+        }
+        catch (e)
+        {
+            error = e.toString();
+        }
+
+        res.status(200).json(ret);
+    });
 
     //++++++++++++++++++++++++ User APIs ++++++++++++++++++++++++++++++
     app.post('/api/login', async (req, res, next) => 
@@ -20,7 +98,7 @@ exports.setApp = function (app, client) {
     const db = client.db('COP4331Cards');
     const results = await db.collection('Users').find({Email:email,Password:password}).toArray();
 
-    var id = -1; // Will display -1 as id if invalid login
+    var id = '';
     var fn = '';
     var ln = '';
     var error = '';
@@ -36,8 +114,8 @@ exports.setApp = function (app, client) {
         //ratemyride.herokuapp.com
         if (results[0].isVerified == false) {
         const msg = {
-          to: results[0].email,
-          from: "RateMyRide@4331cop.com",
+          to: results[0].Email,
+          from: "harshinioruganti2020@gmail.com",
           subject: "Please Verify Your Email",
           text: `Hello, thank you for registering to <RATEMYRIDE> 
               Please copy and paste the address below to verify your account
@@ -103,7 +181,7 @@ exports.setApp = function (app, client) {
         const db = client.db('COP4331Cards');
         try {
             // Check for existing user
-            const user = await db.collection('Users').find({Email:email});
+            const user = await db.collection('Users').findOne({Email:email});
             {
                 if(user)
                 {
@@ -122,7 +200,7 @@ exports.setApp = function (app, client) {
 
         const msg = {
             to: email,
-            from: "RateMyRide@4331cop.com",
+            from: "harshinioruganti2020@gmail.com",
             subject: "Verify Your Email",
             text: `Hello, thank you for registering to <RATEMYRIDE> 
                 Please copy and paste the address below to verify your account
@@ -206,7 +284,7 @@ exports.setApp = function (app, client) {
     
         const msg = {
           to: search,
-          from: "RateMyRide@4331cop.com",
+          from: "harshinioruganti2020@gmail.com",
           subject: "Password Reset",
           text: `Forgot Password
               We have recieved a request to reset the password for your account.
@@ -299,7 +377,7 @@ exports.setApp = function (app, client) {
       var token = require('./createJWT.js');
       const { rideName } = req.body;
 
-      /* try {
+      try {
         if (token.isExpired(jwtToken)) {
           var r = { error: 'The JWT is no longer valid', jwtToken: '' };
           res.status(200).json(r);
@@ -308,7 +386,7 @@ exports.setApp = function (app, client) {
       }
       catch (e) {
         console.log(e.message);
-      } */
+      }
     
       let rides = [];
       let log = '';
@@ -408,7 +486,7 @@ app.post('/api/getRideInfo', async (req, res, next) =>
       var token = require('./createJWT.js');
       const { rideName,  description, themeParkId } = req.body;
 
-      /* try {
+      try {
         if (token.isExpired(jwtToken)) {
           var r = { error: 'The JWT is no longer valid', jwtToken: '' };
           res.status(200).json(r);
@@ -417,7 +495,7 @@ app.post('/api/getRideInfo', async (req, res, next) =>
       }
       catch (e) {
         console.log(e.message);
-      } */
+      }
         
         
     const newRide = {Ride:rideName,Description:description,ThemeParkID:themeParkId};
@@ -486,7 +564,7 @@ app.post('/api/getRideInfo', async (req, res, next) =>
     var token = require('./createJWT.js');
     const { rideId, userId, thrill, theme, length, overall, review } = req.body;
 
-    /* try {
+    try {
       if (token.isExpired(jwtToken)) {
         var r = { error: 'The JWT is no longer valid', jwtToken: '' };
         res.status(200).json(r);
@@ -495,7 +573,7 @@ app.post('/api/getRideInfo', async (req, res, next) =>
     }
     catch (e) {
       console.log(e.message);
-    } */
+    }
 
     var error = '';
 
@@ -533,7 +611,7 @@ app.post('/api/getRideInfo', async (req, res, next) =>
     var token = require('./createJWT.js');
     const { reviewId } = req.body; // Assuming you send the review ID in the request body
 
-    /* try {
+    try {
       if (token.isExpired(jwtToken)) {
         var r = { error: 'The JWT is no longer valid', jwtToken: '' };
         res.status(200).json(r);
@@ -542,7 +620,7 @@ app.post('/api/getRideInfo', async (req, res, next) =>
     }
     catch (e) {
       console.log(e.message);
-    } */
+    }
 
     var log = "";
     const db = client.db('COP4331Cards');
@@ -621,7 +699,7 @@ app.post('/api/getRideInfo', async (req, res, next) =>
     var token = require('./createJWT.js');
     const { rideId } = req.body;
 
-    /* try {
+    try {
       if (token.isExpired(jwtToken)) {
         var r = { error: 'The JWT is no longer valid', jwtToken: '' };
         res.status(200).json(r);
@@ -630,7 +708,7 @@ app.post('/api/getRideInfo', async (req, res, next) =>
     }
     catch (e) {
       console.log(e.message);
-    } */
+    }
         
     var error = "";
 

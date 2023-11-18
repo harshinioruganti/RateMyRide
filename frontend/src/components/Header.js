@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import './Header.css';
 
 const Header = () => {
@@ -21,13 +23,19 @@ const Header = () => {
 
   return (
     <div class="header">
-        <div class="logo">RateMyRide</div>
+        <Link to="/theme-parks">
+          <div class="logo">RateMyRide</div>
+        </Link>
         <input type="text" class="search-bar" placeholder="Search"/>
         <div class="user-icon">
             <div class="initials">{initials}</div>
             <div class="dropdown">
-                <button class="dropdown-item">My Profile</button><br/>
-                <button class="dropdown-item">About Page</button><br/>
+                <Link to="/profile-page">
+                  <button class="dropdown-item">My Profile</button><br/>
+                </Link>
+                <Link to="/about-page">
+                  <button class="dropdown-item">About Page</button><br/>
+                </Link>
                 <button class="dropdown-item" onClick={doLogout}>Logout</button><br/>
             </div>
         </div>

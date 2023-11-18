@@ -10,6 +10,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    font-family: Verdana;
 }
 
 .park {
@@ -34,6 +36,19 @@
   .rides-list {
     display: flex;
     justify-content: center;
+  }
+
+  .ride {
+    width: 100%;
+    padding: 5px;
+    font-size: 16pt;
+    text-align: center;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   
 /* Define alternating colors for parks */

@@ -85,6 +85,7 @@ font-size: 14px; /* Adjust placeholder font size */
   transition: background 0.3s;
   color: white;
   text-align: center;
+  margin: 0 10px
 }
 
 .buttons:hover {
@@ -92,5 +93,5 @@ font-size: 14px; /* Adjust placeholder font size */
 }
 
 .registerResult {
-  
+
 }

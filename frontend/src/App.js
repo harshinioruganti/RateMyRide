@@ -3,16 +3,22 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 import LoginPage from './pages/LoginPage';
+import EmailVerifPage from './pages/EmailVerifPage';
 import ThemeParkPage from './pages/ThemeParkPage';
 import RideInfoPage from './pages/RideInfoPage';
+import AboutPage from './pages/AboutPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/emailVerif" element={<EmailVerifPage />} />
         <Route path="/theme-parks" element={<ThemeParkPage />} />
         <Route path="/rideInfo/:rideId" element={<RideInfoPage />} />
+        <Route path="/profile-page" element={<ProfilePage />} />
+        <Route path="/about-page" element={<AboutPage />} />
       </Routes>
     </BrowserRouter>
   );
