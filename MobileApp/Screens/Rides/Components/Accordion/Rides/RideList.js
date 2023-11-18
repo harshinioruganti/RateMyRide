@@ -10,7 +10,7 @@ const RidesList = ({ backgroundColor, targetThemeParkId}) => {
     useEffect(() => {
         const fetchRides = async () => {
             try {
-                const response = await Axios.post(URL + 'api/getRides',{
+                const response = await Axios.post(URL + 'api/getRides', {
                     themeParkId: targetThemeParkId,
                 });
                 if (response.status === 200)
@@ -37,7 +37,7 @@ const RidesList = ({ backgroundColor, targetThemeParkId}) => {
             renderItem={({ item, index }) => (
                 <RenderRide item={item} index={index} backgroundColor={ backgroundColor }/>
             )}
-            keyExtractor={ (ride) => ride.rideId }
+            keyExtractor={ (rides) => rides.rideName }
             bounces={ false }
         />
     )
