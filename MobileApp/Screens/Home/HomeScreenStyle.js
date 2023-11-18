@@ -33,14 +33,20 @@ export default HomeStyleSheet = StyleSheet.create({
         width: 100,
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 20
+        margin: 20,
+        borderRadius: 15,
     },
-    guestBtn: {
+    guestBtnContainer: {
+        display: 'flex',
+        margin: 15,
+        width: 100,
+    },
+    logoutBtn: {
         backgroundColor: '#fff',
         height: 50,
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        borderRadius: 15,
     }
-
 })

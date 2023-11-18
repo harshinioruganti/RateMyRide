@@ -5,16 +5,21 @@ export const CardStyle = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         width: '100%',
-        backgroundColor: '#171e2e',
+        backgroundColor: '#141c22',
     },
-    searchBar: {
+    themePark: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         backgroundColor: '#fff',
-        width: 350,
-        height: 50,
-        margin: 30,
+        width: 375,
+        height: 100,
         borderRadius: 15,
-    }
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 10,
+        marginBottom: 0,
+    },
 })
 

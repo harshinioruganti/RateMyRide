@@ -22,7 +22,7 @@ export default Header = () =>
                     size={75}
                 />
                 <View style={HeaderStyles.msgContainer}>
-                    <Text style={HeaderStyles.welcomeText}>Welcome,</Text>
+                    <Text style={HeaderStyles.welcomeText}>Rate My Ride,</Text>
                     { 
                         loggedIn 
                             ? 
