@@ -95,8 +95,8 @@ function ThemeParkList() {
 
     let bp = require('./Path.js');
 
-    const [themeParks, setThemeParks] = useState([]);
-    const [rides, setRides] = useState([]);
+    // const [themeParks, setThemeParks] = useState([]);
+    // const [rides, setRides] = useState([]);
     const [activePark, setActivePark] = useState(null);
 
     /* useEffect(() => {
