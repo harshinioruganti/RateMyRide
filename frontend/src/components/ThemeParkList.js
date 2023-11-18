@@ -3,7 +3,7 @@ import { FiPlus, FiMinus } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 function ThemeParkList() {
-    const themeParks = [
+    /* const themeParks = [
         {
             _id: "6552d6f0f90db71828c9cd5e",
             ThemePark: "Magic Kingdom",
@@ -91,15 +91,15 @@ function ThemeParkList() {
             Description: "Seven Dwarfs Mine Train is a steel roller coaster located at Magic Kingdom and Shanghai Disneyland Park. Manufactured by Vekoma, the roller coaster is situated in the Fantasyland sections of both parks.",
             ThemeParkID: "6552d6f0f90db71828c9cd5e"
           }
-    ];
+    ]; */
 
     let bp = require('./Path.js');
 
-    // const [themeParks, setThemeParks] = useState([]);
-    // const [rides, setRides] = useState([]);
+    const [themeParks, setThemeParks] = useState([]);
+    const [rides, setRides] = useState([]);
     const [activePark, setActivePark] = useState(null);
 
-    /* useEffect(() => {
+    useEffect(() => {
         // Fetch theme parks data from the API
         const fetchAllThemeParks = async () => {
           try {
@@ -132,13 +132,14 @@ function ThemeParkList() {
 
         fetchAllThemeParks();
         fetchRides();
-    }, []); */
+    }, []);
   
     const toggleAccordion = (parkId) => {
         setActivePark(activePark === parkId ? null : parkId)
     };
-  
-    return (
+    
+    // HTML WITH HARDCODED ARRAYS
+    /* return (
         <div className="theme-park-list">
             {themeParks.map((park) => (
                 <div key={park._id} className="park">
@@ -162,9 +163,9 @@ function ThemeParkList() {
                 </div>
             ))}
         </div>
-    );
+    );*/
 
-    /* return (
+    return (
         <div className="theme-park-list">
             {themeParks.map((park) => (
                 <div key={park.themeParkId} className="park">
@@ -188,7 +189,7 @@ function ThemeParkList() {
                 </div>
             ))}
         </div>
-    );*/
+    );
 };
   
 export default ThemeParkList;
