@@ -1,69 +1,96 @@
 .formBox {
-    width: 380px;
-    height: 510px;
-    position: relative;
-    margin: 3% auto;
-    border-radius: 10px;
-    background: beige;
-    box-shadow: 0 0 50px black;
-    padding: 5px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+  width: 380px;
+  height: 510px;
+  position: relative;
+  margin: 3% auto;
+  border-radius: 10px;
+  background: beige;
+  box-shadow: 0 0 50px black;
+  padding: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
   
   
-  .input-group {
-    top: 50px;
-    position: absolute;
-    width: 300px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: .5s;
-  }
+.input-group {
+  top: 50px;
+  position: absolute;
+  width: 300px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: .5s;
+}
+
+.input-group input,
+.input-group select,
+.input-group label {
+  margin-bottom: 10px;
+}
+
+.input-group button {
+  margin-top: 10px;
+}
+
+  /* Style for input fields */
+.input-group input[type="text"],
+.input-group input[type="password"],
+.input-group input[type="email"] {
+width: 60%;
+padding: 10px;
+border-radius: 10px;
+border: 1px solid gray;
+margin-bottom: 10px;
+}
+
+/* Style for placeholder text */
+.input-group input[type="text"]::placeholder,
+.input-group input[type="password"]::placeholder,
+.input-group input[type="email"]::placeholder {
+font-size: 14px; /* Adjust placeholder font size */
+}
+
+#inner-title {
+  font-family: 'Arial';
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.user-type-label {
+  margin-right:10px;
+}
+
+.buttons-container {
+  text-align: center;
+}
+
+.buttons {
+  top: 60px;
+  width: 60%;
+  padding: 10px 30px;
+  position: relative;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  background: #171E2E;
+  border: 0;
+  outline: none;
+  border-radius: 30px;
+  transition: background 0.3s;
+  color: white;
+  text-align: center;
+}
+
+.buttons:hover {
+  background: #445988;
+}
+
+.registerResult {
   
-  .input-group input,
-  .input-group select,
-  .input-group label {
-    margin-bottom: 10px;
-  }
-  
-  .input-group button {
-    margin-top: 10px;
-  }
-  
-  #inner-title {
-    font-family: 'Arial';
-    font-size: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-  
-  .user-type-label {
-    margin-right:10px;
-  }
-  
-  .buttons {
-    top: 60px;
-    width: 30%;
-    padding: 10px 30px;
-    position: relative;
-    cursor: pointer;
-    display: block;
-    margin: auto;
-    background: #171E2E;
-    border: 0;
-    outline: none;
-    border-radius: 30px;
-    transition: background 0.3s;
-    color: white;
-  }
-  
-  .buttons:hover {
-    background: #445988;
-  }
+}

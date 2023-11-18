@@ -30,24 +30,46 @@
     flex-direction: column;
     align-items: center;
     transition: .5s;
+
   }
 
-  .buttons {
-    top: 60px;
-    width: 30%;
-    padding: 10px 30px;
-    position: relative;
-    cursor: pointer;
-    display: block;
-    margin: auto;
-    background: #171E2E;
-    border: 0;
-    outline: none;
-    border-radius: 30px;
-    transition: background 0.3s;
-    color: white;
-  }
+  /* Style for input fields */
+.input-group input[type="text"],
+.input-group input[type="password"] {
+  width: 60%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  margin-bottom: 10px;
+}
 
-  .buttons:hover {
+/* Style for placeholder text */
+.input-group input[type="text"]::placeholder,
+.input-group input[type="password"]::placeholder {
+  font-size: 14px; /* Adjust placeholder font size */
+}
+
+.buttons-container {
+  text-align: center;
+}
+
+.buttons {
+  top: 60px;
+  width: 60%;
+  padding: 10px 30px;
+  position: relative;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  background: #171E2E;
+  border: 0;
+  outline: none;
+  border-radius: 30px;
+  transition: background 0.3s;
+  color: white;
+  text-align: center;
+}
+
+.buttons:hover {
     background: #445988;
-  }
+}

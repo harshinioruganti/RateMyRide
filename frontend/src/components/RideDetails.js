@@ -31,13 +31,13 @@ function RideDetails() {
     }, [rideId]);
 
   return (
-    <div>
+    <div id="ride-info">
         {rideDetails && (
         <div>
-            <h1>{rideDetails.rideName}</h1>
-            <h3>Ride Details</h3>
-            <div>
-                <h2>Ride Name: {rideDetails.rideName}</h2>
+            <h1 id="ride-name-header">{rideDetails.rideName}</h1>
+            <h2 id="ride-details-header">Ride Details</h2>
+            <div className="ride-info-block">
+                <p>Ride Name: {rideDetails.rideName}</p>
                 <p>Description: {rideDetails.description}</p>
             </div>
         </div>

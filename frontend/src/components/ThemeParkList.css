@@ -1,0 +1,63 @@
+.theme-park-title {
+    text-align: center;
+}
+
+.theme-park-title h1 {
+    color: white;
+}
+
+.theme-park-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.park {
+    width: 80%;
+    margin: 10px 0;
+    border-radius: 8px;
+}
+
+.park-header {
+    width: 100%;
+    padding: 5px;
+    font-size: 20pt;
+    text-align: center;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .rides-list {
+    display: flex;
+    justify-content: center;
+  }
+  
+/* Define alternating colors for parks */
+.park-0 {
+    background-color: #7bc3e3; /* First color for parks */
+    }
+  
+.park-1 {
+    background-color: #faefc2; /* Second color for parks */
+  }
+  
+.park-2 {
+    background-color: #68aa74; /* Third color for parks */
+  }
+  
+  /* Style rides based on the park index */
+.ride-0 {
+    background-color: #7bc3e3; /* Match first park color for rides */
+  }
+  
+.ride-1 {
+    background-color: #faefc2; /* Match second park color for rides */
+  }
+  
+.ride-2 {
+    background-color: #68aa74; /* Match third park color for rides */
+  }

@@ -2,6 +2,8 @@ import React, {useEffect, useState } from 'react';
 import { FiPlus, FiMinus } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
+import './ThemeParkList.css';
+
 function ThemeParkList() {
     const themeParks = [
         {
@@ -140,28 +142,39 @@ function ThemeParkList() {
     
     // RETURN WITH HARDCODED ARRAYS
     return (
-        <div className="theme-park-list">
-            {themeParks.map((park) => (
-                <div key={park._id} className="park">
-                    <button className="park-header" onClick={() => toggleAccordion(park._id)}>
-                        {park.ThemePark} {activePark === park._id ? <FiMinus/> : <FiPlus/>}
-                    </button>
-                    {activePark === park._id && (
-                        <div className="rides-list">
-                            <ul>
-                                {rides
-                                    .filter((ride) => ride.ThemeParkID === park._id)
-                                    .map((ride) => (
-                                        <li key={ride._id}>
-                                            <Link to={`/rideInfo/${ride._id}`}>{ride.Ride}</Link>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
+        <div id="theme-park-list">
+            <div id="themeParkTitle" className="theme-park-title">
+                <br/>
+                <h1>Theme Parks</h1>
+            </div>
+            <div className="theme-park-list">
+                {themeParks.map((park, index) => {
+                    return (
+                        <div key={park._id} className={`park park-${index % 3}`}>
+                            <button
+                                className="park-header"
+                                onClick={() => toggleAccordion(park._id)}
+                            >
+                                {park.ThemePark} {activePark === park._id ? <FiMinus/> : <FiPlus/>}
+                            </button>
+                            {activePark === park._id && (
+                                <div className="rides-list">
+                                    <ul>
+                                        {rides
+                                            .filter((ride) => ride.ThemeParkID === park._id)
+                                            .map((ride) => (
+                                                <li key={ride._id} className={`ride ride-${index % 3}`}>
+                                                    <Link to={`/rideInfo/${ride._id}`}>{ride.Ride}</Link>
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
-            ))}
+                    )
+                })}
+            </div>
         </div>
     );
 
