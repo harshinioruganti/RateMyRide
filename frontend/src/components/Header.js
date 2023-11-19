@@ -24,21 +24,26 @@ const Header = () => {
 
   return (
     <div class="header">
-        <Link to="/theme-parks">
-          <div class="logo">RateMyRide</div>
+      <div id="logo">
+        <Link to="/theme-parks" class="logo">
+          RateMyRide
         </Link>
-        <div class="user-icon">
-            <div class="initials">{initials}</div>
-            <div class="dropdown">
-                <Link to="/profile-page">
-                  <button class="dropdown-item">My Profile</button><br/>
-                </Link>
-                <Link to="/about-page">
-                  <button class="dropdown-item">About Page</button><br/>
-                </Link>
-                <button class="dropdown-item" onClick={doLogout}>Logout</button><br/>
-            </div>
-        </div>
+      </div>
+      <div id="search">
+        <input class="search-bar" type="text" placeholder="Search"/>
+      </div>
+      <div class="user-icon">
+          <div class="initials">{initials}</div>
+          <div class="dropdown">
+              <Link to="/profile-page">
+                <button class="dropdown-item">My Profile</button><br/>
+              </Link>
+              <Link to="/about-page">
+                <button class="dropdown-item">About Page</button><br/>
+              </Link>
+              <button class="dropdown-item" onClick={doLogout}>Logout</button><br/>
+          </div>
+      </div>
     </div>
   );
 }
