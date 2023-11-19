@@ -106,7 +106,7 @@ function ThemeParkList() {
         // Fetch theme parks data from the API
         const fetchAllThemeParks = async () => {
           try {
-            const response = await fetch(bp.buildPath('/api/getAllThemeParks'));
+            const response = await fetch(bp.buildPath('api/getAllThemeParks'));
             const data = await response.json();
             if (data.allThemeParks) {
               setThemeParks(data.allThemeParks);
@@ -121,7 +121,7 @@ function ThemeParkList() {
 
         const fetchRides = async () => {
             try {
-                const response = await fetch(bp.buildPath('/api/getRides'));
+                const response = await fetch(bp.buildPath('api/getRides'));
                 const data = await response.json();
 
                 if (data.rideList) {
