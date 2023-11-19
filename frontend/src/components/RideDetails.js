@@ -10,7 +10,7 @@ function RideDetails() {
   useEffect(() => {
     const fetchRideDetails = async () => {
         try {
-          const response = await fetch(bp.buildPath('/api/getRideInfo'), {
+          const response = await fetch(bp.buildPath('api/getRideInfo'), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
