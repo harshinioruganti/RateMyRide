@@ -21,6 +21,7 @@ function RideReviews() {
 
             const data = await response.json();
             if (response.ok) {
+              console.log('getRideRating API response:', data);
                 setAvgRating(data.overallAvg);
             } else {
                 setError(data.log);
@@ -42,6 +43,7 @@ function RideReviews() {
             
             const data = await response.json();
             if (response.ok) {
+                console.log('getReviews API response:', data);
                 setReviews(data.reviewList);
             } else {
                 setError(data.log);

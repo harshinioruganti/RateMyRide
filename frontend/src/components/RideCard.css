@@ -1,0 +1,13 @@
+/* RideCard.css */
+
+.card-container {
+    margin: 10px;
+    border: 1px solid #000;
+    padding: 10px;
+  }
+
+  .ride-card-name {
+    font-size: 14pt;
+    }
+
+  

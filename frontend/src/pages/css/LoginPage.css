@@ -4,17 +4,23 @@
   margin-top: -5px; /* vertical positioning */
 }
 
-.button {
-  padding: 10px 20px;
-  cursor: pointer;
-  background: lightcyan;
-  border: 0;
-  outline: none;
-  border-radius: 30px;
-  transition: background 0.3s;
-  color: #171E2E;
-  margin: 0 10px; /* horizontal spacing */
-}
+.login-page-buttons
+  {
+    padding: 10px 20px;
+    position: relative;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    background: lightcyan;
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    transition: background 0.3s;
+    color: #171E2E;
+    text-align: center;
+    margin: 0 10px; /* horizontal spacing */
+    font-size: 14pt;
+  }
 
 .button:hover {
   background: #445988;

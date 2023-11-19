@@ -1,26 +1,23 @@
 /* Header Styles */
 .header {
-    background-color: #3498db;
-    color: #fff;
+    background-color: #fff;
+    color: black;
     padding: 10px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
   }
   
   /* Logo Styles */
   .logo {
     font-size: 24px;
     font-weight: bold;
+    align-items: left;
+    text-decoration: none;
   }
-  
-  /* Search Bar Styles */
-  .search-bar {
-    width: 300px;
-    margin: 0 auto;
-    padding: 5px;
-    border: 1px solid #fff;
-    border-radius: 5px;
+
+  .logo:visited {
+    color: black;
+    text-decoration: none;
   }
   
   /* User Icon Styles */
@@ -28,8 +25,8 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: white;
-    border: 3px solid #3498db;
+    background-color: lightgray;
+    border: 2px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,7 +35,8 @@
 
   .initials
   {
-    color: black;
+    color: white;
+    font-weight: bold;
   }
   
   /* Dropdown Styles */
@@ -57,7 +55,7 @@
     padding: 5px;
     cursor: pointer;
     background-color: transparent;
-    font-size: 10pt;
+    font-size: 12pt;
     border: none;
   }
 

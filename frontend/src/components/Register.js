@@ -58,10 +58,12 @@ function Register()
           ref={(c) => registerEmail = c}/>
         <input name="password" type="password" placeholder="Password"
           ref={(c) => registerPassword = c}/>
-        <button name="registerButton" type="button" className="buttons" value="Register"
-          onClick={doRegister}>Register</button>
+        <div className="buttons-container">
+          <button name="registerButton" type="buttons" className="buttons" value="Register"
+            onClick={doRegister}>Register</button>
+        </div>
       </form>
-      <span id="registerResult">{message}</span>
+      <span id="registerResult" className='registerResult'>{message}</span>
     </div>
   );
 };

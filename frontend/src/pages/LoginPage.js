@@ -13,8 +13,8 @@ const LoginPage = () =>
     <div className="app">
       <PageTitle />
       <div className='toggle-container'>
-        <button className="button" onClick={() => setIsRegistering(false)}>Login</button>
-        <button className="button" onClick={() => setIsRegistering(true)}>Register</button>
+        <button className="login-page-buttons" onClick={() => setIsRegistering(false)}>Login</button>
+        <button className="login-page-buttons" onClick={() => setIsRegistering(true)}>Register</button>
       </div>
       {isRegistering ? <Register /> : <Login />}
     </div>
