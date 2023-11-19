@@ -150,7 +150,7 @@ function Landing() {
       <div id="Cards" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
         {cardData.map((card, index) => (
           <Col key={card.id} xs={12} md={4} style={{ marginBottom: '20px' }}>
-            <Card style={{ width: '80%' }}>
+            <Card style={{ width: '90%' }}>
               <Card.Img variant="top" src={card.imageSrc} />
               <CardBody>
                 <Card.Title>{card.title}</Card.Title>
