@@ -89,7 +89,7 @@ exports.setApp = function (app, client) {
     const { email, password } = req.body;
 
     const db = client.db('COP4331Cards');
-    const results = await db.collection('Users').find({Email:email,Password:password}).toArray();
+    const results = await db.collection('Users').find({Email:email}).toArray();
 
     var id = '';
     var fn = '';
@@ -98,13 +98,19 @@ exports.setApp = function (app, client) {
 
     var ret;
 
+    // If account exists
     if( results.length > 0 )
     {
-        id = results[0]._id;
-        fn = results[0].FirstName;
-        ln = results[0].LastName;
+	var salt = results[0].Salt;
+    	var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
+	// If correct password
+	if(hash == results[0].Password)
+	{
+	  id = results[0]._id;
+          fn = results[0].FirstName;
+ 	  ln = results[0].LastName;
 
-        //ratemyride.herokuapp.com
+	  //ratemyride.herokuapp.com
         if (results[0].isVerified == false) {
         const msg = {
           to: results[0].Email,
@@ -129,7 +135,7 @@ exports.setApp = function (app, client) {
             ret = { error: error };
           }
           return res.status(200).json(ret);
-        }
+        }//end of email verif block
   
         try {
           const token = require("./createJWT.js");
@@ -138,46 +144,53 @@ exports.setApp = function (app, client) {
         catch (e) {
           ret = { error: e.message };
         }
+      }// end of correct pass block
+      else {// If incorrect password
+        ret = { error: "Password is incorrect" };
       }
-      else {
-        ret = { error: "Email/Password combination incorrect" };
-      }
+    else {//If account doesn't exist
+	ret = { error: "Email/Password combination incorrect" };
+    }
   
       res.status(200).json(ret);
     });
-
+	
     app.post('/api/register', async (req, res, next) => 
     {
         // incoming: firstName, lastName, email, password
         // outgoing: error
 
         const { firstName, lastName, email, password } = req.body;
-	    
-        const newAccount = {
-            FirstName:firstName,
-            LastName:lastName,
-            Email:email,
-            Password:password,
-            emailToken: crypto.randomBytes(64).toString('hex'),
-            isVerified: false
-        };
 
         let error = '';
         var ret;
         const db = client.db('COP4331Cards');
         try {
             // Check for existing user
-            const user = await db.collection('Users').findOne({Email:email});
-            {
-                if(user)
+            const result = await db.collection('Users').findOne({Email:email});
+            //{
+                if(result)
                 {
                     error = "Account with this email already exists.";
                     error = { error: error };
                     return res.status(200).json(error);
                 }
-            }
-
-            const result = db.collection('Users').insertOne(newAccount);
+            //}
+		
+	    var salt = crypto.randomBytes(16).toString('hex'); 
+            var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
+		
+	    const newAccount = {
+                FirstName:firstName,
+                LastName:lastName,
+                Email:email,
+                Password:hash,
+		Salt:salt,
+                emailToken: crypto.randomBytes(64).toString('hex'),
+                isVerified: false
+            };
+            const res = db.collection('Users').insertOne(newAccount);
+	    error = "Account created";
         }
         catch (e)
         {
