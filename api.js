@@ -47,14 +47,7 @@ exports.setApp = function (app, client) {
         // outgoing: error
 
         const { firstName, lastName, email, password } = req.body;
-
-        /* // Fetch the current maximum UserId
-        const maxUserIdResult = await db.collection('Users').find({}, { sort: { UserId: -1 }, limit: 1 }).toArray();
-        const currentMaxUserId = maxUserIdResult.length > 0 ? parseInt(maxUserIdResult[0].UserId) || 0 : 0;
-
-        // Calculate the next UserId
-        const newUserId = (parseInt(currentMaxUserId) + 1).toString(); */
-
+	    
         const newAccount = {
             FirstName:firstName,
             LastName:lastName,
@@ -159,14 +152,7 @@ exports.setApp = function (app, client) {
         // outgoing: error
 
         const { firstName, lastName, email, password } = req.body;
-
-        /* // Fetch the current maximum UserId
-        const maxUserIdResult = await db.collection('Users').find({}, { sort: { UserId: -1 }, limit: 1 }).toArray();
-        const currentMaxUserId = maxUserIdResult.length > 0 ? parseInt(maxUserIdResult[0].UserId) || 0 : 0;
-
-        // Calculate the next UserId
-        const newUserId = (parseInt(currentMaxUserId) + 1).toString(); */
-
+	    
         const newAccount = {
             FirstName:firstName,
             LastName:lastName,
@@ -206,7 +192,7 @@ exports.setApp = function (app, client) {
                 Please copy and paste the address below to verify your account
                 http://https://ratemyride-3b8d03447308.herokuapp.com//emailVerif?token=${newAccount.emailToken}`,
             html: `<h1> Hello, <h1>
-                  <p> THank you for registering on our site</p>
+                  <p> Thank you for registering on our site</p>
                   <p> please click the link below to verify your account.</p>
                   <a href=https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${newAccount.emailToken}>Verify account</a>`,
           }
