@@ -393,6 +393,33 @@ exports.setApp = function (app, client) {
   });
 
   // +++++++++++++++++++++++++++++ Ride APIs +++++++++++++++++++++++++++++
+  app.post("/api/getAllRides", async (req, res, next) => {
+    // incoming:
+    // outgoing: allRides, log
+
+    var log = "";
+    const db = client.db("COP4331Cards");
+    const rides = await db.collection("Rides").find({}).toArray();
+
+    if (rides.length > 0) {
+        const mappedRides = rides.map((ride) => ({
+            rideId: ride._id,
+            rideName: ride.Ride,
+            description: ride.Description,
+            themeParkId: ride.ThemeParkID,
+            imageSource: ride.ImageSource
+            // Add other fields as needed
+        }));
+        log = "Success.";
+        var ret = { allRides: mappedRides, log: log };
+        res.status(200).json(ret);
+    } else {
+        log = "No rides found.";
+        var ret = { log: log };
+        res.status(200).json(ret);
+    }
+});
+
   app.post("/api/searchRide", async (req, res, next) => {
       // incoming: rideName
       // outgoing: rides, log
@@ -475,7 +502,7 @@ exports.setApp = function (app, client) {
 
   app.post("/api/getRideInfo", async (req, res, next) => {
       // incoming: rideId
-      // outgoing: rideName, description, themeParkId, log
+      // outgoing: rideName, description, themeParkId, imageSource, log
 
       var log = "";
 
@@ -502,6 +529,7 @@ catch (e) {
           rideName = results[0].Ride;
           description = results[0].Description;
           themeParkId = results[0].ThemeParkID;
+          imageSource = results[0].ImageSource;
           log = "Success.";
       } else {
           log = "Ride doesn't exist.";
@@ -511,6 +539,7 @@ catch (e) {
           rideName: rideName,
           description: description,
           themeParkId: themeParkId,
+          imageSource: imageSource,
           log: log,
       };
       res.status(200).json(ret);

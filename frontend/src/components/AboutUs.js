@@ -4,6 +4,7 @@ import './AboutUs.css';
 const AboutUs = () => {
   return (
     <div>
+      <br></br>
       <h1 className="about-us-title">About Us</h1>
       <section className="about-us-section"> {/* Add the CSS class */}
         <p>

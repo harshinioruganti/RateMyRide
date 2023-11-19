@@ -59,7 +59,7 @@
     position: absolute;
     top: 50px;
     right: 10px;
-    background-color: #fff;
+    background-color: #171e2e;
     border: 2px solid #445988;
     border-radius: 5px;
     padding: 5px;
@@ -72,11 +72,18 @@
     background-color: transparent;
     font-size: 12pt;
     border: none;
+    text-decoration: none;
+    color: white;
   }
 
   .dropdown-item:hover {
     background-color: gray;
   }
+
+ .dropdown-item:visited
+ {
+    text-decoration: none;
+ }
   
   /* Show Dropdown on Hover */
   .user-icon:hover .dropdown {
