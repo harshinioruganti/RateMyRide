@@ -7,7 +7,7 @@ function Landing() {
       id: 1,
       title: 'Revenge of the Mummy',
       themePark: 'Universal Studios',
-      imageSrc: 'https://picsum.photos/200',
+      imageSrc: 'https://imgs.search.brave.com/ERgXSZvORUifqHAJiDgv5yxC6e3Q9WDSP9KQF4LpLC8/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pMC53/cC5jb20vd3d3Lmhl/eW9ybGFuZG8uY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy9yZXZl/bmdlLW9mLXRoZS1t/dW1teS5qcGc_Zml0/PTEyMDAsNjAwJnNz/bD0x',
       content: "'Prepare to forfeit your souls!'",
       reviews: [],
     },
@@ -15,7 +15,7 @@ function Landing() {
       id: 2,
       title: 'Men in Black: Alien Attack',
       themePark: 'Universal Studios',
-      imageSrc: 'https://picsum.photos/100',
+      imageSrc: 'https://imgs.search.brave.com/K0CXilYYVd32sXJ1yKRIdf9rCrkZycGHqpxPUCPlFgk/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9ibG9n/LmRpc2NvdmVydW5p/dmVyc2FsLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/Ni9NRU4tSU4tQkxB/Q0stQWxpZW4tQXR0/YWNrLVJpZGUuanBn',
       content: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
       reviews: [],
     },
@@ -23,7 +23,7 @@ function Landing() {
       id: 3,
       title: 'Hollywood Rip Ride Rockit',
       themePark: 'Hollywood Studios',
-      imageSrc: 'https://picsum.photos/300',
+      imageSrc: 'https://imgs.search.brave.com/s3sT4q7UDtXSDPFrH36IuzozZ5tth16-iY6G0kWielY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc3F1YXJlc3Bh/Y2UtY2RuLmNvbS9j/b250ZW50L3YxLzU2/YjkyZmQ2Zjg1MDgy/NDljYWJlZmYwYS8x/NDYwMjMzMTkwMDQ0/LVhLSVhVUldNWVNU/RkI5VkZZNFFVL3Jp/cC1yaWRlLXJvY2tp/dC1jbGltYi1hbmQt/ZHJvcC5qcGc',
       content: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
       reviews: [],
     },
@@ -151,7 +151,7 @@ function Landing() {
         {cardData.map((card, index) => (
           <Col key={card.id} xs={12} md={4} style={{ marginBottom: '20px' }}>
             <Card style={{ width: '90%' }}>
-              <Card.Img variant="top" src={card.imageSrc} />
+              <Card.Img variant="top" src={card.imageSrc}  style={{ height: '200px', objectFit: 'cover' }} />
               <CardBody>
                 <Card.Title>{card.title}</Card.Title>
                 <Card.Text>{card.content}</Card.Text>
