@@ -12,7 +12,7 @@ _createToken = function ( fn, ln, id )
     {
       const expiration = new Date();
       const user = {id:id,firstName:fn,lastName:ln};
-      secret = crypto.randomBytes(64).toString('hex');
+      secret = process.env.ACCESS_TOKEN_SECRET;
       const accessToken =  jwt.sign( user, secret);
       // In order to expire with a value other than the default, use the 
        // following

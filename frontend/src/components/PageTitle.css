@@ -5,10 +5,13 @@
 .title {
     text-align: center;
     color: white;
+    font-size:24pt;
 }
 
 .logo
 {
     display: flex;
     justify-content: center;
+    align-items: center;
+    margin-left: 35%;
 }

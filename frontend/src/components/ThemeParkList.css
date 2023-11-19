@@ -1,0 +1,108 @@
+.theme-park-title {
+    text-align: center;
+}
+
+.theme-park-title {
+    color: white;
+    font-size:22pt;
+}
+
+ /* Search Bar Styles */
+ .search-bar {
+  width: 300px;
+  margin: 0 auto;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-image: url('../search-icon.png'); 
+  background-size: 20px; /* Adjust size of icon here */
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.add-ride-button {
+  outline: yellow;
+  font-size: 14pt;
+  align-items: left;
+  margin: 10px;
+}
+
+.theme-park-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: Verdana;
+}
+
+.park {
+    width: 80%;
+    margin: 10px 0;
+    border-radius: 8px;
+}
+
+.park-header {
+    width: 100%;
+    padding: 5px;
+    font-size: 20pt;
+    text-align: center;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+.park-info {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.park-name {
+  font-size: 16pt;
+}
+
+.park-location {
+  font-size: 10pt;
+}
+  
+  .rides-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ride-name {
+    font-size: 16pt;
+    text-decoration: none;
+    background-color: transparent;
+    align-items: center;
+  }
+  
+/* Define alternating colors for parks */
+.park-0 {
+    background-color: #7bc3e3; /* First color for parks */
+    }
+  
+.park-1 {
+    background-color: #faefc2; /* Second color for parks */
+  }
+  
+.park-2 {
+    background-color: #68aa74; /* Third color for parks */
+  }
+  
+  /* Style rides based on the park index */
+.ride-0 {
+    background-color: #7bc3e3; /* Match first park color for rides */
+  }
+  
+.ride-1 {
+    background-color: #faefc2; /* Match second park color for rides */
+  }
+  
+.ride-2 {
+    background-color: #68aa74; /* Match third park color for rides */
+  }

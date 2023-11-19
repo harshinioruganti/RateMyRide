@@ -1,0 +1,23 @@
+.about-us-title {
+    text-align: center
+}
+
+.about-us-title h1 {
+    color: white;
+}
+
+.about-us-section {
+    background-color: #faefc2;
+    color: black;
+    font-size: 14pt;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+.about-us-title {
+
+}
+  

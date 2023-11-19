@@ -30,24 +30,46 @@
     flex-direction: column;
     align-items: center;
     transition: .5s;
+
   }
 
-  .buttons {
-    top: 60px;
-    width: 30%;
-    padding: 10px 30px;
+  /* Style for input fields */
+.input-group input[type="text"],
+.input-group input[type="password"] {
+  width: 60%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  margin-bottom: 10px;
+}
+
+/* Style for placeholder text */
+.input-group input[type="text"]::placeholder,
+.input-group input[type="password"]::placeholder {
+  font-size: 14px; /* Adjust placeholder font size */
+}
+
+.buttons-container {
+  text-align: center;
+}
+
+.buttons {
+    padding: 10px 20px;
     position: relative;
     cursor: pointer;
     display: block;
     margin: auto;
-    background: #171E2E;
+    background: #171e2e;
     border: 0;
     outline: none;
     border-radius: 30px;
     transition: background 0.3s;
     color: white;
-  }
+    text-align: center;
+    margin: 0 10px; /* horizontal spacing */
+    font-size: 12pt;
+}
 
-  .buttons:hover {
+.buttons:hover {
     background: #445988;
-  }
+}
