@@ -168,14 +168,14 @@ exports.setApp = function (app, client) {
         try {
             // Check for existing user
             const result = await db.collection('Users').findOne({Email:email});
-            //{
+            {
                 if(result)
                 {
                     error = "Account with this email already exists.";
                     error = { error: error };
                     return res.status(200).json(error);
                 }
-            //}
+            }
 		
 	    var salt = crypto.randomBytes(16).toString('hex'); 
             var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
