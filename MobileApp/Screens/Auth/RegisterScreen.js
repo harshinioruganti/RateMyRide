@@ -66,7 +66,7 @@ export default RegisterScreen = ({ navigation }) => {
             password: formData.password,
         }
         try {
-            const response = await Axios.post(URL + 'api/register', data, {
+            const response = await Axios.post(URL + '/api/mobile/register', data, {
                 headers: { 'Content-type': 'application/json' }
             });
 

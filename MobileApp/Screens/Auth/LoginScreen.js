@@ -6,7 +6,8 @@ import Axios from 'axios';
 import ReusableAuthForm from "./Components/ReusableAuthForm";
 import { login } from "../../Store/AuthSlice";
 
-const URL = 'https://ratemyride-3b8d03447308.herokuapp.com/'
+const URL1 = 'https://ratemyride-3b8d03447308.herokuapp.com/'
+const URL = 'http://localhost:5055/'
 
 export default LoginScreen = ({ navigation }) => 
 {
@@ -25,7 +26,8 @@ export default LoginScreen = ({ navigation }) =>
             password: userData.password,
         };
         try {
-            const response = await Axios.post(URL + 'api/login', user, {
+            console.log(URL + 'api/mobile/login')
+            const response = await Axios.post(URL+ 'api/mobile/login', user, {
                 headers: { 'Content-type': 'application/json' }
             });
 

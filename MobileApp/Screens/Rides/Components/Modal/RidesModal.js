@@ -8,7 +8,6 @@ import RatingAndDescription from "./Content/RatingAndDescription";
 const RidesModal = ({toggleModal, isVisible, rideInfo, backgroundColor}) => {
 
     const handleCloseModal = () => toggleModal(false);
-
     return (
         <Modal visible={ isVisible } >
             <View style={ styles.modalContainer }>
