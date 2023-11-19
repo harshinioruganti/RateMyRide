@@ -54,21 +54,20 @@
 }
 
 .buttons {
-  top: 60px;
-  width: 60%;
-  padding: 10px 20px;
-  position: relative;
-  cursor: pointer;
-  display: block;
-  margin: auto;
-  background: #171E2E;
-  border: 0;
-  outline: none;
-  border-radius: 30px;
-  transition: background 0.3s;
-  color: white;
-  text-align: center;
-  margin: 0 10px;
+    padding: 10px 20px;
+    position: relative;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    background: #171e2e;
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    transition: background 0.3s;
+    color: white;
+    text-align: center;
+    margin: 0 10px; /* horizontal spacing */
+    font-size: 12pt;
 }
 
 .buttons:hover {

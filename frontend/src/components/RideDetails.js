@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 function RideDetails() {
+  let bp = require('./Path.js');
+
   const [rideDetails, setRideDetails] = useState({});
   const { rideId } = useParams();
 
   useEffect(() => {
     const fetchRideDetails = async () => {
         try {
-          const response = await fetch('/api/getRideInfo', {
+          const response = await fetch(bp.buildPath('/api/getRideInfo'), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

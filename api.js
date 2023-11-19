@@ -377,7 +377,7 @@ exports.setApp = function (app, client) {
       var token = require('./createJWT.js');
       const { rideName } = req.body;
 
-      try {
+      /* try {
         if (token.isExpired(jwtToken)) {
           var r = { error: 'The JWT is no longer valid', jwtToken: '' };
           res.status(200).json(r);
@@ -386,7 +386,7 @@ exports.setApp = function (app, client) {
       }
       catch (e) {
         console.log(e.message);
-      }
+      } */
     
       let rides = [];
       let log = '';
@@ -456,9 +456,9 @@ app.post('/api/getRideInfo', async (req, res, next) =>
 	
  var log = '';
 
-  const { rideId, jwtToken } = req.body;
+  const { rideId } = req.body;
 
-  try {
+  /* try {
     if (token.isExpired(jwtToken)) {
       var r = { error: 'The JWT is no longer valid', jwtToken: '' };
       res.status(200).json(r);
@@ -467,7 +467,7 @@ app.post('/api/getRideInfo', async (req, res, next) =>
   }
   catch (e) {
     console.log(e.message);
-  }
+  } */
 
   const db = client.db('COP4331Cards');
   const results = await db.collection('Rides').find({_id:new ObjectId(rideId)}).toArray();
@@ -497,7 +497,7 @@ app.post('/api/getRideInfo', async (req, res, next) =>
       var token = require('./createJWT.js');
       const { rideName,  description, themeParkId } = req.body;
 
-      try {
+      /* try {
         if (token.isExpired(jwtToken)) {
           var r = { error: 'The JWT is no longer valid', jwtToken: '' };
           res.status(200).json(r);
@@ -506,7 +506,7 @@ app.post('/api/getRideInfo', async (req, res, next) =>
       }
       catch (e) {
         console.log(e.message);
-      }
+      } */
         
         
     const newRide = {Ride:rideName,Description:description,ThemeParkID:themeParkId};

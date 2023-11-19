@@ -57,7 +57,7 @@ function Login()
             <input type="password" id="loginPassword" className="login-field" placeholder="Password" required
                 ref={(c) => loginPassword = c}/><br />
             <div className="buttons-container">
-                <button type="button" id="loginButton" className="buttons" value = "Login"
+                <button type="button" id="loginButton" className="login-button" value = "Login"
                     onClick={doLogin}>Login</button>
             </div>
         </form>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Header.css';
@@ -21,12 +21,12 @@ const Header = () => {
 
   };  
 
+
   return (
     <div class="header">
         <Link to="/theme-parks">
           <div class="logo">RateMyRide</div>
         </Link>
-        <input type="text" class="search-bar" placeholder="Search"/>
         <div class="user-icon">
             <div class="initials">{initials}</div>
             <div class="dropdown">

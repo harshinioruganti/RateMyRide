@@ -11,20 +11,13 @@
   .logo {
     font-size: 24px;
     font-weight: bold;
-    align-items: left
+    align-items: left;
+    text-decoration: none;
   }
-  
-  /* Search Bar Styles */
-  .search-bar {
-    width: 300px;
-    margin: 0 auto;
-    padding: 5px;
-    border: 1px solid black;
-    border-radius: 5px;
-    background-image: url('../search-icon.png'); 
-    background-size: 20px; /* Adjust size of icon here */
-    background-repeat: no-repeat;
-    background-position: right center;
+
+  .logo:visited {
+    color: black;
+    text-decoration: none;
   }
   
   /* User Icon Styles */
@@ -32,7 +25,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: gray;
+    background-color: lightgray;
     border: 2px solid black;
     display: flex;
     justify-content: center;
