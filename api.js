@@ -566,6 +566,36 @@ app.post('/api/getRideInfo', async (req, res, next) =>
     
       res.status(200).json({ reviewList, log });
     });
+
+  app.post('/api/getMyReviews', async (req, res, next) => {
+  // incoming: userId
+  // outgoing: reviewList, log
+
+  const { userId } = req.body;
+  const db = client.db('COP4331Cards');
+
+  let reviewList = [];
+  let log = '';
+
+  const results = await db.collection('Reviews').find({ UserID:userId }).toArray();
+
+  if (results.length > 0) {
+    reviewList = results.map(review => ({
+      thrill: review.Thrill,
+      theme: review.Theme,
+      length: review.Length,
+      overall: review.Overall,
+      review: review.Review,
+      rideId: review.RideID
+    }));
+    log = "Reviews found."
+  } 
+  else {
+    log = "No reviews yet.";
+  }
+
+  res.status(200).json({ reviewList, log });
+});
     
     app.post('/api/addReview', async (req, res, next) =>
     {
