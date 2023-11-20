@@ -26,5 +26,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.2.0"
   },
-  "heroku-run-build-script": true
+  "heroku-run-build-script": true,
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }
