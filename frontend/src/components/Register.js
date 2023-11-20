@@ -61,8 +61,8 @@ function Register()
               <button name="registerButton" className="register-button" value="Register"
                 onClick={doRegister}>Register</button>
             </div>
+            <span id="registerResult" className='registerResult'>{message}</span>
           </form>
-      <span id="registerResult" className='registerResult'>{message}</span>
     </div>
   );
 };
