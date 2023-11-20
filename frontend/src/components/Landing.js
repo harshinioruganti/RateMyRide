@@ -120,7 +120,7 @@ function Landing() {
                 <Card.Title>{card.rideName}</Card.Title>
                 <Card.Text>Theme Park</Card.Text>
                 <Card.Text>Average Rating:</Card.Text>
-                <Button variant="primary" onClick={() => handleModalShow(card.id)}>
+                <Button variant="primary" onClick={() => handleModalShow(card.rideId)}>
                   Rate It!
                 </Button>
 

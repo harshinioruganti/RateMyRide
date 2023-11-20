@@ -16,7 +16,7 @@ const Header = () => {
   {
 	  event.preventDefault();
 
-    localStorage.removeItem("user_data")
+    localStorage.removeItem("user_data");
     window.location.href = '/';
 
   };  

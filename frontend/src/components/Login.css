@@ -87,3 +87,12 @@
 .login-button:hover {
     background: #445988;
 }
+
+.login-field.error {
+  border: 2px solid red;
+  background-color: lightpink;
+}
+
+.login-field:focus {
+  border: 2px solid #1e90ff;
+}

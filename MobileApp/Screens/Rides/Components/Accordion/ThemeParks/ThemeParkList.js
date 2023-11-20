@@ -36,7 +36,7 @@ const ThemeParkList = () => {
             renderItem={({ item, index }) => (
                 <ThemeParkItem item={item} index={index} />
             )}
-            keyExtractor={ (park) => park.themePark }
+            keyExtractor={ (park) => park.ParkId }
             bounces={ false }
         />
     )

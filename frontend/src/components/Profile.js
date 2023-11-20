@@ -43,22 +43,9 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      <LoggedInName />
       <br/>
-      {/* User reviews section */}
-      <div className="user-reviews">
-        <h2>User Reviews</h2>
-        <ul>
-          {userReviews.map((review, index) => (
-            <li key={index}>
-              <p>Thrill: {review.thrill}</p>
-              <p>Theme: {review.theme}</p>
-              <p>Length: {review.length}</p>
-              <p>Overall: {review.overall}</p>
-              <p>Review: {review.review}</p>
-            </li>
-          ))}
-        </ul>
+      <div className="profile-icon">
+          <div className="initials">{initials}</div>
       </div>
     </div>
   );  

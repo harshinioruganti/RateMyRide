@@ -1,34 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, StyleSheet, TouchableOpacity, ScrollView, Text } from "react-native";
 import RideDescription from "../Components/Body/Description";
-import AddRatingModal from "../Components/Ratings/AddRatingModal";
 
-const RatingAndDescription = ({ rideDescription }) => {
-    const [activeModal, setActiveModal] = useState(false);
-
-    const handleOpeningModal = () => {
-        setActiveModal(!activeModal)
-    }
-
+const RatingAndDescription = () => {
     return (
-        <>
-        <AddRatingModal 
-            isVisible={ activeModal }
-        />
-            <ScrollView>
-                <View style={ styles.bodyWrapper }>
-                    <View style={ styles.description }>
-                        <Text style={{ paddingLeft: 20, fontSize: 18, fontWeight: 'bold'}}>Description:</Text>
-                        <RideDescription description={ rideDescription }/>
-                    </View>
-                    <View style={ styles.ratings }>
-                        <TouchableOpacity style={ styles.addButton } onPress={ handleOpeningModal }>
-                            <Text style={{ color: '#fff', fontSize: 25, }}>Add a new rating!</Text>
-                        </TouchableOpacity>
-                    </View>
+        <ScrollView>
+            <View style={ styles.bodyWrapper }>
+                <View style={ styles.description }>
+                    <RideDescription />
                 </View>
-            </ScrollView>
-        </>
+                <View style={ styles.ratings }>
+                    <TouchableOpacity style={ styles.addButton }>
+                        <Text style={{ color: '#fff', fontSize: 25, }}>Add a new rating!</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </ScrollView>
     )
 }
 
