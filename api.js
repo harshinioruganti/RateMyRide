@@ -641,6 +641,7 @@ catch (e) {
               overall: review.Overall,
               review: review.Review,
               rideId: review.RideID,
+              reviewId: review._id,
           }));
           log = "Reviews found.";
       } else {
