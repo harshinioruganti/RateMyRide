@@ -119,11 +119,11 @@ exports.setApp = function (app, client) {
           subject: "Please Verify Your Email",
           text: `Hello, thank you for registering to <RATEMYRIDE> 
               Please copy and paste the address below to verify your account
-              http://localhost:3000/emailVerif?token=${results[0].emailToken}`,
+              http://https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${results[0].emailToken}`,
           html: `<h1> Hello, <h1>
                 <p> Thank you for registering on our site</p>
                 <p> please click the link below to verify your account.</p>
-                <a href=http://localhost:3000/emailVerif?token=${results[0].emailToken}>Verify account</a>`,
+                <a href=https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${results[0].emailToken}>Verify account</a>`,
         }
 	try {
             await sgMail.send(msg)
@@ -185,7 +185,7 @@ exports.setApp = function (app, client) {
             subject: "Verify Your Email",
             text: `Hello, thank you for registering to <RATEMYRIDE> 
                 Please copy and paste the address below to verify your account
-                http://https://ratemyride-3b8d03447308.herokuapp.com//emailVerif?token=${newAccount.emailToken}`,
+                http://https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${newAccount.emailToken}`,
             html: `<h1> Hello, <h1>
                   <p> Thank you for registering on our site</p>
                   <p> please click the link below to verify your account.</p>
