@@ -81,9 +81,9 @@ function Login()
                     ref={(c) => loginPassword = c}/><br />
                 <button type="submit"  id="loginButton" className="login-button" value = "Login"
                     onClick={doLogin}>Login</button>
-                <button type="button" className="reset-button" onClick={handlePasswordReset}>
+                {/*<button type="button" className="reset-button" onClick={handlePasswordReset}>
                     Forgot Password?
-                </button>
+                </button>*/}
                 <span id="loginResult" className='login-result'>{message}</span>
             </form>
         </div>
