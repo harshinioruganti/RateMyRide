@@ -108,11 +108,11 @@ exports.setApp = function (app, client) {
                   subject: "Please Verify Your Email",
                   text: `Hello, thank you for registering to <RATEMYRIDE> 
             Please copy and paste the address below to verify your account
-            http://localhost:3000/emailVerif?token=${results[0].emailToken}`,
+            https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${results[0].emailToken}`,
                   html: `<h1> Hello, <h1>
               <p> Thank you for registering on our site</p>
               <p> please click the link below to verify your account.</p>
-              <a href=http://localhost:3000/emailVerif?token=${results[0].emailToken}>Verify account</a>`,
+              <a href=https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${results[0].emailToken}>Verify account</a>`,
               };
 
               try {
@@ -145,13 +145,6 @@ exports.setApp = function (app, client) {
       // outgoing: error
 
       const { firstName, lastName, email, password } = req.body;
-
-      /* // Fetch the current maximum UserId
-      const maxUserIdResult = await db.collection('Users').find({}, { sort: { UserId: -1 }, limit: 1 }).toArray();
-      const currentMaxUserId = maxUserIdResult.length > 0 ? parseInt(maxUserIdResult[0].UserId) || 0 : 0;
-
-      // Calculate the next UserId
-      const newUserId = (parseInt(currentMaxUserId) + 1).toString(); */
 
       const newAccount = {
           FirstName: firstName,
@@ -187,7 +180,7 @@ exports.setApp = function (app, client) {
           subject: "Verify Your Email",
           text: `Hello, thank you for registering to <RATEMYRIDE> 
               Please copy and paste the address below to verify your account
-              http://https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${newAccount.emailToken}`,
+              https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${newAccount.emailToken}`,
           html: `<h1> Hello, <h1>
                 <p> Thank you for registering on our site</p>
                 <p> please click the link below to verify your account.</p>
@@ -271,7 +264,7 @@ exports.setApp = function (app, client) {
           text: `Forgot Password
             We have recieved a request to reset the password for your account.
             To reset password click on the link below.
-            http://https://ratemyride-3b8d03447308.herokuapp.com/passReset?token=${passToken}`,
+            https://ratemyride-3b8d03447308.herokuapp.com/passReset?token=${passToken}`,
           html: `<h1> Hello, <h1>
               <p>  We have recieved a request to reset the password for your account</p>
               <p> please click the link below to reset your password</p>
@@ -708,6 +701,68 @@ catch (e) {
       } catch (e) {
           console.log(e.message);
       }
+
+      var ret = { error: error };
+      res.status(200).json(ret);
+  });
+
+  app.post("/api/editReview", async (req, res, next) => {
+    // incoming: rideId, userId, thrill, theme, length, overall, review
+    // outgoing: error
+
+    var token = require("./createJWT.js");
+    const {
+        rideId,
+        userId,
+        thrill,
+        theme,
+        length,
+        overall,
+        review,
+    } = req.body;
+
+    try {
+        if (token.isExpired(jwtToken)) {
+            var r = { error: "The JWT is no longer valid", jwtToken: "" };
+            res.status(200).json(r);
+            return;
+        }
+    } catch (e) {
+        console.log(e.message);
+    }
+
+    var error = "";
+
+    const db = client.db("COP4331Cards");
+    const results = await db
+        .collection("Reviews")
+        .findOne({ RideID: rideId, UserID: userId });
+
+    if (results) {
+        const updatedReview = {
+            ...results,
+            Thrill: thrill,
+            Theme: theme,
+            Length: length,
+            Overall: overall,
+            Review: review,
+        };
+        const result = db.collection("Reviews")
+            .updateOne({ RideID: rideId, UserID: userId },
+            { $set: updatedReview }
+        );
+        error = "Rewiew edited. Thank you!";
+    } else {
+        error =
+            "No existing review has been found to edit.";
+    }
+
+    var refreshedToken = null;
+    try {
+        refreshedToken = token.refresh(jwtToken);
+    } catch (e) {
+        console.log(e.message);
+    }
 
       var ret = { error: error };
       res.status(200).json(ret);
