@@ -159,6 +159,8 @@ exports.setApp = function (app, client) {
   // outgoing: log
 
   var log = "";
+  var ret = '';
+  let error = '';
 
   const { firstName, lastName, email, password } = req.body;
 
@@ -170,7 +172,7 @@ exports.setApp = function (app, client) {
   {
     log = "Account with this email already exists."
   }
-  else{
+  else {
     var salt = crypto.randomBytes(16).toString('hex'); 
     var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
 
