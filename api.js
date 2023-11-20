@@ -82,122 +82,74 @@ exports.setApp = function (app, client) {
 
     //++++++++++++++++++++++++ User APIs ++++++++++++++++++++++++++++++
     app.post('/api/login', async (req, res, next) => 
+  {
+  // incoming: email, password
+  // outgoing: userID, firstName, lastName, log
+	
+  var log = '';
+
+  const { email, password } = req.body;
+
+  const db = client.db('COP4331Cards');
+
+  const results = await db.collection('Users').find({Email:email}).toArray();
+
+  var id = -1;// Will display -1 as id if invalid login
+  var fn = '';
+  var ln = '';
+
+  if( results.length > 0 )
+  {
+    var salt = results[0].Salt;
+    var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
+
+    if(hash == results[0].Password)
     {
-    // incoming: email, password
-    // outgoing: id, firstName, lastName, error
-
-    const { email, password } = req.body;
-
-    const db = client.db('COP4331Cards');
-    const results = await db.collection('Users').find({Email:email}).toArray();
-
-    var id = '';
-    var fn = '';
-    var ln = '';
-    var error = '';
-
-    var ret;
-
-    // If account exists
-    if( results.length > 0 )
-    {
-	var salt = results[0].Salt;
-    	var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
-	// If correct password
-	if(hash == results[0].Password)
-	{
-	  id = results[0]._id;
-          fn = results[0].FirstName;
- 	  ln = results[0].LastName;
-
-	  //ratemyride.herokuapp.com
-        if (results[0].isVerified == false) {
-        const msg = {
-          to: results[0].Email,
-          from: "harshinioruganti2020@gmail.com",
-          subject: "Please Verify Your Email",
-          text: `Hello, thank you for registering to <RATEMYRIDE> 
-              Please copy and paste the address below to verify your account
-              http://localhost:3000/emailVerif?token=${results[0].emailToken}`,
-          html: `<h1> Hello, <h1>
-                <p> Thank you for registering on our site</p>
-                <p> please click the link below to verify your account.</p>
-                <a href=http://localhost:3000/emailVerif?token=${results[0].emailToken}>Verify account</a>`,
-        }
-
-        try {
-            await sgMail.send(msg)
-            error = "Please verify your email, a new verification link has been sent to your email"
-            ret = { error: error };
-          }
-          catch (e) {
-            error = e.toString();
-            ret = { error: error };
-          }
-          return res.status(200).json(ret);
-        }//end of email verif block
-  
-        try {
-          const token = require("./createJWT.js");
-          ret = token.createToken(fn, ln, id);
-        }
-        catch (e) {
-          ret = { error: e.message };
-        }
-      }// end of correct pass block
-      else {// If incorrect password
-        ret = { error: "Password is incorrect" };
-      }
-    else {//If account doesn't exist
-	ret = { error: "Email/Password combination incorrect" };
+      id = results[0]._id;
+      fn = results[0].FirstName;
+      ln = results[0].LastName;
+      log = "Success."
     }
-  
-      res.status(200).json(ret);
-    });
+    else{
+      log = "Incorrect password."
+    }
+  }
+  else{
+    log = "Account doesn't exist."
+  }
+
+
+  var ret = { userID:id, firstName:fn, lastName:ln, log:log};
+  res.status(200).json(ret);
+  });
 	
     app.post('/api/register', async (req, res, next) => 
-    {
-        // incoming: firstName, lastName, email, password
-        // outgoing: error
+  {
+  // incoming: firstName, lastName, email, password
+  // outgoing: log
 
-        const { firstName, lastName, email, password } = req.body;
+  var log = "";
 
-        let error = '';
-        var ret;
-        const db = client.db('COP4331Cards');
-        try {
-            // Check for existing user
-            const result = await db.collection('Users').findOne({Email:email});
-            {
-                if(result)
-                {
-                    error = "Account with this email already exists.";
-                    error = { error: error };
-                    return res.status(200).json(error);
-                }
-            }
-		
-	    var salt = crypto.randomBytes(16).toString('hex'); 
-            var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
-		
-	    const newAccount = {
-                FirstName:firstName,
-                LastName:lastName,
-                Email:email,
-                Password:hash,
-		Salt:salt,
-                emailToken: crypto.randomBytes(64).toString('hex'),
-                isVerified: false
-            };
-            const res = db.collection('Users').insertOne(newAccount);
-	    error = "Account created";
-        }
-        catch (e)
-        {
-            error = e.toString();
-        }
+  const { firstName, lastName, email, password } = req.body;
 
-        const msg = {
+  const db = client.db('COP4331Cards');
+
+  // Check for existing user
+  const results = await db.collection('Users').find({Email:email}).toArray();
+  if(results.length > 0)
+  {
+    log = "Account with this email already exists."
+  }
+  else{
+    var salt = crypto.randomBytes(16).toString('hex'); 
+    var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
+
+    var newAccount = {FirstName:firstName, LastName:lastName, Email:email, Password:hash, Salt:salt, emailToken:crypto.randomBytes(64).toString('hex'), isVerified:false};
+    db.collection('Users').insertOne(newAccount);
+    log = "Account created."
+  }
+
+  const msg = {
             to: email,
             from: "harshinioruganti2020@gmail.com",
             subject: "Verify Your Email",
@@ -219,10 +171,10 @@ exports.setApp = function (app, client) {
             ret = { error: error };
           }
 
-	    
-          res.status(200).json(ret);
-    });
-
+  var ret = { log:log };
+  res.status(200).json(ret);
+});
+	
     app.post('/api/emailVerif', async (req, res, next) => {
         const { emailToken } = req.body;
         const db = client.db('COP4331Cards');
