@@ -1,0 +1,23 @@
+/* Styles for the profile icon */
+.profile-container {
+    text-align: center;
+  }
+  
+  .profile-icon {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: lightgray; /* Change this to your desired background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 72px; /* Change font size as needed */
+    color: 1e90ffwhite; /* Text color */
+  }
+  
+  .initials {
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  

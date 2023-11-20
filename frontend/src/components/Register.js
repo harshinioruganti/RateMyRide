@@ -49,13 +49,13 @@ function Register()
       <div className="formBox">
           <form onSubmit={doRegister} id="login" className="input-group">
             <span id="inner-title">Register</span>
-            <input name="firstName" type="text" placeholder="First Name"
+            <input name="firstName" type="text" className={`register-field ${message !== '' ? 'register-field.error' : ''}`} placeholder="First Name"
               ref={(c) => registerFirstName = c}/>
-            <input name="lastName" type="text" placeholder="Last Name"
+            <input name="lastName" type="text" className={`register-field ${message !== '' ? 'register-field.error' : ''}`} placeholder="Last Name"
               ref={(c) => registerLastName = c}/>
-            <input name="email" type="email" placeholder="Email"
+            <input name="email" type="email" className={`register-field ${message !== '' ? 'register-field.error' : ''}`} placeholder="Email"
               ref={(c) => registerEmail = c}/>
-            <input name="password" type="password" placeholder="Password"
+            <input name="password" type="password" className={`register-field ${message !== '' ? 'register-field.error' : ''}`} placeholder="Password"
               ref={(c) => registerPassword = c}/>
             <div className="buttons-container">
               <button name="registerButton" className="register-button" value="Register"

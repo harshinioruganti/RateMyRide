@@ -187,7 +187,7 @@ exports.setApp = function (app, client) {
           subject: "Verify Your Email",
           text: `Hello, thank you for registering to <RATEMYRIDE> 
               Please copy and paste the address below to verify your account
-              http://https://ratemyride-3b8d03447308.herokuapp.com//emailVerif?token=${newAccount.emailToken}`,
+              http://https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${newAccount.emailToken}`,
           html: `<h1> Hello, <h1>
                 <p> Thank you for registering on our site</p>
                 <p> please click the link below to verify your account.</p>
@@ -248,7 +248,7 @@ exports.setApp = function (app, client) {
       let results;
 
       try {
-          results = await db.collection("Users").findOne({ email: search });
+          results = await db.collection("Users").findOne({ Email: search });
           if (!results) {
               error = "Registered user does not exist with that email";
               return res.redirect("/");
@@ -258,7 +258,7 @@ exports.setApp = function (app, client) {
           const updateUser = { $set: { passToken: passToken } };
           user = db
               .collection("Users")
-              .updateOne({ email: search }, updateUser);
+              .updateOne({ Email: search }, updateUser);
       } catch (e) {
           error = e.toString();
           ret = { error: error };
@@ -271,11 +271,11 @@ exports.setApp = function (app, client) {
           text: `Forgot Password
             We have recieved a request to reset the password for your account.
             To reset password click on the link below.
-            http://localhost:3000/passReset?token=${passToken}`,
+            http://https://ratemyride-3b8d03447308.herokuapp.com/passReset?token=${passToken}`,
           html: `<h1> Hello, <h1>
               <p>  We have recieved a request to reset the password for your account</p>
               <p> please click the link below to reset your password</p>
-              <a href=http://localhost:3000/passReset?token=${passToken}>Reset Password</a>`,
+              <a href=https://ratemyride-3b8d03447308.herokuapp.com/passReset?token=${passToken}>Reset Password</a>`,
       };
 
       console.log(error);
@@ -621,7 +621,7 @@ catch (e) {
       res.status(200).json({ reviewList, log });
   });
 
-  app.post("/api/getRideReviews", async (req, res, next) => {
+  app.post("/api/getReviews", async (req, res, next) => {
       // incoming: rideId
       // outgoing: reviewList, log
 
