@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, ActivityIndicator, View, Text, StyleSheet, Alert } from "react-native";
-import { Rating } from 'react-native-ratings';
 import Axios from 'axios';
 import Review from "./Review";
 const URL = 'https://ratemyride-3b8d03447308.herokuapp.com/'
 
 const ReviewList = ({ rideId }) => {
-    const [avgScore, setAvgScore] = useState(null);
     const [reviewList, setReviewList] = useState([]);
-    const [showDetails, setShowDetails] = useState(false);
     const [loadingReviews, setLoadingReviews] = useState(false);
 
     useEffect(() => {

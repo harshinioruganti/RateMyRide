@@ -7,23 +7,26 @@ const Review = ({ item, index }) => {
 
     const renderRatings = () => {
         return Object.keys(item).map((key, index) => {
-            if (key !== 'overall' && key !== 'userId') {
+            if (key !== 'overall' && key !== 'userId' && key !== 'review') {
                 return (
-                    <>
-                        <Text style={{ color: "#fff"}}>{key}</Text>
-                    <Rating 
-                        key={index}
-                        style={styles.rating}
-                        tintColor="#141c22"
-                        startingValue={item[key]}
-                        readonly
-                    />
-                    </>
+                    <View style={ styles.ratingContainer}>
+                        <Text style={{ color: "#fff", fontSize: 20 }}>
+                            {key.charAt(0).toUpperCase() + key.slice(1) + ":"}
+                        </Text>
+                        <Rating 
+                            key={ item.userId }
+                            style={styles.rating}
+                            tintColor="#141c22"
+                            startingValue={item[key]}
+                            readonly
+                        />
+                    </View>
                 );
             }
             return null;
         });
     }
+
     return (
         <View style={styles.container}>
             <View style={styles.topSection}>
@@ -51,9 +54,19 @@ const Review = ({ item, index }) => {
                 )}
             </View>
             {showDetails && (
-                <View style={styles.ratingsList}>
-                    {renderRatings()}
-                </View>
+                <>
+                    <View style={styles.ratingsList}>
+                        {renderRatings()}
+                    </View>
+                    <View style={styles.reviewContainer}>
+                        <Text style={{ color: "#fff", fontSize: 20, }}>
+                            Review:
+                        </Text>
+                        <Text style={{ color: "#fff", fontSize: 16 }}>
+                            {item.review}
+                        </Text>
+                    </View>
+                </>
             )}
         </View>
     );
@@ -64,7 +77,6 @@ export default Review;
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
-        alignItems: 'center',
         borderRadius: 15,
         backgroundColor: '#141c22',
         margin: 5,
@@ -85,8 +97,19 @@ const styles = StyleSheet.create({
     },
     ratingsList: {
         display: 'flex',
-        height: 500,
         backgroundColor: '#141c22',
         width: '100%',
+    },
+    ratingContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#fff', // Adjust border color if needed
+    },
+    reviewContainer: {
+        padding: 15,
+
     },
 });
