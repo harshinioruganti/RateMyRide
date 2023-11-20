@@ -97,6 +97,7 @@ exports.setApp = function (app, client) {
   var id = -1;// Will display -1 as id if invalid login
   var fn = '';
   var ln = '';
+  var ret = '';
 
   if( results.length > 0 )
   {
@@ -109,6 +110,36 @@ exports.setApp = function (app, client) {
       fn = results[0].FirstName;
       ln = results[0].LastName;
       log = "Success."
+
+	    //ratemyride.herokuapp.com
+        if (results[0].isVerified == false) {
+        const msg = {
+          to: results[0].Email,
+          from: "harshinioruganti2020@gmail.com",
+          subject: "Please Verify Your Email",
+          text: `Hello, thank you for registering to <RATEMYRIDE> 
+              Please copy and paste the address below to verify your account
+              http://localhost:3000/emailVerif?token=${results[0].emailToken}`,
+          html: `<h1> Hello, <h1>
+                <p> Thank you for registering on our site</p>
+                <p> please click the link below to verify your account.</p>
+                <a href=http://localhost:3000/emailVerif?token=${results[0].emailToken}>Verify account</a>`,
+        }
+	try {
+            await sgMail.send(msg)
+            log = "Please verify your email, a new verification link has been sent to your email"
+          }
+          catch (e) {
+            log = e.toString();
+          }
+	}
+	try {
+          const token = require("./createJWT.js");
+          ret = token.createToken(fn, ln, id);
+        }
+        catch (e) {
+          log = e.toString();
+        }
     }
     else{
       log = "Incorrect password."
@@ -118,8 +149,7 @@ exports.setApp = function (app, client) {
     log = "Account doesn't exist."
   }
 
-
-  var ret = { userID:id, firstName:fn, lastName:ln, log:log};
+  ret = { userID:id, firstName:fn, lastName:ln, log:log};
   res.status(200).json(ret);
   });
 	
