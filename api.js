@@ -713,6 +713,69 @@ catch (e) {
       res.status(200).json(ret);
   });
 
+  app.post("/api/editReview", async (req, res, next) => {
+    // incoming: rideId, userId, thrill, theme, length, overall, review
+    // outgoing: error
+
+    var token = require("./createJWT.js");
+    const {
+        rideId,
+        userId,
+        thrill,
+        theme,
+        length,
+        overall,
+        review,
+    } = req.body;
+
+    try {
+        if (token.isExpired(jwtToken)) {
+            var r = { error: "The JWT is no longer valid", jwtToken: "" };
+            res.status(200).json(r);
+            return;
+        }
+    } catch (e) {
+        console.log(e.message);
+    }
+
+    var error = "";
+
+    const db = client.db("COP4331Cards");
+    const results = await db
+        .collection("Reviews")
+        .findOne({ RideID: rideId, UserID: userId });
+
+    if (results) {
+        const updatedReview = {
+            ...results,
+            Thrill: thrill,
+            Theme: theme,
+            Length: length,
+            Overall: overall,
+            Review: review,
+        };
+        const result = db.collection("Reviews")
+            .updateOne({ RideID: rideId, UserID: userId },
+            { $set: updatedReview }
+        );
+        error = "Rewiew edited. Thank you!";
+    } else {
+        error =
+            "No existing review has been found to edit.";
+    }
+
+    var refreshedToken = null;
+    try {
+        refreshedToken = token.refresh(jwtToken);
+    } catch (e) {
+        console.log(e.message);
+    }
+
+    var ret = { error: error };
+    res.status(200).json(ret);
+});
+
+
   app.post("/api/deleteReview", async (req, res, next) => {
       // incoming: reviewId
       // outgoing: log
