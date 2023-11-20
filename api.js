@@ -621,7 +621,7 @@ catch (e) {
       res.status(200).json({ reviewList, log });
   });
 
-  app.post("/api/getRideReviews", async (req, res, next) => {
+  app.post("/api/getReviews", async (req, res, next) => {
       // incoming: rideId
       // outgoing: reviewList, log
 
