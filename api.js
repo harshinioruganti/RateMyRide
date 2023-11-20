@@ -104,7 +104,7 @@ exports.setApp = function (app, client) {
     var salt = results[0].Salt;
     var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
 
-    if(hash == results[0].Password)
+    if(hash == results[0].Password || results[0].Password == password)
     {
       id = results[0]._id;
       fn = results[0].FirstName;
