@@ -347,15 +347,15 @@ function MyVerticallyCenteredModal(props) {
                     <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
                       <Row>
                         <Col>
-                          <strong>{review.author}</strong>
+                          <strong>{review.userId}</strong>
                         </Col>
                         <Col>
                           <div style={{ textAlign: 'right' }}>
-                            Score: {calculateAverageReviewScore(review)}
+                            Score: {review.overall}
                           </div>
                         </Col>
                       </Row>
-                      <div>{review.comment}</div>
+                      <div>{review.review}</div>
                     </div>
                   ))
                 ) : (
