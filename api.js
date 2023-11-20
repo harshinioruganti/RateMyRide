@@ -86,6 +86,10 @@ exports.setApp = function (app, client) {
         return res.status(400).json({ error: "Email is required" });
       }
 
+      if (!email.includes('@')) {
+        return res.status(400).json({ error: "Please enter a valid email." });
+      }
+
       if (!password || password.trim() === '') {
         return res.status(400).json({ error: "Password is required" });
       }
@@ -159,6 +163,21 @@ exports.setApp = function (app, client) {
 
       const { firstName, lastName, email, password } = req.body;
 
+      if (!firstName || firstName.trim() === '') {
+        return res.status(400).json({ error: "First Name is a required field." });
+      }
+
+      if (!lastName || lastName.trim() === '') {
+        return res.status(400).json({ error: "Last name is a required field." });
+      }
+
+      if (!email || email.trim() === '' || !email.includes('@')) {
+        return res.status(400).json({ error: "Please enter a valid email." });
+      }
+
+      if (!password || password.trim() === '') {
+        return res.status(400).json({ error: "Password is required." });
+      }
 
       var salt = crypto.randomBytes(16).toString('hex'); 
       var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
