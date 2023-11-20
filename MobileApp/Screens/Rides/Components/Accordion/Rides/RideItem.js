@@ -10,7 +10,7 @@ const RenderRide = ({ item, backgroundColor }) => {
     const handleModal = () => {
         setModal(!modal);
     }
-    
+
     return (
         <>
             {/* RIDES MODAL, use can view info about a specific ride and choose to leave a review  */}
@@ -27,8 +27,8 @@ const RenderRide = ({ item, backgroundColor }) => {
                         <Text style={ styles.rideName}>{ item.rideName }</Text>
                         {/* TURN RATING INTO COMPONENT */}
                         <AverageRating 
+                            rideId={ item.rideId }
                             tintColor={ backgroundColor }
-                            startingVal={ 2.5 }
                         />
                     </View>
                     <Ionicons name='chevron-forward-outline' size={ 50 } />
@@ -38,14 +38,13 @@ const RenderRide = ({ item, backgroundColor }) => {
     )
 }
 
-
 export default RenderRide;
 
 // Styles
 const styles = StyleSheet.create({
     ridesContainer: {
         width: 325,
-        height: 75,
+        height: 100,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
         width: 250
     },
     rideName: {
-        fontSize: 18,
+        fontSize: 25,
         fontWeight: 'bold',
     },
 })

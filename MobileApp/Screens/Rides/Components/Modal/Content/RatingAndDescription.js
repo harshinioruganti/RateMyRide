@@ -1,33 +1,41 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity, ScrollView, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity, ScrollView, Text, Alert } from "react-native";
 import RideDescription from "../Components/Body/Description";
 import AddRatingModal from "../Components/Ratings/AddRatingModal";
+import { useSelector } from 'react-redux';
 
-const RatingAndDescription = ({ rideDescription }) => {
+const RatingAndDescription = ({ rideDescription, rideId }) => {
     const [activeModal, setActiveModal] = useState(false);
+    const loggedIn = useSelector((state) => state.auth.loggedIn);
 
-    const handleOpeningModal = () => {
-        setActiveModal(!activeModal)
+    const handleActivateModal = () => {
+        if (!loggedIn) {
+            Alert.alert("Guest users cannot review rides...Please login or create an account to contiue.");
+            return;
+        }
+        else {
+            setActiveModal(!activeModal)
+        }
     }
 
     return (
         <>
-        <AddRatingModal 
-            isVisible={ activeModal }
-        />
-            <ScrollView>
-                <View style={ styles.bodyWrapper }>
-                    <View style={ styles.description }>
-                        <Text style={{ paddingLeft: 20, fontSize: 18, fontWeight: 'bold'}}>Description:</Text>
-                        <RideDescription description={ rideDescription }/>
-                    </View>
-                    <View style={ styles.ratings }>
-                        <TouchableOpacity style={ styles.addButton } onPress={ handleOpeningModal }>
-                            <Text style={{ color: '#fff', fontSize: 25, }}>Add a new rating!</Text>
-                        </TouchableOpacity>
-                    </View>
+            <AddRatingModal 
+                isVisible={ activeModal }
+                rideId={ rideId }
+                closeModal={ handleActivateModal }
+            />
+            <View style={ styles.bodyWrapper }>
+                <View style={ styles.description }>
+                    <Text style={{ paddingLeft: 20, fontSize: 18, fontWeight: 'bold'}}>Description:</Text>
+                    <RideDescription description={ rideDescription }/>
                 </View>
-            </ScrollView>
+                <View style={ styles.ratings }>
+                    <TouchableOpacity style={ styles.addButton } onPress={ handleActivateModal }>
+                        <Text style={{ color: '#fff', fontSize: 25, }}>Add a new rating!</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </>
     )
 }
@@ -42,7 +50,7 @@ const styles = StyleSheet.create({
         overflowY: 'auto',
     },
     description: {
-
+        
     },
     ratings: {
         display: 'flex',

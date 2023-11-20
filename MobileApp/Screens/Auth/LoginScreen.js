@@ -7,7 +7,6 @@ import ReusableAuthForm from "./Components/ReusableAuthForm";
 import { login } from "../../Store/AuthSlice";
 
 const URL1 = 'https://ratemyride-3b8d03447308.herokuapp.com/'
-const URL = 'http://localhost:5055/'
 
 export default LoginScreen = ({ navigation }) => 
 {
@@ -26,8 +25,7 @@ export default LoginScreen = ({ navigation }) =>
             password: userData.password,
         };
         try {
-            console.log(URL + 'api/mobile/login')
-            const response = await Axios.post(URL+ 'api/mobile/login', user, {
+            const response = await Axios.post(URL1+ 'api/mobile/login', user, {
                 headers: { 'Content-type': 'application/json' }
             });
 
@@ -36,10 +34,18 @@ export default LoginScreen = ({ navigation }) =>
                 // console.log(response.data.error);
                 Alert.alert('Error: ', response.data.error);
             }
+            else if (response.data.userID === -1) {
+                Alert.alert('Error logging in: Email or Password Incorrect!');
+                return;
+            }
             else 
             {
-                // console.log(response.data)
-                dispatch(login({ loggedIn: true, firstName: response.data.firstName }))
+                dispatch(login({ 
+                    loggedIn: true, 
+                    firstName: response.data.firstName, 
+                    lastName: response.data.lastName,
+                    userID: response.data.userID,
+                }))
                 setUserData({
                     email: '',
                     password: '',

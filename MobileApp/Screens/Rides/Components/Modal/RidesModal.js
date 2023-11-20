@@ -1,9 +1,9 @@
 import React from "react";
-import { Modal, StyleSheet, View } from 'react-native';
-
+import { Modal, StyleSheet, View, Text } from 'react-native';
 import RidesModalHeader from "./Content/ModalHeader";
 import HorizontalDivider from "./Components/Dividers/HorizontalDivider";
 import RatingAndDescription from "./Content/RatingAndDescription";
+import ReviewList from "./Components/Reviews/ReviewsList";
 
 const RidesModal = ({toggleModal, isVisible, rideInfo, backgroundColor}) => {
 
@@ -22,8 +22,14 @@ const RidesModal = ({toggleModal, isVisible, rideInfo, backgroundColor}) => {
                     {/* BODY  */}
                     <RatingAndDescription 
                         rideDescription={ rideInfo.description }
+                        rideId={ rideInfo.rideId }
                     />
                     {/* REVIEWS  */}
+                    <Text style={ styles.viewReviewTitle }>View User Reviews Below</Text>
+                    <HorizontalDivider />
+                    <ReviewList 
+                        rideId={ rideInfo.rideId }
+                    />
                 </View>
             </View>
         </Modal>
@@ -46,6 +52,11 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         height: '95%',
         width: '90%',
+    },
+    viewReviewTitle: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
 })
 

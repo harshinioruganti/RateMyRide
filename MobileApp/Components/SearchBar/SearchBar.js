@@ -8,29 +8,31 @@ import TouchableIconButton from "../Button/TouchableIconButton";
 import { View } from "react-native";
 
 const SearchBar = ({ containerStyle, leftSideContainerStyle, onSearch, placeholder }) => {
-    const [search, setSearch] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
 
-    // update state
-    const onChangeSearch = (search) => setSearch(search);
+    const handleSearch = (text) => {
+        setSearchTerm(text)
+        onSearch(searchTerm);
+    }
 
     return (
-            // Styles for Card is CardStyle.searchBar
-            <View style={ containerStyle }>
-                <CustomTextInput 
-                    viewStyle={ leftSideContainerStyle }
-                    inputStyle={ SearchBarStyle.input }
-                    inputType={ 'default' }
-                    placeHolder={ placeholder }
-                    onChangeText={ onChangeSearch }
-                    value={ search }
-                />
-                <TouchableIconButton 
-                    viewStyle={ SearchBarStyle.rightSideContainer }
-                    onPress={ onSearch }
-                    icon={ 'search' }
-                    iconSize={ 45 }
-                />
-            </View>
+        // Styles for Card is CardStyle.searchBar
+        <View style={ containerStyle }>
+            <CustomTextInput 
+                viewStyle={ leftSideContainerStyle }
+                inputStyle={ SearchBarStyle.input }
+                inputType={ 'default' }
+                placeHolder={ placeholder }
+                onChangeText={ text => handleSearch(text) }
+                value={ searchTerm }
+            />
+            <TouchableIconButton 
+                viewStyle={ SearchBarStyle.rightSideContainer }
+                // onPress={ handleSearch }
+                icon={ 'search' }
+                iconSize={ 45 }
+            />
+        </View>
     )
 }
 

@@ -15,7 +15,6 @@ const ThemeParkList = () => {
                 {
                     const data = response.data;
                     if (data.allThemeParks && data.allThemeParks.length > 0) {
-                        console.log("Success");
                         setThemeParks(data.allThemeParks);
                     } else {
                         console.log(data.log);

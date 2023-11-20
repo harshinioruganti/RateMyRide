@@ -38,17 +38,10 @@ const ThemeParkItem = ({ item, index }) => {
             </TouchableOpacity>
             {/* Render Rides that are at the given park */}
             {activePark && 
-                <>
-                    <SearchBar 
-                        containerStyle={ SearchBarStyle.secondarySearchBar }
-                        leftSideContainerStyle={ SearchBarStyle.secondaryLeftSideContainer }
-                        placeholder={ 'SEARCH RIDE' }
-                    />
-                    <RidesList
-                        targetThemeParkId={ item.themeParkId }
-                        backgroundColor={ backgroundColor }
-                    />
-                </>
+                <RidesList
+                    targetThemeParkId={ item.themeParkId }
+                    backgroundColor={ backgroundColor }
+                />
             }
         </>
     )

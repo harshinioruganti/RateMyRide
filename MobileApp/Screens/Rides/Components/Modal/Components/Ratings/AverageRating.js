@@ -29,9 +29,9 @@ const AverageRating = ({ tintColor, rideId }) => {
             showRating={ false }
             type="star"
             tintColor={ tintColor }
-            startingValue={ avgRating !== null ? parseFloat(avgRating) : 2.5 }
+            startingValue={ avgRating }
             readonly={ true }
-            imageSize={ 20 }
+            imageSize={ 30 }
             style={{ alignSelf: 'flex-start' }}
         />
     )

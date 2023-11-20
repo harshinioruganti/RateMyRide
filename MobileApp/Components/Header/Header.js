@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import { useSelector } from 'react-redux';
 // Styles
 import HeaderStyles from './HeaderStyles';
 
 export default Header = () => 
 {
-    // Will be transformed into redux later
-    const [loggedIn, setLoggedIn] = useState(false);
-
-    const handleLoginPress = () => setLoggedIn(!loggedIn);
+    const loggedIn = useSelector(state => state.auth.loggedIn)
+    const firstName = useSelector(state => state.auth.firstName);
+    const lastName = useSelector(state => state.auth.lastName);
 
     return (
         <View style={HeaderStyles.container}>
@@ -26,7 +25,7 @@ export default Header = () =>
                     { 
                         loggedIn 
                             ? 
-                            <Text style={HeaderStyles.userText}>Vincent DiPietrantonio</Text> 
+                            <Text style={HeaderStyles.userText}>{ firstName + ' ' + lastName }</Text> 
                             : 
                             <Text 
                                 style={HeaderStyles.userText}

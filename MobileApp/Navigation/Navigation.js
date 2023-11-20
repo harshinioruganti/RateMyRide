@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 // Navigation Imports
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
 
 // Screens
 import HomeScreen from '../Screens/Home/HomeScreen';
@@ -16,7 +17,7 @@ const Stack = createStackNavigator();
 
 export const MainTabNavigator = () =>
 {
-    const [loggedIn, setLoggedIn] = useState(false);
+    const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
     return (
         <Tab.Navigator
@@ -44,7 +45,7 @@ export const MainTabNavigator = () =>
 
             <Tab.Screen name={"HOME"} component={ LandingPage } options={{ headerShown: false }} />
             <Tab.Screen name={ "RIDES" } component={ RidesScreen } options={{ headerShown: false }} />
-            {loggedIn && <Tab.Screen name={ "PROFILE" } component={ ProfileScreen } options={{ headerShown: false }} /> }
+            {isLoggedIn && <Tab.Screen name={ "PROFILE" } component={ ProfileScreen } options={{ headerShown: false }} /> }
 
         </Tab.Navigator>
     )

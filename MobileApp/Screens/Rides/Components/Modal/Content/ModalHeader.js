@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
     },
     mainText: {
-        fontSize: 25,
+        fontSize: 30,
         fontWeight: 'bold',
         color: 'black'
     },
