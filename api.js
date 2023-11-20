@@ -30,10 +30,10 @@ exports.setApp = function (app, client) {
         id = results[0]._id;
         fn = results[0].FirstName;
         ln = results[0].LastName;
-        log = "Success."
+        log = "Success.";
       }
       else{
-        log = "Account doesn't exist."
+        log = "Account doesn't exist.";
       }
 
 
