@@ -82,6 +82,14 @@ exports.setApp = function (app, client) {
 
       const { email, password } = req.body;
 
+      if (!email || email.trim() === '') {
+        return res.status(400).json({ error: "Email is required" });
+      }
+
+      if (!password || password.trim() === '') {
+        return res.status(400).json({ error: "Password is required" });
+      }
+
       const db = client.db("COP4331Cards");
       const results = await db.collection("Users").find({ Email: email}).toArray();
 
