@@ -109,7 +109,7 @@ exports.setApp = function (app, client) {
       id = results[0]._id;
       fn = results[0].FirstName;
       ln = results[0].LastName;
-      log = "Success."
+      log = "Success.";
 
 	    //ratemyride.herokuapp.com
         if (results[0].isVerified == false) {
@@ -127,7 +127,7 @@ exports.setApp = function (app, client) {
         }
 	try {
             await sgMail.send(msg)
-            log = "Please verify your email, a new verification link has been sent to your email"
+            log = "Please verify your email, a new verification link has been sent to your email";
           }
           catch (e) {
             log = e.toString();
@@ -142,11 +142,11 @@ exports.setApp = function (app, client) {
         }
     }
     else{
-      log = "Incorrect password."
+      log = "Incorrect password.";
     }
   }
   else{
-    log = "Account doesn't exist."
+    log = "Account doesn't exist.";
   }
 
   ret = { userID:id, firstName:fn, lastName:ln, log:log};
