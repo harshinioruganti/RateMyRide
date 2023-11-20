@@ -108,11 +108,11 @@ exports.setApp = function (app, client) {
                   subject: "Please Verify Your Email",
                   text: `Hello, thank you for registering to <RATEMYRIDE> 
             Please copy and paste the address below to verify your account
-            http://localhost:3000/emailVerif?token=${results[0].emailToken}`,
+            https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${results[0].emailToken}`,
                   html: `<h1> Hello, <h1>
               <p> Thank you for registering on our site</p>
               <p> please click the link below to verify your account.</p>
-              <a href=http://localhost:3000/emailVerif?token=${results[0].emailToken}>Verify account</a>`,
+              <a href=https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${results[0].emailToken}>Verify account</a>`,
               };
 
               try {
@@ -145,13 +145,6 @@ exports.setApp = function (app, client) {
       // outgoing: error
 
       const { firstName, lastName, email, password } = req.body;
-
-      /* // Fetch the current maximum UserId
-      const maxUserIdResult = await db.collection('Users').find({}, { sort: { UserId: -1 }, limit: 1 }).toArray();
-      const currentMaxUserId = maxUserIdResult.length > 0 ? parseInt(maxUserIdResult[0].UserId) || 0 : 0;
-
-      // Calculate the next UserId
-      const newUserId = (parseInt(currentMaxUserId) + 1).toString(); */
 
       const newAccount = {
           FirstName: firstName,
@@ -187,7 +180,7 @@ exports.setApp = function (app, client) {
           subject: "Verify Your Email",
           text: `Hello, thank you for registering to <RATEMYRIDE> 
               Please copy and paste the address below to verify your account
-              http://https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${newAccount.emailToken}`,
+              https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${newAccount.emailToken}`,
           html: `<h1> Hello, <h1>
                 <p> Thank you for registering on our site</p>
                 <p> please click the link below to verify your account.</p>
@@ -271,7 +264,7 @@ exports.setApp = function (app, client) {
           text: `Forgot Password
             We have recieved a request to reset the password for your account.
             To reset password click on the link below.
-            http://https://ratemyride-3b8d03447308.herokuapp.com/passReset?token=${passToken}`,
+            https://ratemyride-3b8d03447308.herokuapp.com/passReset?token=${passToken}`,
           html: `<h1> Hello, <h1>
               <p>  We have recieved a request to reset the password for your account</p>
               <p> please click the link below to reset your password</p>
