@@ -29,8 +29,7 @@ function Register()
 
           if( res.error.length > 0 )
           {
-              setMessage('Account not created');
-              console.log(res.error);
+              setMessage(res.error);
           }
           else
           {
