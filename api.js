@@ -83,10 +83,7 @@ exports.setApp = function (app, client) {
       const { email, password } = req.body;
 
       const db = client.db("COP4331Cards");
-      const results = await db
-          .collection("Users")
-          .find({ Email: email, Password: password })
-          .toArray();
+      const results = await db.collection("Users").find({ Email: email}).toArray();
 
       var id = "";
       var fn = "";
@@ -96,6 +93,14 @@ exports.setApp = function (app, client) {
       var ret;
 
       if (results.length > 0) {
+        var salt = results[0].Salt;
+        var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
+        if(hash != results[0].Password)
+        {
+            error = "Incorrect password";
+            ret = { error: error };
+            return res.status(200).json(ret);
+        }
           id = results[0]._id;
           fn = results[0].FirstName;
           ln = results[0].LastName;
@@ -146,11 +151,15 @@ exports.setApp = function (app, client) {
 
       const { firstName, lastName, email, password } = req.body;
 
+
+      var salt = crypto.randomBytes(16).toString('hex'); 
+      var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
       const newAccount = {
           FirstName: firstName,
           LastName: lastName,
           Email: email,
-          Password: password,
+          Password: hash,
+          Salt: salt,
           emailToken: crypto.randomBytes(64).toString("hex"),
           isVerified: false,
       };
