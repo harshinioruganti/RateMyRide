@@ -87,24 +87,21 @@ exports.setApp = function (app, client) {
   // outgoing: userID, firstName, lastName, log
 	
   var log = '';
+  var id = -1;// Will display -1 as id if invalid login
+  var fn = '';
+  var ln = '';
 
   const { email, password } = req.body;
-
   const db = client.db('COP4331Cards');
 
   const results = await db.collection('Users').find({Email:email}).toArray();
 
-  var id = -1;// Will display -1 as id if invalid login
-  var fn = '';
-  var ln = '';
-  var ret = '';
-
   if( results.length > 0 )
   {
-    var salt = results[0].Salt;
-    var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
+    const salt = results[0].Salt;
+    const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`); 
 
-    if(hash == results[0].Password || results[0].Password == password)
+    if(hash == results[0].Password)
     {
       id = results[0]._id;
       fn = results[0].FirstName;
@@ -124,18 +121,20 @@ exports.setApp = function (app, client) {
                 <p> Thank you for registering on our site</p>
                 <p> please click the link below to verify your account.</p>
                 <a href=https://ratemyride-3b8d03447308.herokuapp.com/emailVerif?token=${results[0].emailToken}>Verify account</a>`,
-        }
-	try {
+        };
+
+	    try {
             await sgMail.send(msg)
             log = "Please verify your email, a new verification link has been sent to your email";
-          }
-          catch (e) {
-            log = e.toString();
-          }
+        }
+        catch (e) {
+        log = e.toString();
+        }
 	}
 	try {
           const token = require("./createJWT.js");
-          ret = token.createToken(fn, ln, id);
+          const ret = token.createToken(fn, ln, id);
+          return res.status(200).json({ userID: id, firstName: fn, lastName: ln, log, token: ret });
         }
         catch (e) {
           log = e.toString();
@@ -145,7 +144,7 @@ exports.setApp = function (app, client) {
       log = "Incorrect password.";
     }
   }
-  else{
+  else {
     log = "Account doesn't exist.";
   }
 
