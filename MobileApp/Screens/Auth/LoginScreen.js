@@ -6,7 +6,7 @@ import Axios from 'axios';
 import ReusableAuthForm from "./Components/ReusableAuthForm";
 import { login } from "../../Store/AuthSlice";
 
-const URL1 = 'https://ratemyride-3b8d03447308.herokuapp.com/'
+const URL = 'https://ratemyride-3b8d03447308.herokuapp.com/'
 
 export default LoginScreen = ({ navigation }) => 
 {
@@ -15,6 +15,7 @@ export default LoginScreen = ({ navigation }) =>
         email: '',
         password: '',
     })
+    const [wrongInfo, setWrongInfo] = useState(null);
     const dispatch = useDispatch();
     // Update states
     const handleUserDataUpdates = (fieldName, value) => setUserData({ ...userData, [fieldName]: value })
@@ -25,17 +26,15 @@ export default LoginScreen = ({ navigation }) =>
             password: userData.password,
         };
         try {
-            const response = await Axios.post(URL1+ 'api/mobile/login', user, {
+            const response = await Axios.post(URL + 'api/mobile/login', user, {
                 headers: { 'Content-type': 'application/json' }
             });
 
-            if (response.status !== 200) 
-            {
-                // console.log(response.data.error);
-                Alert.alert('Error: ', response.data.error);
+            if (response.status !== 200) {
+                console.log('Error: ', response.data.error);
             }
             else if (response.data.userID === -1) {
-                Alert.alert('Error logging in: Email or Password Incorrect!');
+                setWrongInfo('Error logging in: Email or Password Incorrect!');
                 return;
             }
             else 
@@ -50,7 +49,7 @@ export default LoginScreen = ({ navigation }) =>
                     email: '',
                     password: '',
                 });
-                Alert.alert('Success, You are now logged in!');
+                setWrongInfo('');
             }
         }
         catch(err) {
@@ -64,12 +63,14 @@ export default LoginScreen = ({ navigation }) =>
             value: userData.email,
             inputType: 'email-address',
             name: 'email',
+            isPassword: false,
         },
         {
             placeholder: 'Password',
             value: userData.password,
             inputType: 'password',
             name: 'password',
+            isPassword: true,
         },
     ]
 
@@ -91,6 +92,7 @@ export default LoginScreen = ({ navigation }) =>
             altForm={ altForm }
             updateFormData={ handleUserDataUpdates }
             onFormSubmit={ handleLogin }
+            wrongInfo={ wrongInfo }
         />
     )
 }

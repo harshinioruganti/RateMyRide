@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageBackground } from 'react-native';
+import { ImageBackground, Text } from 'react-native';
 import { useSelector } from 'react-redux';
 // Styling
 import AuthStyling from "../AuthStyling";
@@ -11,7 +11,7 @@ import TouchableTextButton from "../../../Components/Button/TouchableTextButton"
 import Card from "../../../Components/Cards/Card";
 import NavigationButton from '../../../Components/Button/NavigationButton';
 
-const ReusableAuthForm = ({ inputFields, mainForm, altForm, updateFormData, onFormSubmit }) => {
+const ReusableAuthForm = ({ inputFields, mainForm, wrongInfo, altForm, successMessage, updateFormData, onFormSubmit }) => {
     const isLoggedIn = useSelector(state => state.auth.loggedIn);
     return (
         <ImageBackground
@@ -21,6 +21,15 @@ const ReusableAuthForm = ({ inputFields, mainForm, altForm, updateFormData, onFo
             <KeyBoardAvoidWrapper>
                 {/* Reusable Form  */}
                 <Card styles={ AuthStyling.container}>
+                    { wrongInfo && (
+                        <Text style={{ fontSize: 22, }}>Email/Password Incorrect!</Text>
+                    )}
+                    { isLoggedIn && (
+                        <Text style={{ fontSize: 22, }}>You are now logged in!</Text>
+                    )}
+                    { successMessage && (
+                        <Text style={{ fontSize: 22, }}>Account Created, Please Login!</Text>
+                    )}
                     {inputFields.map((field, index) => (
                         <CustomTextInput 
                             key={ index }
@@ -30,16 +39,16 @@ const ReusableAuthForm = ({ inputFields, mainForm, altForm, updateFormData, onFo
                             inputType={ field.inputType }
                             viewStyle={ AuthStyling.inputContainer }
                             inputStyle={ AuthStyling.input }
+                            secureTextEntry={ field.isPassword }
                             require
                         />
                     ))}
-                    <TouchableTextButton 
+                    { !isLoggedIn && (<TouchableTextButton 
                         touchableOpacStyle={ AuthStyling.signUpBtn }
                         onPress={ onFormSubmit }
                         title={ mainForm.title }
                         titleStyle={ AuthStyling.titleStyle }
-                        disable={ isLoggedIn }
-                    />
+                    />)}
                     <NavigationButton
                         cardStyle={ AuthStyling.altAuthContainer }
                         textStyle={ AuthStyling.altText }

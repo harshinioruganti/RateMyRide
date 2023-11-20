@@ -17,11 +17,11 @@ export default Header = () =>
                 {/* User Icon */}
                 <Ionicons 
                     style = {HeaderStyles.icon}
-                    name={loggedIn ? "person" : "help-circle"}
-                    size={75}
+                    name={ loggedIn ? "person" : "help-circle" }
+                    size={ 75 }
                 />
                 <View style={HeaderStyles.msgContainer}>
-                    <Text style={HeaderStyles.welcomeText}>Rate My Ride,</Text>
+                    <Text style={HeaderStyles.welcomeText}>Account:</Text>
                     { 
                         loggedIn 
                             ? 

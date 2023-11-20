@@ -16,8 +16,7 @@ export default RegisterScreen = ({ navigation }) => {
         password: '',
     })
     
-    const [errorMessage, setErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+    const [signUpMsg, setSignUpMsg] = useState('');
 
     // Input Fields
     const inputFields = [
@@ -72,12 +71,9 @@ export default RegisterScreen = ({ navigation }) => {
 
             if (response.status !== 200) {
                 console.log(response.data.error);
-                setErrorMessage(response.data.error);
-                setSuccessMessage('');
-                Alert.alert('Error: ', response.data.error);
+                setSignUpMsg('Error Creating Account, Please Try Again!');
             }
             else {
-                console.log("Success");
                 // Reset form values
                 setFormData({
                     firstName: '',
@@ -87,7 +83,8 @@ export default RegisterScreen = ({ navigation }) => {
                 });
                 // Set message to true that will display a message on 
                 // the form page
-                Alert.alert('Success', 'Account created successfully.');
+                setSignUpMsg('Account Created! Continue to Login Page');
+                console.log('Success', 'Account created successfully.');
             }
         }
         catch(err) {
@@ -104,6 +101,7 @@ export default RegisterScreen = ({ navigation }) => {
             altForm={ altForm }
             updateFormData={ handleUpdateFormData }
             onFormSubmit={ handleSignUp }
+            successMessage={ signUpMsg }
         />
     )
 }

@@ -14,7 +14,7 @@ const Review = ({ item, index }) => {
                             {key.charAt(0).toUpperCase() + key.slice(1) + ":"}
                         </Text>
                         <Rating 
-                            key={ item.userId }
+                            key={ key }
                             style={styles.rating}
                             tintColor="#141c22"
                             startingValue={item[key]}
@@ -110,6 +110,5 @@ const styles = StyleSheet.create({
     },
     reviewContainer: {
         padding: 15,
-
     },
 });
