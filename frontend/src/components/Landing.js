@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
-import { Button, Card, CardBody, Container, Modal, Row, Col, Navbar, Nav, NavDropdown, Form, FormControl} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Button, Card, CardBody, Container, Modal, Row, Col, Navbar, Nav, NavDropdown, Form, FormControl } from 'react-bootstrap';
 
 function Landing() {
   let bp = require('./Path.js');
+
+  var _ud = localStorage.getItem('user_data');
+  var ud = JSON.parse(_ud);
+  var userId = ud.id;
+  var firstName = ud.firstName;
+  var lastName = ud.lastName;
+  const initials = (firstName && lastName) ? `${firstName.charAt(0)}${lastName.charAt(0)}` : '';
+
 
   const [cardData, setCardData] = useState([
     {
@@ -12,8 +20,8 @@ function Landing() {
       themeParkId: "6552d746f90db71828c9cd5f",
       imageSource: "https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/ibmig/cms/image/wesh/33240692-33240692.jpg?crop=1xw:1.00000000000000000xh;center,top&resize=640:*",
       reviews: [],
-  },
-  {
+    },
+    {
       rideId: "65536dd8489eedd0dc744ba1",
       rideName: "Manta",
       description: "Find out what it’s like to spin, glide, skim and fly like a giant ray when you experience the only flying roller coaster of its kind in Florida.",
@@ -73,9 +81,12 @@ function Landing() {
 
   const [modalShow, setModalShow] = useState(null);
   const [reviews, setReviews] = useState([]);
-  const [newReview, setNewReview] = useState({
+  const [newreview, setNewReview] = useState({
     author: '',
     comment: '',
+    rating: '',
+    theme: '',
+    length: '',
   });
 
   const handleModalShow = (id) => {
@@ -86,26 +97,56 @@ function Landing() {
     setModalShow(null);
   };
 
-  const handleReviewChange = (e) => {
+  const handlereviewchange = (e) => {
     setNewReview({
-      ...newReview,
+      ...newreview,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleReviewSubmit = (e, cardId) => {
+  const handlereviewsubmit = async (e, cardId) => {
     e.preventDefault();
+
     const updatedCardData = cardData.map((card) =>
-      card.id === cardId
-        ? { ...card, reviews: [...card.reviews, newReview] }
+      card.rideId === cardId
+        ? {
+          ...card,
+          reviews: [...card.reviews, newreview],
+        }
         : card
     );
 
     setCardData(updatedCardData);
 
+    try {
+      const response = await fetch(bp.buildPath('api/addReview'), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          rideId: cardId,
+          userId: userId, // replace with actual user ID
+          thrill: newreview.rating,
+          theme: newreview.theme,
+          length: newreview.length,
+          overall: newreview.rating, //change this to average rating
+          review: newreview.comment,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error submitting review:', error);
+    }
+
     setNewReview({
       author: '',
       comment: '',
+      rating: '',
+      theme: '',
+      length: '',
     });
   };
 
@@ -115,7 +156,7 @@ function Landing() {
         {cardData.map((card, index) => (
           <Col key={card.rideId} xs={12} md={4} style={{ marginBottom: '20px' }}>
             <Card style={{ width: '90%' }}>
-              <Card.Img variant="top" src={card.imageSource}  style={{ height: '200px', objectFit: 'cover' }} />
+              <Card.Img variant="top" src={card.imageSource} style={{ height: '200px', objectFit: 'cover' }} />
               <CardBody>
                 <Card.Title>{card.rideName}</Card.Title>
                 <Card.Text>Theme Park</Card.Text>
@@ -129,11 +170,11 @@ function Landing() {
                   onHide={handleModalHide}
                   title={card.rideName}
                   content={card.description}
-                  imageSrc={card.imageSource}
+                  imagesrc={card.imageSource}
                   reviews={card.reviews}
-                  newReview={newReview}
-                  handleReviewChange={handleReviewChange}
-                  handleReviewSubmit={(e) => handleReviewSubmit(e, card.rideId)}
+                  newreview={newreview}
+                  handlereviewchange={handlereviewchange}
+                  handlereviewsubmit={(e) => handlereviewsubmit(e, card.rideId)}
                 />
               </CardBody>
             </Card>
@@ -146,7 +187,7 @@ function Landing() {
 
 function calculateAverageRating(reviews) {
   console.log('Reviews:', reviews);
-  
+
   if (reviews.length === 0) {
     return 'No Ratings';
   }
@@ -155,7 +196,7 @@ function calculateAverageRating(reviews) {
     console.log('Review:', review);
     return sum + parseInt(review.rating, 10);
   }, 0);
-  
+
   const averageRating = totalRating / reviews.length;
   console.log('Total Rating:', totalRating);
   console.log('Average Rating:', averageRating);
@@ -164,6 +205,63 @@ function calculateAverageRating(reviews) {
 }
 
 function MyVerticallyCenteredModal(props) {
+
+  let bp = require('./Path.js');
+
+  const [rideReviews, setRideReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(bp.buildPath('api/getReviews'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            rideId: props.rideId,
+          }),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+  
+        const data = await response.json();
+        console.log('Reviews data:', data);
+  
+        // Check if the expected properties are present in the response
+        if ('reviewList' in data && 'log' in data) {
+          setRideReviews(data.reviewList);
+        } else {
+          console.error('Unexpected response format:', data);
+        }
+      } catch (error) {
+        console.error('Error fetching reviews:', error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    if (props.show) {
+      // Fetch reviews only when the modal is shown
+      fetchReviews();
+    }
+  }, [props.show, props.rideId]);
+
+  function calculateAverageReviewScore(review) {
+    const rating = parseInt(review.rating, 10);
+    const theme = parseInt(review.theme, 10);
+    const length = parseInt(review.length, 10);
+
+    // Calculate the average of the three scores
+    const averageScore = (rating + theme + length) / 3;
+
+    // Round to one decimal place
+    return averageScore.toFixed(1);
+  }
+
   return (
     <Modal
       {...props}
@@ -179,7 +277,7 @@ function MyVerticallyCenteredModal(props) {
         <Container>
           <Row>
             <Col md={4}>
-              <img src={props.imageSrc} alt={props.title} className="img-fluid" />
+              <img src={props.imagesrc} alt={props.title} className="img-fluid" />
             </Col>
             <Col md={8}>
               <h4>{props.title}</h4>
@@ -191,30 +289,38 @@ function MyVerticallyCenteredModal(props) {
             <Col>
               <hr />
               <h5>Reviews</h5>
-              {props.reviews.map((review, index) => (
-                <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
-                  <Row>
-                    <Col>
-                      <strong>{review.author}</strong>
-                    </Col>
-                    <Col>
-                      <div style={{ textAlign: 'right' }}>
-                        Rating: {review.rating}
-                      </div>
-                    </Col>
-                  </Row>
-                  <div>{review.comment}</div>
-                </div>
-              ))}
+              {loading ? (
+                <p>Loading reviews...</p>
+              ) : (
+                rideReviews.length > 0 ? (
+                  rideReviews.map((review, index) => (
+                    <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+                      <Row>
+                        <Col>
+                          <strong>{review.author}</strong>
+                        </Col>
+                        <Col>
+                          <div style={{ textAlign: 'right' }}>
+                            Score: {calculateAverageReviewScore(review)}
+                          </div>
+                        </Col>
+                      </Row>
+                      <div>{review.comment}</div>
+                    </div>
+                  ))
+                ) : (
+                  <p>No reviews yet.</p>
+                )
+              )}
 
-              <Form onSubmit={props.handleReviewSubmit}>
+              <Form onSubmit={props.handlereviewsubmit}>
                 <Form.Group controlId="author">
                   <Form.Label>Your Name:</Form.Label>
                   <Form.Control
                     type="text"
                     name="author"
-                    value={props.newReview.author}
-                    onChange={props.handleReviewChange}
+                    value={props.newreview.author}
+                    onChange={props.handlereviewchange}
                     required
                   />
                 </Form.Group>
@@ -223,8 +329,33 @@ function MyVerticallyCenteredModal(props) {
                   <Form.Control
                     type="number"
                     name="rating"
-                    value={props.newReview.rating}
-                    onChange={props.handleReviewChange}
+                    value={props.newreview.rating}
+                    onChange={props.handlereviewchange}
+                    min="1"
+                    max="5"
+                    required
+                  />
+                </Form.Group>
+                <Form.Group controlId="theme">
+                  <Form.Label>Theme (1-5):</Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="theme"
+                    value={props.newreview.theme}
+                    onChange={props.handlereviewchange}
+                    min="1"
+                    max="5"
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="length">
+                  <Form.Label>Length (1-5):</Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="length"
+                    value={props.newreview.length}
+                    onChange={props.handlereviewchange}
                     min="1"
                     max="5"
                     required
@@ -235,8 +366,8 @@ function MyVerticallyCenteredModal(props) {
                   <Form.Control
                     as="textarea"
                     name="comment"
-                    value={props.newReview.comment}
-                    onChange={props.handleReviewChange}
+                    value={props.newreview.comment}
+                    onChange={props.handlereviewchange}
                     required
                   />
                 </Form.Group>
