@@ -70,6 +70,20 @@
     font-size: 12pt;
 }
 
-.buttons:hover {
+.login-button {
+  background: #171e2e;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 14pt;
+  display: block;
+  margin-top: 50px;
+}
+
+.login-result {
+  margin-top: 20px;
+}
+
+.login-button:hover {
     background: #445988;
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../App.css';
 import './Register.css';
 
 function Register()
@@ -47,22 +46,22 @@ function Register()
   };
 
   return (
-    <div className="formBox">
-      <form onSubmit={doRegister} id="login" className="input-group">
-        <span id="inner-title">Register</span>
-        <input name="firstName" type="text" placeholder="First Name"
-          ref={(c) => registerFirstName = c}/>
-        <input name="lastName" type="text" placeholder="Last Name"
-          ref={(c) => registerLastName = c}/>
-        <input name="email" type="email" placeholder="Email"
-          ref={(c) => registerEmail = c}/>
-        <input name="password" type="password" placeholder="Password"
-          ref={(c) => registerPassword = c}/>
-        <div className="buttons-container">
-          <button name="registerButton" type="buttons" className="buttons" value="Register"
-            onClick={doRegister}>Register</button>
-        </div>
-      </form>
+      <div className="formBox">
+          <form onSubmit={doRegister} id="login" className="input-group">
+            <span id="inner-title">Register</span>
+            <input name="firstName" type="text" placeholder="First Name"
+              ref={(c) => registerFirstName = c}/>
+            <input name="lastName" type="text" placeholder="Last Name"
+              ref={(c) => registerLastName = c}/>
+            <input name="email" type="email" placeholder="Email"
+              ref={(c) => registerEmail = c}/>
+            <input name="password" type="password" placeholder="Password"
+              ref={(c) => registerPassword = c}/>
+            <div className="buttons-container">
+              <button name="registerButton" className="register-button" value="Register"
+                onClick={doRegister}>Register</button>
+            </div>
+          </form>
       <span id="registerResult" className='registerResult'>{message}</span>
     </div>
   );

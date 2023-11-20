@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../App.css';
 import './Login.css';
 import 'react-router-dom';
 
@@ -50,18 +49,16 @@ function Login()
 
     return (
         <div className="formBox">
-        <form id="login" className="input-group" onSubmit={doLogin}>
-            <span id="inner-title">Login</span><br />
-            <input type="text" id="loginEmail" className="login-field" placeholder="Email"
-                required ref={(c) => loginEmail = c}/><br />
-            <input type="password" id="loginPassword" className="login-field" placeholder="Password" required
-                ref={(c) => loginPassword = c}/><br />
-            <div className="buttons-container">
+            <form id="login" className="input-group" onSubmit={doLogin}>
+                <span id="inner-title">Login</span><br />
+                <input type="text" id="loginEmail" className="login-field" placeholder="Email"
+                    required ref={(c) => loginEmail = c}/><br />
+                <input type="password" id="loginPassword" className="login-field" placeholder="Password" required
+                    ref={(c) => loginPassword = c}/><br />
                 <button type="button" id="loginButton" className="login-button" value = "Login"
                     onClick={doLogin}>Login</button>
-            </div>
-        </form>
-        <span id="loginResult">{message}</span>
+                <span id="loginResult" className='login-result'>{message}</span>
+            </form>
         </div>
     );
 };

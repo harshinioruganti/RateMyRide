@@ -3,7 +3,8 @@
 }
 
 .about-us-title h1 {
-    color: white;
+    color: black;
+    font-size: 24pt;
 }
 
 .about-us-section {
@@ -16,8 +17,4 @@
     margin: 0 auto;
     text-align: center;
   }
-
-.about-us-title {
-
-}
   

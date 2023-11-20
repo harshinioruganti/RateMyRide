@@ -88,6 +88,16 @@ font-size: 14px; /* Adjust placeholder font size */
   margin: 0 10px
 }
 
+.register-button {
+  background: #171e2e;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 14pt;
+  display: block;
+  margin-top: 150px;
+}
+
 .buttons:hover {
   background: #445988;
 }

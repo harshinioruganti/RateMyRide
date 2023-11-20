@@ -7,19 +7,6 @@
     font-size:22pt;
 }
 
- /* Search Bar Styles */
- .search-bar {
-  width: 300px;
-  margin: 0 auto;
-  padding: 5px;
-  border: 1px solid black;
-  border-radius: 5px;
-  background-image: url('../search-icon.png'); 
-  background-size: 20px; /* Adjust size of icon here */
-  background-repeat: no-repeat;
-  background-position: right center;
-}
-
 .add-ride-button {
   outline: yellow;
   font-size: 14pt;

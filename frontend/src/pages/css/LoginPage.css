@@ -1,3 +1,7 @@
+.app {
+  background-color: #171E2E;
+}
+
 .toggle-container {
   display: flex;
   justify-content: center;
